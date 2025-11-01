@@ -4,7 +4,7 @@ import { TanStackDevtools } from "@tanstack/react-devtools"
 
 import TanStackQueryDevtools from "../lib/integrations/tanstack-query/devtools"
 
-import appCss from "./styles.css?url"
+import appCss from "./global.css?url"
 
 import type { QueryClient } from "@tanstack/react-query"
 
@@ -43,12 +43,12 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body>
+      <body className="bg-background text-foreground antialiased">
         {children}
 
         <TanStackDevtools
           config={{
-            position: "bottom-right",
+            position: "bottom-left",
           }}
           plugins={[
             {

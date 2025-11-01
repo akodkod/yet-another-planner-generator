@@ -48,7 +48,7 @@ const eslintConfig = defineConfig(
   {
     settings: {
       "better-tailwindcss": {
-        entryPoint: "src/global.css",
+        entryPoint: "app/global.css",
         attributes: [
           "class",
           "className",
