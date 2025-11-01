@@ -2,7 +2,7 @@ import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/ui/utils"
 import { Separator } from "@/lib/ui/separator"
 
 function ItemGroup({ className, ...props }: React.ComponentProps<"div">) {
@@ -31,7 +31,12 @@ function ItemSeparator({
 }
 
 const itemVariants = cva(
-  "group/item flex items-center border border-transparent text-sm rounded-md transition-colors [a]:hover:bg-accent/50 [a]:transition-colors duration-100 flex-wrap outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
+  `
+    group/item flex items-center border border-transparent text-sm rounded-md transition-colors
+    [a]:hover:bg-accent/50 [a]:transition-colors
+    duration-100 flex-wrap outline-none
+    focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]
+  `,
   {
     variants: {
       variant: {
@@ -48,7 +53,7 @@ const itemVariants = cva(
       variant: "default",
       size: "default",
     },
-  }
+  },
 )
 
 function Item({
@@ -72,20 +77,31 @@ function Item({
 }
 
 const itemMediaVariants = cva(
-  "flex shrink-0 items-center justify-center gap-2 group-has-[[data-slot=item-description]]/item:self-start [&_svg]:pointer-events-none group-has-[[data-slot=item-description]]/item:translate-y-0.5",
+  `
+    flex shrink-0 items-center justify-center gap-2
+    group-has-[[data-slot=item-description]]/item:self-start
+    [&_svg]:pointer-events-none
+    group-has-[[data-slot=item-description]]/item:translate-y-0.5
+  `,
   {
     variants: {
       variant: {
         default: "bg-transparent",
-        icon: "size-8 border rounded-sm bg-muted [&_svg:not([class*='size-'])]:size-4",
+        icon: `
+          size-8 border rounded-sm bg-muted
+          [&_svg:not([class*='size-'])]:size-4
+        `,
         image:
-          "size-10 rounded-sm overflow-hidden [&_img]:size-full [&_img]:object-cover",
+          `
+            size-10 rounded-sm overflow-hidden
+            [&_img]:size-full [&_img]:object-cover
+          `,
       },
     },
     defaultVariants: {
       variant: "default",
     },
-  }
+  },
 )
 
 function ItemMedia({
@@ -108,8 +124,11 @@ function ItemContent({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="item-content"
       className={cn(
-        "flex flex-1 flex-col gap-1 [&+[data-slot=item-content]]:flex-none",
-        className
+        `
+          flex flex-1 flex-col gap-1
+          [&+[data-slot=item-content]]:flex-none
+        `,
+        className,
       )}
       {...props}
     />
@@ -122,7 +141,7 @@ function ItemTitle({ className, ...props }: React.ComponentProps<"div">) {
       data-slot="item-title"
       className={cn(
         "flex w-fit items-center gap-2 text-sm leading-snug font-medium",
-        className
+        className,
       )}
       {...props}
     />
@@ -135,8 +154,11 @@ function ItemDescription({ className, ...props }: React.ComponentProps<"p">) {
       data-slot="item-description"
       className={cn(
         "text-muted-foreground line-clamp-2 text-sm leading-normal font-normal text-balance",
-        "[&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4",
-        className
+        `
+          [&>a:hover]:text-primary
+          [&>a]:underline [&>a]:underline-offset-4
+        `,
+        className,
       )}
       {...props}
     />
@@ -159,7 +181,7 @@ function ItemHeader({ className, ...props }: React.ComponentProps<"div">) {
       data-slot="item-header"
       className={cn(
         "flex basis-full items-center justify-between gap-2",
-        className
+        className,
       )}
       {...props}
     />
@@ -172,7 +194,7 @@ function ItemFooter({ className, ...props }: React.ComponentProps<"div">) {
       data-slot="item-footer"
       className={cn(
         "flex basis-full items-center justify-between gap-2",
-        className
+        className,
       )}
       {...props}
     />

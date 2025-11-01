@@ -10,11 +10,9 @@ import unusedImports from "eslint-plugin-unused-imports"
 import globals from "globals"
 import ts from "typescript-eslint"
 import storybook from "eslint-plugin-storybook"
-import { tanstackConfig } from "@tanstack/eslint-config"
 
 const eslintConfig = defineConfig(
   cspellRecommended,
-  ...tanstackConfig,
   ...storybook.configs["flat/recommended"],
   {
     files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
@@ -257,10 +255,6 @@ const eslintConfig = defineConfig(
         {
           message: "Sleep function is only for development",
           selector: "Identifier[name=sleep]",
-        },
-        {
-          message: 'Please use "export" along with the declaration instead.',
-          selector: "ExportNamedDeclaration[source=null][specifiers.length>0]",
         },
       ],
 

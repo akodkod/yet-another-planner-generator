@@ -1,11 +1,7 @@
 import * as React from "react"
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  MoreHorizontalIcon,
-} from "lucide-react"
+import { ChevronLeftIcon, ChevronRightIcon, MoreHorizontalIcon } from "lucide-react"
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/ui/utils"
 import { Button, buttonVariants } from "@/lib/ui/button"
 
 function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
@@ -34,7 +30,10 @@ function PaginationContent({
 }
 
 function PaginationItem({ ...props }: React.ComponentProps<"li">) {
-  return <li data-slot="pagination-item" {...props} />
+  return <li
+    data-slot="pagination-item"
+    {...props}
+         />
 }
 
 type PaginationLinkProps = {
@@ -58,7 +57,7 @@ function PaginationLink({
           variant: isActive ? "outline" : "ghost",
           size,
         }),
-        className
+        className,
       )}
       {...props}
     />
@@ -73,11 +72,19 @@ function PaginationPrevious({
     <PaginationLink
       aria-label="Go to previous page"
       size="default"
-      className={cn("gap-1 px-2.5 sm:pl-2.5", className)}
+      className={cn(`
+        gap-1 px-2.5
+        sm:pl-2.5
+      `, className)}
       {...props}
     >
       <ChevronLeftIcon />
-      <span className="hidden sm:block">Previous</span>
+      <span
+        className={`
+          hidden
+          sm:block
+        `}
+      >Previous</span>
     </PaginationLink>
   )
 }
@@ -90,10 +97,18 @@ function PaginationNext({
     <PaginationLink
       aria-label="Go to next page"
       size="default"
-      className={cn("gap-1 px-2.5 sm:pr-2.5", className)}
+      className={cn(`
+        gap-1 px-2.5
+        sm:pr-2.5
+      `, className)}
       {...props}
     >
-      <span className="hidden sm:block">Next</span>
+      <span
+        className={`
+          hidden
+          sm:block
+        `}
+      >Next</span>
       <ChevronRightIcon />
     </PaginationLink>
   )

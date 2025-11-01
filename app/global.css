@@ -75,7 +75,7 @@
 }
 
 @theme inline {
-  --default-border-width: 3px;
+  --default-border-width: 0.5px;
   
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -118,6 +118,10 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+  }
+
+  *:not(.rounded-full) {
+    corner-shape: superellipse(1.24);
   }
 
   body {

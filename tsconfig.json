@@ -29,7 +29,22 @@
       "@/*": [
         "./*"
       ],
-    }
+    },
+    /* Plugins */
+    "plugins": [
+      {
+        "name": "ts-plugin-sort-import-suggestions",
+        "moveUpPatterns": [
+          "@/",
+        ],
+        "moveDownPatterns": [
+          "@radix-ui",
+          "process",
+          "lucide-react",
+          "react-day-picker",
+        ],
+      }
+    ]
   },
   "include": [
     "**/*.ts",
