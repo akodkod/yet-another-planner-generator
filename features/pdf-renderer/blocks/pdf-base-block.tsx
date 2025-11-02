@@ -1,15 +1,17 @@
-import { BaseBlock, Block, BlockSizeType, BlockType } from "@/features/blocks/block-types"
+import { BlockSizeType } from "@/features/blocks/block-types"
+import { BlockTreeNode, TreeNode, TreeNodeType } from "@/features/tree/tree"
+import { isBlockTreeNode } from "@/features/tree/tree-utils"
 import { ViewStyle } from "@/lib/utils/react-pdf"
 import { match } from "ts-pattern"
 
-export function getBaseBlockStyles(block: BaseBlock, parent: Block | null): ViewStyle {
+export function getBaseBlockStyles(node: BlockTreeNode, parent: TreeNode | null): ViewStyle {
   return {
-    ...getSizeStyles(block, parent),
-    ...block.style,
+    ...getSizeStyles(node, parent && isBlockTreeNode(parent) ? parent : null),
+    ...node.block.style,
   }
 }
 
-function getSizeStyles(block: BaseBlock, parent: Block | null): ViewStyle {
+function getSizeStyles(node: BlockTreeNode, parent: BlockTreeNode | null): ViewStyle {
   if (!parent) {
     return {
       width: "100%",
@@ -17,8 +19,10 @@ function getSizeStyles(block: BaseBlock, parent: Block | null): ViewStyle {
     }
   }
 
+  const { block } = node
+
   return match(parent)
-    .with({ type: BlockType.Column }, () => ({
+    .with({ type: TreeNodeType.ColumnBlock }, () => ({
       ...match(block.width)
         .with({ type: BlockSizeType.Auto }, () => ({ width: "auto" }))
         .with({ type: BlockSizeType.Full }, () => ({ width: "100%" }))
@@ -33,7 +37,7 @@ function getSizeStyles(block: BaseBlock, parent: Block | null): ViewStyle {
         .with({ type: BlockSizeType.Pixels }, (height) => ({ height: `${height.pixels}px` }))
         .exhaustive(),
     }))
-    .with({ type: BlockType.Row }, () => ({
+    .with({ type: TreeNodeType.RowBlock }, () => ({
       ...match(block.width)
         .with({ type: BlockSizeType.Auto }, () => ({ width: "auto" }))
         .with({ type: BlockSizeType.Full }, () => ({ flex: 1 }))

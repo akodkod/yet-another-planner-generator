@@ -1,6 +1,4 @@
-import { TextBlock } from "@/features/blocks/block-types"
-import { BlockRendererProps } from "@/features/blocks/blocks-renderer"
-import { getBaseBlockStyles } from "@/features/blocks/renderers/base-block-renderer"
+import { getBaseBlockStyles } from "@/features/pdf-renderer/blocks/pdf-base-block"
 import { useRootChapterContext, useOptionalYearChapterContext, useOptionalDayChapterContext, useOptionalMonthChapterContext, useOptionalPageChapterContext, useOptionalWeekChapterContext } from "@/features/chapters/chapter-contexts"
 import { ViewStyle } from "@/lib/utils/react-pdf"
 import Handlebars from "handlebars"
@@ -8,18 +6,20 @@ import { format } from "date-fns"
 import { Text, View } from "@react-pdf/renderer"
 import { localeCodeExists, localeCodeToLocale } from "@/lib/utils/date-fns"
 import { getErrorMessage } from "@/lib/utils/error"
+import { TextBlockTreeNode } from "@/features/tree/tree"
+import { PDFNodeRendererProps } from "@/features/pdf-renderer/pdf-renderer"
 
-export function TextBlockRenderer({ block, parent }: BlockRendererProps<TextBlock>) {
+export function PDFTextBlock({ node, parent }: PDFNodeRendererProps<TextBlockTreeNode>) {
   const variables = useVariables()
 
   const styles: ViewStyle = {
-    ...getBaseBlockStyles(block, parent),
+    ...getBaseBlockStyles(node, parent),
   }
 
   return (
     <View style={styles}>
-      <Text style={block.textStyle}>
-        {renderContent(block.content, variables)}
+      <Text style={node.block.textStyle}>
+        {renderContent(node.block.content, variables)}
       </Text>
     </View>
   )
@@ -46,8 +46,12 @@ function useVariables() {
 function renderContent(text: string, variables: Record<string, unknown>) {
   if (!text.includes("{")) return text
 
-  const template = Handlebars.compile(text)
-  return template(variables)
+  try {
+    const template = Handlebars.compile(text)
+    return template(variables)
+  } catch (error) {
+    return `Cannot render text: "${text}". Error: ${getErrorMessage(error)}`
+  }
 }
 
 Handlebars.registerHelper("format-date", (date: unknown, dateFormat: string, localeCodeOrContext?: unknown) => {

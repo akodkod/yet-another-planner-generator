@@ -1,11 +1,10 @@
 import { DayChapterContext, useRootChapterContext, useWeekChapterContext } from "@/features/chapters/chapter-contexts"
-import { DayChapter } from "@/features/chapters/chapter-types"
-import { ChapterRendererProps } from "@/features/chapters/chapters-renderer"
-import { PageChapterRenderer } from "@/features/chapters/renderers/page-chapter-renderer"
+import { PDFNodeRendererProps, PDFRenderer } from "@/features/pdf-renderer/pdf-renderer"
+import { DayChapterTreeNode } from "@/features/tree/tree"
 import { tz } from "@date-fns/tz"
 import { eachDayOfInterval, getDate, getDay, getDayOfYear, max, min } from "date-fns"
 
-export function DayChapterRenderer({ chapter, parent: _ }: ChapterRendererProps<DayChapter>) {
+export function PDFDayChapter({ node }: PDFNodeRendererProps<DayChapterTreeNode>) {
   const { startDate, endDate } = useRootChapterContext()
   const { weekStartDate, weekEndDate } = useWeekChapterContext()
 
@@ -28,13 +27,10 @@ export function DayChapterRenderer({ chapter, parent: _ }: ChapterRendererProps<
         dayOfWeek: getDay(day),
       }}
     >
-      {chapter.children.map((child) => (
-        <PageChapterRenderer
-          key={child.id}
-          chapter={child}
-          parent={chapter}
-        />
-      ))}
+      <PDFRenderer
+        nodes={node.children}
+        parent={node}
+      />
     </DayChapterContext.Provider>
   ))
 }

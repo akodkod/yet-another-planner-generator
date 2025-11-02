@@ -4,6 +4,7 @@ cmdk
 Embla
 oklch
 oxlint
+snakecase
 superellipse
 tabular-nums
 tanstackstart

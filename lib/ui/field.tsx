@@ -50,7 +50,7 @@ function FieldGroup({ className, ...props }: React.ComponentProps<"div">) {
         `
           group/field-group @container/field-group flex w-full flex-col gap-7
           data-[slot=checkbox-group]:gap-3
-          [&>[data-slot=field-group]]:gap-4
+          *:data-[slot=field-group]:gap-4
         `,
         className,
       )}
@@ -61,7 +61,7 @@ function FieldGroup({ className, ...props }: React.ComponentProps<"div">) {
 
 const fieldVariants = cva(
   `
-    group/field flex w-full gap-3
+    group/field flex w-full gap-1
     data-[invalid=true]:text-destructive
   `,
   {
@@ -69,12 +69,12 @@ const fieldVariants = cva(
       orientation: {
         vertical: [`
           flex-col
-          [&>*]:w-full
+          *:w-full
           [&>.sr-only]:w-auto
         `],
         horizontal: [
           "flex-row items-center",
-          "[&>[data-slot=field-label]]:flex-auto",
+          "*:data-[slot=field-label]:flex-auto",
           `
             has-[>[data-slot=field-content]]:items-start
             has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-px
@@ -83,11 +83,11 @@ const fieldVariants = cva(
         responsive: [
           `
             flex-col
-            [&>*]:w-full
+            *:w-full
             [&>.sr-only]:w-auto
-            @md/field-group:flex-row @md/field-group:items-center @md/field-group:[&>*]:w-auto
+            @md/field-group:flex-row @md/field-group:items-center @md/field-group:*:w-auto
           `,
-          "@md/field-group:[&>[data-slot=field-label]]:flex-auto",
+          "@md/field-group:*:data-[slot=field-label]:flex-auto",
           `
             @md/field-group:has-[>[data-slot=field-content]]:items-start
             @md/field-group:has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-px
@@ -145,7 +145,7 @@ function FieldLabel({
         `
           has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col has-[>[data-slot=field]]:rounded-md
           has-[>[data-slot=field]]:border
-          [&>*]:data-[slot=field]:p-4
+          *:data-[slot=field]:p-4
         `,
         `
           has-data-[state=checked]:bg-primary/5 has-data-[state=checked]:border-primary
@@ -181,7 +181,7 @@ function FieldDescription({ className, ...props }: React.ComponentProps<"p">) {
       className={cn(
         `
           text-muted-foreground text-sm leading-normal font-normal
-          group-has-[[data-orientation=horizontal]]/field:text-balance
+          group-has-data-[orientation=horizontal]/field:text-balance
         `,
         `
           last:mt-0

@@ -39,44 +39,28 @@ export type BlockSize = {
   pixels: number
 }
 
-export type SidesNumbers = number | {
-  top: number
-  right: number
-  bottom: number
-  left: number
-}
-
-export type BaseBlock = {
-  id: string
+type BaseBlock = {
   width: BlockSize
   height: BlockSize
   style: ViewStyle
 }
 
+export type EmptySpaceBlock = BaseBlock
+
 export type ColumnBlock = BaseBlock & {
-  type: BlockType.Column
   spacing: number
-  children: Block[]
 }
 
 export type RowBlock = BaseBlock & {
-  type: BlockType.Row
   spacing: number
-  children: Block[]
-}
-
-export type EmptySpaceBlock = BaseBlock & {
-  type: BlockType.EmptySpace
 }
 
 export type TextBlock = BaseBlock & {
-  type: BlockType.Text
   content: string
   textStyle: ViewStyle
 }
 
 export type BackgroundGridBlock = BaseBlock & {
-  type: BlockType.BackgroundGrid
   gridType: BackgroundGridType
   gridColor: ViewStyle["backgroundColor"]
   gridSpacing: BackgroundGridSpacing

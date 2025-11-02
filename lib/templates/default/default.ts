@@ -1,34 +1,41 @@
-import { ChapterType, RootChapter } from "@/features/chapters/chapter-types"
-import { genChapterId } from "@/features/editor/editor-utils"
-import { DefaultTemplateDayPage } from "@/lib/templates/default/day-pages"
+import { PDFTree, TreeNodeType } from "@/features/tree/tree"
+import { DefaultTemplateDayPage1, DefaultTemplateDayPage2 } from "@/lib/templates/default/day-pages"
 import { DefaultTemplateMonthStartsPage, DefaultTemplateMonthEndsPage } from "@/lib/templates/default/month-pages"
-import { DefaultTemplateWeekStartsPage, DefaultTemplateWeekEndsPage } from "@/lib/templates/default/week-pages"
+import { DefaultTemplateWeekStartsPage1, DefaultTemplateWeekEndsPage, DefaultTemplateWeekStartsPage2 } from "@/lib/templates/default/week-pages"
 import { DefaultTemplateYearStartsPage, DefaultTemplateYearEndsPage } from "@/lib/templates/default/year-pages"
+import { genChapterId } from "@/lib/templates/template-utils"
 
-export const DefaultTemplateRootChapter: RootChapter = {
+export const DefaultTemplate: PDFTree = {
   id: genChapterId(),
-  type: ChapterType.Root,
+  type: TreeNodeType.RootChapter,
+  chapter: {
+    year: 2025,
+    pageWidth: 1620,
+    pageHeight: 2160,
+  },
   children: [
     {
       id: genChapterId(),
-      type: ChapterType.Year,
+      type: TreeNodeType.YearChapter,
       children: [
         DefaultTemplateYearStartsPage,
         {
           id: genChapterId(),
-          type: ChapterType.Month,
+          type: TreeNodeType.MonthChapter,
           children: [
             DefaultTemplateMonthStartsPage,
             {
               id: genChapterId(),
-              type: ChapterType.Week,
+              type: TreeNodeType.WeekChapter,
               children: [
-                DefaultTemplateWeekStartsPage,
+                DefaultTemplateWeekStartsPage1,
+                DefaultTemplateWeekStartsPage2,
                 {
                   id: genChapterId(),
-                  type: ChapterType.Day,
+                  type: TreeNodeType.DayChapter,
                   children: [
-                    DefaultTemplateDayPage,
+                    DefaultTemplateDayPage1,
+                    DefaultTemplateDayPage2,
                   ],
                 },
                 DefaultTemplateWeekEndsPage,

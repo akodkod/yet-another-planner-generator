@@ -1,117 +1,147 @@
-import { BlockType, BlockSizeType } from "@/features/blocks/block-types"
-import { PageChapter, ChapterType } from "@/features/chapters/chapter-types"
-import { genChapterId, genBlockId } from "@/features/editor/editor-utils"
+import { BlockSizeType } from "@/features/blocks/block-types"
+import { genChapterId, genBlockId } from "@/lib/templates/template-utils"
+import { PageChapterTreeNode, TreeNodeType } from "@/features/tree/tree"
 
-export const DefaultTemplateMonthStartsPage: PageChapter = {
+export const DefaultTemplateMonthStartsPage: PageChapterTreeNode = {
   id: genChapterId(),
-  type: ChapterType.Page,
-  template: {
-    id: genBlockId(),
-    type: BlockType.Column,
-    spacing: 0,
-    style: {
-      alignItems: "center",
-      justifyContent: "center",
-      transform: "skewY(-6deg)",
-    },
-    width: {
-      type: BlockSizeType.Full,
-    },
-    height: {
-      type: BlockSizeType.Full,
-    },
-    children: [
-      {
-        id: genBlockId(),
-        type: BlockType.Text,
-        content: "{{format-date monthDate 'MMMM'}}",
-        style: {},
-        textStyle: {
-          fontSize: 192,
-          fontWeight: "bold",
-        },
-        width: {
-          type: BlockSizeType.Auto,
-        },
-        height: {
-          type: BlockSizeType.Auto,
-        },
-      },
-      {
-        id: genBlockId(),
-        type: BlockType.Text,
-        content: "Wow, a new month!",
-        style: {},
-        textStyle: {
-          color: "#aaa",
-          fontSize: 48,
-          fontFamily: "Helvetica",
-          lineHeight: 1,
-        },
-        width: {
-          type: BlockSizeType.Auto,
-        },
-        height: {
-          type: BlockSizeType.Auto,
-        },
-      },
-    ],
+  type: TreeNodeType.PageChapter,
+  chapter: {
+    name: "Month starts",
   },
+  children: [
+    {
+      id: genBlockId(),
+      type: TreeNodeType.ColumnBlock,
+      block: {
+        spacing: 0,
+        style: {
+          alignItems: "center",
+          justifyContent: "center",
+          transform: [
+            { operation: "skew", value: [0, -6] },
+          ],
+        },
+        width: {
+          type: BlockSizeType.Full,
+        },
+        height: {
+          type: BlockSizeType.Full,
+        },
+      },
+      children: [
+        {
+          id: genBlockId(),
+          type: TreeNodeType.TextBlock,
+          block: {
+            content: "{{format-date monthDate 'MMMM'}}",
+            style: {},
+            textStyle: {
+              fontSize: 192,
+              fontWeight: "bold",
+            },
+            width: {
+              type: BlockSizeType.Auto,
+            },
+            height: {
+              type: BlockSizeType.Auto,
+            },
+          },
+          children: [],
+        },
+        {
+          id: genBlockId(),
+          type: TreeNodeType.TextBlock,
+          block: {
+            content: "New month incoming!",
+            style: {},
+            textStyle: {
+              color: "#aaa",
+              fontSize: 48,
+              fontFamily: "Helvetica",
+              lineHeight: 1,
+            },
+            width: {
+              type: BlockSizeType.Auto,
+            },
+            height: {
+              type: BlockSizeType.Auto,
+            },
+          },
+          children: [],
+        },
+      ],
+    },
+  ],
 }
 
-export const DefaultTemplateMonthEndsPage: PageChapter = {
+export const DefaultTemplateMonthEndsPage: PageChapterTreeNode = {
   id: genChapterId(),
-  type: ChapterType.Page,
-  template: {
-    id: genBlockId(),
-    type: BlockType.Column,
-    spacing: 0,
-    style: {
-      alignItems: "center",
-      justifyContent: "center",
-      transform: "skewY(-6deg)",
-    },
-    width: {
-      type: BlockSizeType.Full,
-    },
-    height: {
-      type: BlockSizeType.Full,
-    },
-    children: [
-      {
-        id: genBlockId(),
-        type: BlockType.Text,
-        content: "{{monthOfYear}}",
-        style: {},
-        textStyle: {
-          fontSize: 192,
-          fontWeight: "bold",
-        },
-        width: {
-          type: BlockSizeType.Auto,
-        },
-        height: {
-          type: BlockSizeType.Auto,
-        },
-      },
-      {
-        id: genBlockId(),
-        type: BlockType.Text,
-        content: "Month is over :)",
-        style: {},
-        textStyle: {
-          color: "#aaa",
-          fontSize: 48,
-          fontFamily: "Helvetica",
-          lineHeight: 1,
-        },
-        width: {
-          type: BlockSizeType.Auto,
-        },
-        height: {
-          type: BlockSizeType.Auto,
-        },
-      },
-    ],
+  type: TreeNodeType.PageChapter,
+  chapter: {
+    name: "Month ends",
   },
+  children: [
+    {
+      id: genBlockId(),
+      type: TreeNodeType.ColumnBlock,
+      block: {
+        spacing: 0,
+        style: {
+          alignItems: "center",
+          justifyContent: "center",
+          transform: [
+            { operation: "skew", value: [0, -6] },
+          ],
+        },
+        width: {
+          type: BlockSizeType.Full,
+        },
+        height: {
+          type: BlockSizeType.Full,
+        },
+      },
+      children: [
+        {
+          id: genBlockId(),
+          type: TreeNodeType.TextBlock,
+          block: {
+            content: "Bye {{format-date monthDate 'MMMM'}}",
+            style: {},
+            textStyle: {
+              fontSize: 192,
+              fontWeight: "bold",
+            },
+            width: {
+              type: BlockSizeType.Auto,
+            },
+            height: {
+              type: BlockSizeType.Auto,
+            },
+          },
+          children: [],
+        },
+        {
+          id: genBlockId(),
+          type: TreeNodeType.TextBlock,
+          block: {
+            content: "See you next month!",
+            style: {},
+            textStyle: {
+              color: "#aaa",
+              fontSize: 48,
+              fontFamily: "Helvetica",
+              lineHeight: 1,
+            },
+            width: {
+              type: BlockSizeType.Auto,
+            },
+            height: {
+              type: BlockSizeType.Auto,
+            },
+          },
+          children: [],
+        },
+      ],
+    },
+  ],
 }

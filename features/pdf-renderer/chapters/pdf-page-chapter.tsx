@@ -1,10 +1,9 @@
-import { BlocksRenderer } from "@/features/blocks/blocks-renderer"
 import { PageChapterContext, useRootChapterContext } from "@/features/chapters/chapter-contexts"
-import { PageChapter } from "@/features/chapters/chapter-types"
-import { ChapterRendererProps } from "@/features/chapters/chapters-renderer"
+import { PDFNodeRendererProps, PDFRenderer } from "@/features/pdf-renderer/pdf-renderer"
+import { PageChapterTreeNode } from "@/features/tree/tree"
 import { Page } from "@react-pdf/renderer"
 
-export function PageChapterRenderer({ chapter, parent: _ }: ChapterRendererProps<PageChapter>) {
+export function PDFPageChapter({ node }: PDFNodeRendererProps<PageChapterTreeNode>) {
   const { pageWidth, pageHeight } = useRootChapterContext()
 
   return (
@@ -15,9 +14,9 @@ export function PageChapterRenderer({ chapter, parent: _ }: ChapterRendererProps
           height: pageHeight,
         }}
       >
-        <BlocksRenderer
-          blocks={[chapter.template]}
-          parent={null}
+        <PDFRenderer
+          nodes={node.children}
+          parent={node}
         />
       </Page>
     </PageChapterContext.Provider>
