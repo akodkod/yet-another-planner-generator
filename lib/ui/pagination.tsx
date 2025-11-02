@@ -38,12 +38,14 @@ function PaginationItem({ ...props }: React.ComponentProps<"li">) {
 
 type PaginationLinkProps = {
   isActive?: boolean
+  disabled?: boolean
 } & Pick<React.ComponentProps<typeof Button>, "size"> &
   React.ComponentProps<"a">
 
 function PaginationLink({
   className,
   isActive,
+  disabled,
   size = "icon",
   ...props
 }: PaginationLinkProps) {
@@ -57,6 +59,7 @@ function PaginationLink({
           variant: isActive ? "outline" : "ghost",
           size,
         }),
+        disabled && "pointer-events-none opacity-50",
         className,
       )}
       {...props}
@@ -79,12 +82,9 @@ function PaginationPrevious({
       {...props}
     >
       <ChevronLeftIcon />
-      <span
-        className={`
-          hidden
-          sm:block
-        `}
-      >Previous</span>
+      <span className="hidden">
+        Previous
+      </span>
     </PaginationLink>
   )
 }
@@ -103,12 +103,9 @@ function PaginationNext({
       `, className)}
       {...props}
     >
-      <span
-        className={`
-          hidden
-          sm:block
-        `}
-      >Next</span>
+      <span className="hidden">
+        Next
+      </span>
       <ChevronRightIcon />
     </PaginationLink>
   )

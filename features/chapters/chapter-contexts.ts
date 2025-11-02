@@ -1,31 +1,36 @@
+import { TZDate } from "@date-fns/tz"
 import { Context, createContext, useContext } from "react"
 
 export type RootChapterContext = {
-  startDate: Date
-  endDate: Date
+  startDate: TZDate
+  endDate: TZDate
   pageWidth: number
   pageHeight: number
 }
 
 export type YearChapterContext = {
   year: number
+  yearDate: TZDate
+  yearStartDate: TZDate
+  yearEndDate: TZDate
 }
 
 export type MonthChapterContext = {
+  monthDate: TZDate
   monthOfYear: number
-  monthStartDate: Date
-  monthEndDate: Date
+  monthStartDate: TZDate
+  monthEndDate: TZDate
 }
 
 export type WeekChapterContext = {
   weekOfYear: number
   weekOfMonth: number
-  weekStartDate: Date
-  weekEndDate: Date
+  weekStartDate: TZDate
+  weekEndDate: TZDate
 }
 
 export type DayChapterContext = {
-  dayDate: Date
+  dayDate: TZDate
   dayOfYear: number
   dayOfMonth: number
   dayOfWeek: number

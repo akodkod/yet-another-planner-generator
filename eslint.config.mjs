@@ -165,6 +165,11 @@ const eslintConfig = defineConfig(
         allowAllPropertiesOnSameLine: true,
       }],
 
+      "@stylistic/key-spacing": ["error", {
+        beforeColon: false,
+        afterColon: true,
+      }],
+
       "@stylistic/jsx-quotes": ["error", "prefer-double"],
       "@stylistic/jsx-curly-brace-presence": ["error", "never"],
       "@stylistic/jsx-curly-spacing": ["error", {

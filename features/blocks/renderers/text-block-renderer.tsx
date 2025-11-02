@@ -6,6 +6,8 @@ import { ViewStyle } from "@/lib/utils/react-pdf"
 import Handlebars from "handlebars"
 import { format } from "date-fns"
 import { Text, View } from "@react-pdf/renderer"
+import { localeCodeExists, localeCodeToLocale } from "@/lib/utils/date-fns"
+import { getErrorMessage } from "@/lib/utils/error"
 
 export function TextBlockRenderer({ block, parent }: BlockRendererProps<TextBlock>) {
   const variables = useVariables()
@@ -48,10 +50,20 @@ function renderContent(text: string, variables: Record<string, unknown>) {
   return template(variables)
 }
 
-Handlebars.registerHelper("format-date", (date: unknown, dateFormat: string) => {
-  if (date instanceof Date) {
-    return format(date, dateFormat)
-  }
+Handlebars.registerHelper("format-date", (date: unknown, dateFormat: string, localeCodeOrContext?: unknown) => {
+  const localeCode = typeof localeCodeOrContext === "string" ? localeCodeOrContext : undefined
 
-  return date
+  if (date instanceof Date) {
+    if (localeCode && !localeCodeExists(localeCode)) {
+      return `Cannot format date. Locale "${localeCode}" does not exist`
+    }
+
+    try {
+      return format(date, dateFormat, { locale: localeCodeToLocale(localeCode) })
+    } catch (error) {
+      return `Cannot format date: "${date}". Error: ${getErrorMessage(error)}`
+    }
+  } else {
+    return `Cannot format date. "${date}" is not a date`
+  }
 })

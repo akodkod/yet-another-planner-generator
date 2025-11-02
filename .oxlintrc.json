@@ -92,6 +92,7 @@
       {
         "ignore": [
           "zod",
+          "recharts",
           "@radix-ui/*",
           "@sentry/*",
           "@/db/schema",
@@ -149,7 +150,7 @@
         "paths": [
           {
             "name": "nanoid",
-            "message": "Use our custom instance instead"
+            "message": "Use our custom instance from @/lib/utils/nanoid"
           },
           {
             "name": "@/lib/utils/dev",

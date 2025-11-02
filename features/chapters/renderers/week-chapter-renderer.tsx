@@ -1,20 +1,24 @@
-import { useMonthChapterContext, useYearChapterContext, WeekChapterContext } from "@/features/chapters/chapter-contexts"
+import { useMonthChapterContext, useRootChapterContext, WeekChapterContext } from "@/features/chapters/chapter-contexts"
 import { ChapterType, WeekChapter } from "@/features/chapters/chapter-types"
 import { ChapterRendererProps } from "@/features/chapters/chapters-renderer"
 import { DayChapterRenderer } from "@/features/chapters/renderers/day-chapter-renderer"
 import { PageChapterRenderer } from "@/features/chapters/renderers/page-chapter-renderer"
-import { eachWeekOfInterval, endOfWeek, getWeek, getWeekOfMonth, startOfWeek } from "date-fns"
+import { tz } from "@date-fns/tz"
+import { clamp, eachWeekOfInterval, endOfWeek, getWeek, getWeekOfMonth, startOfWeek } from "date-fns"
 import { Fragment } from "react/jsx-runtime"
 import { match } from "ts-pattern"
 
 export function WeekChapterRenderer({ chapter, parent: _ }: ChapterRendererProps<WeekChapter>) {
-  const { year } = useYearChapterContext()
-  const { monthOfYear } = useMonthChapterContext()
+  const { startDate, endDate } = useRootChapterContext()
+  const { monthStartDate, monthEndDate } = useMonthChapterContext()
 
-  const startDate = new Date(year, monthOfYear, 1)
-  const endDate = new Date(year, monthOfYear, 31)
-
-  const weeks = eachWeekOfInterval({ start: startDate, end: endDate }, { weekStartsOn: 1 })
+  const weeks = eachWeekOfInterval({
+    start: monthStartDate,
+    end: monthEndDate,
+  }, {
+    weekStartsOn: 1,
+    in: tz("UTC"),
+  }).map((week) => clamp(week, { start: startDate, end: endDate }))
 
   return weeks.map((week) => (
     <WeekChapterContext.Provider

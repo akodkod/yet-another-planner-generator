@@ -2,7 +2,7 @@ import { RootChapterContext } from "@/features/chapters/chapter-contexts"
 import { Chapter, RootChapter } from "@/features/chapters/chapter-types"
 import { RootChapterRenderer } from "@/features/chapters/renderers/root-chapter-renderer"
 
-import "@/features/pdf/pdf-initializer"
+import "@/features/pdf-generator/pdf-initializer"
 
 export type ChapterRendererProps<T extends Chapter = Chapter> = {
   chapter: T
