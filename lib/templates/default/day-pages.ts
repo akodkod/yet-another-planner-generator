@@ -1,16 +1,16 @@
 import { BlockSizeType, BackgroundGridType, BackgroundGridSpacing } from "@/features/blocks/block-types"
-import { genChapterId, genBlockId } from "@/lib/templates/template-utils"
-import { PageChapterTreeNode, TreeNodeType } from "@/features/tree/tree"
+import { PageChapterTreeNode, TreeNodeType } from "@/features/trees/tree"
+import { genTreeNodeId } from "@/features/trees/tree-gen"
 
 export const DefaultTemplateDayPage1: PageChapterTreeNode = {
-  id: genChapterId(),
+  id: genTreeNodeId(TreeNodeType.PageChapter),
   type: TreeNodeType.PageChapter,
   chapter: {
     name: "Tasks",
   },
   children: [
     {
-      id: genBlockId(),
+      id: genTreeNodeId(TreeNodeType.ColumnBlock),
       type: TreeNodeType.ColumnBlock,
       block: {
         spacing: 0,
@@ -26,7 +26,7 @@ export const DefaultTemplateDayPage1: PageChapterTreeNode = {
       },
       children: [
         {
-          id: genBlockId(),
+          id: genTreeNodeId(TreeNodeType.RowBlock),
           type: TreeNodeType.RowBlock,
           block: {
             spacing: 16,
@@ -43,7 +43,7 @@ export const DefaultTemplateDayPage1: PageChapterTreeNode = {
           },
           children: [
             {
-              id: genBlockId(),
+              id: genTreeNodeId(TreeNodeType.TextBlock),
               type: TreeNodeType.TextBlock,
               block: {
                 content: "{{format-date dayDate \"do 'of' LLLL\"}}",
@@ -61,7 +61,7 @@ export const DefaultTemplateDayPage1: PageChapterTreeNode = {
               children: [],
             },
             {
-              id: genBlockId(),
+              id: genTreeNodeId(TreeNodeType.TextBlock),
               type: TreeNodeType.TextBlock,
               block: {
                 content: "{{format-date dayDate 'EEEE'}}",
@@ -85,7 +85,7 @@ export const DefaultTemplateDayPage1: PageChapterTreeNode = {
           ],
         },
         {
-          id: genBlockId(),
+          id: genTreeNodeId(TreeNodeType.BackgroundGridBlock),
           type: TreeNodeType.BackgroundGridBlock,
           block: {
             gridType: BackgroundGridType.Dots,
@@ -110,14 +110,14 @@ export const DefaultTemplateDayPage1: PageChapterTreeNode = {
 }
 
 export const DefaultTemplateDayPage2: PageChapterTreeNode = {
-  id: genChapterId(),
+  id: genTreeNodeId(TreeNodeType.PageChapter),
   type: TreeNodeType.PageChapter,
   chapter: {
     name: "Notes",
   },
   children: [
     {
-      id: genBlockId(),
+      id: genTreeNodeId(TreeNodeType.ColumnBlock),
       type: TreeNodeType.ColumnBlock,
       block: {
         spacing: 0,
@@ -133,7 +133,7 @@ export const DefaultTemplateDayPage2: PageChapterTreeNode = {
       },
       children: [
         {
-          id: genBlockId(),
+          id: genTreeNodeId(TreeNodeType.RowBlock),
           type: TreeNodeType.RowBlock,
           block: {
             spacing: 16,
@@ -150,7 +150,7 @@ export const DefaultTemplateDayPage2: PageChapterTreeNode = {
           },
           children: [
             {
-              id: genBlockId(),
+              id: genTreeNodeId(TreeNodeType.TextBlock),
               type: TreeNodeType.TextBlock,
               block: {
                 content: "{{format-date dayDate \"do 'of' LLLL\"}}\r\nNotes",
@@ -168,7 +168,7 @@ export const DefaultTemplateDayPage2: PageChapterTreeNode = {
               children: [],
             },
             {
-              id: genBlockId(),
+              id: genTreeNodeId(TreeNodeType.TextBlock),
               type: TreeNodeType.TextBlock,
               block: {
                 content: "{{format-date dayDate 'EEEE'}}",
@@ -192,7 +192,7 @@ export const DefaultTemplateDayPage2: PageChapterTreeNode = {
           ],
         },
         {
-          id: genBlockId(),
+          id: genTreeNodeId(TreeNodeType.BackgroundGridBlock),
           type: TreeNodeType.BackgroundGridBlock,
           block: {
             gridType: BackgroundGridType.Dots,

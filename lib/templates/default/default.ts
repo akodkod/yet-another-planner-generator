@@ -1,12 +1,12 @@
-import { PDFTree, TreeNodeType } from "@/features/tree/tree"
+import { PDFTree, TreeNodeType } from "@/features/trees/tree"
+import { genTreeNodeId } from "@/features/trees/tree-gen"
 import { DefaultTemplateDayPage1, DefaultTemplateDayPage2 } from "@/lib/templates/default/day-pages"
 import { DefaultTemplateMonthStartsPage, DefaultTemplateMonthEndsPage } from "@/lib/templates/default/month-pages"
 import { DefaultTemplateWeekStartsPage1, DefaultTemplateWeekEndsPage, DefaultTemplateWeekStartsPage2 } from "@/lib/templates/default/week-pages"
 import { DefaultTemplateYearStartsPage, DefaultTemplateYearEndsPage } from "@/lib/templates/default/year-pages"
-import { genChapterId } from "@/lib/templates/template-utils"
 
 export const DefaultTemplate: PDFTree = {
-  id: genChapterId(),
+  id: genTreeNodeId(TreeNodeType.RootChapter),
   type: TreeNodeType.RootChapter,
   chapter: {
     year: 2025,
@@ -15,23 +15,23 @@ export const DefaultTemplate: PDFTree = {
   },
   children: [
     {
-      id: genChapterId(),
+      id: genTreeNodeId(TreeNodeType.YearChapter),
       type: TreeNodeType.YearChapter,
       children: [
         DefaultTemplateYearStartsPage,
         {
-          id: genChapterId(),
+          id: genTreeNodeId(TreeNodeType.MonthChapter),
           type: TreeNodeType.MonthChapter,
           children: [
             DefaultTemplateMonthStartsPage,
             {
-              id: genChapterId(),
+              id: genTreeNodeId(TreeNodeType.WeekChapter),
               type: TreeNodeType.WeekChapter,
               children: [
                 DefaultTemplateWeekStartsPage1,
                 DefaultTemplateWeekStartsPage2,
                 {
-                  id: genChapterId(),
+                  id: genTreeNodeId(TreeNodeType.DayChapter),
                   type: TreeNodeType.DayChapter,
                   children: [
                     DefaultTemplateDayPage1,

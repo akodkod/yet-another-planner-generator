@@ -5,12 +5,11 @@ import { Alert, AlertTitle, AlertDescription } from "@/lib/ui/alert"
 import { AlertCircleIcon, DownloadIcon } from "lucide-react"
 import { Button } from "@/lib/ui/button"
 import { Link } from "@tanstack/react-router"
+import { usePDF } from "@react-pdf/renderer"
+import { PDFRenderer } from "@/features/pdf-renderer/pdf-renderer"
 
 import "react-pdf/dist/Page/AnnotationLayer.css"
 import "react-pdf/dist/Page/TextLayer.css"
-import { PDFRenderer } from "@/features/pdf-renderer/pdf-renderer"
-import { usePDF } from "@react-pdf/renderer"
-import { TreeNode } from "@/features/tree/tree"
 
 const reactPDFOptions: DocumentProps["options"] = {
   cMapUrl: `https://unpkg.com/pdfjs-dist@${pdfjs.version}/cmaps/`,
@@ -18,17 +17,17 @@ const reactPDFOptions: DocumentProps["options"] = {
 }
 
 export type PDFViewerProps = {
-  tree: TreeNode
+  treeId: string
   width?: number
   height?: number
 }
 
-export function PDFViewer({ tree, width, height }: PDFViewerProps) {
+export function PDFViewer({ treeId, width, height }: PDFViewerProps) {
   const [pdf] = usePDF({
     document: (
       <PDFRenderer
-        nodes={[tree]}
-        parent={null}
+        treeId={treeId}
+        options={{}}
       />
     ),
   })

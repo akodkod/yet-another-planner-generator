@@ -1,10 +1,16 @@
 import { DayChapterContext, useRootChapterContext, useWeekChapterContext } from "@/features/chapters/chapter-contexts"
-import { PDFNodeRendererProps, PDFRenderer } from "@/features/pdf-renderer/pdf-renderer"
-import { DayChapterTreeNode } from "@/features/tree/tree"
+import { PDFRenderChildren } from "@/features/pdf-renderer/pdf-render-children"
+import { PDFRenderNodeContentProps } from "@/features/pdf-renderer/pdf-render-node"
+import { usePDFRenderer } from "@/features/pdf-renderer/pdf-renderer-context"
+import { TreeNodeType } from "@/features/trees/tree"
+import { Trees } from "@/features/trees/trees"
 import { tz } from "@date-fns/tz"
 import { eachDayOfInterval, getDate, getDay, getDayOfYear, max, min } from "date-fns"
 
-export function PDFDayChapter({ node }: PDFNodeRendererProps<DayChapterTreeNode>) {
+export function PDFDayChapter({ nodeId }: PDFRenderNodeContentProps) {
+  const { treeId } = usePDFRenderer()
+  const node = Trees.useNodeOf(treeId, nodeId, TreeNodeType.DayChapter)
+
   const { startDate, endDate } = useRootChapterContext()
   const { weekStartDate, weekEndDate } = useWeekChapterContext()
 
@@ -27,10 +33,7 @@ export function PDFDayChapter({ node }: PDFNodeRendererProps<DayChapterTreeNode>
         dayOfWeek: getDay(day),
       }}
     >
-      <PDFRenderer
-        nodes={node.children}
-        parent={node}
-      />
+      <PDFRenderChildren nodeId={node.id} />
     </DayChapterContext.Provider>
   ))
 }

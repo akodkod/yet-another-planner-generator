@@ -1,21 +1,23 @@
-import { InspectorBaseBlock } from "@/features/inspector/blocks/inspector-base-block"
-import { InspectorNodeRendererProps } from "@/features/inspector/inspector"
-import { InspectorTitle } from "@/features/inspector/inspector-title"
-import { TreeStore } from "@/features/tree-store/tree-store"
-import { ColumnBlockTreeNode } from "@/features/tree/tree"
+import { InspectorBaseBlock } from "@/features/pdf-editor/inspector/blocks/inspector-base-block"
+import { InspectorRenderNodeProps } from "@/features/pdf-editor/inspector/inspector"
+import { InspectorTitle } from "@/features/pdf-editor/inspector/inspector-title"
+import { Trees } from "@/features/trees/trees"
+import { TreeNodeType } from "@/features/trees/tree"
 import { useDebounceFn } from "@/lib/hooks/use-debounce-fn"
 import { FieldGroup, Field, FieldSet, FieldLabel } from "@/lib/ui/field"
 import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from "@/lib/ui/input-group"
 import { Separator } from "@/lib/ui/separator"
 import { useState } from "react"
 import * as z from "zod"
+import { PDFEditor } from "@/features/pdf-editor/pdf-editor"
 
-export function InspectorColumnBlock({ treeId, nodeId }: InspectorNodeRendererProps) {
-  const node = TreeStore.useNode<ColumnBlockTreeNode>(treeId, nodeId)
+export function InspectorColumnBlock({ nodeId }: InspectorRenderNodeProps) {
+  const treeId = PDFEditor.useTreeId()
+  const node = PDFEditor.useNodeOf(nodeId, TreeNodeType.ColumnBlock)
 
   const [spacing, setSpacing] = useState(node.block.spacing)
 
-  const updateNode = useDebounceFn(TreeStore.updateNode.bind(TreeStore), 1000)
+  const updateNode = useDebounceFn(Trees.updateNode.bind(Trees), 1000)
 
   return (
     <div className="space-y-4">
@@ -58,10 +60,7 @@ export function InspectorColumnBlock({ treeId, nodeId }: InspectorNodeRendererPr
 
       <Separator />
 
-      <InspectorBaseBlock
-        treeId={treeId}
-        nodeId={nodeId}
-      />
+      <InspectorBaseBlock nodeId={nodeId} />
     </div>
   )
 }

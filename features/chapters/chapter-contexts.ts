@@ -1,5 +1,6 @@
+import { useRequireContext } from "@/lib/hooks/use-require-context"
 import { TZDate } from "@date-fns/tz"
-import { Context, createContext, useContext } from "react"
+import { createContext, useContext } from "react"
 
 export type RootChapterContext = {
   startDate: TZDate
@@ -58,10 +59,3 @@ export const useMonthChapterContext = () => useRequireContext(MonthChapterContex
 export const useWeekChapterContext = () => useRequireContext(WeekChapterContext)
 export const useDayChapterContext = () => useRequireContext(DayChapterContext)
 export const usePageChapterContext = () => useRequireContext(PageChapterContext)
-
-function useRequireContext<T>(context: Context<T | null>): T {
-  const value = useContext(context)
-  if (!value) throw new Error("Context not found")
-
-  return value
-}

@@ -1,16 +1,16 @@
 import { BlockSizeType } from "@/features/blocks/block-types"
-import { genChapterId, genBlockId } from "@/lib/templates/template-utils"
-import { PageChapterTreeNode, TreeNodeType } from "@/features/tree/tree"
+import { PageChapterTreeNode, TreeNodeType } from "@/features/trees/tree"
+import { genTreeNodeId } from "@/features/trees/tree-gen"
 
 export const DefaultTemplateMonthStartsPage: PageChapterTreeNode = {
-  id: genChapterId(),
+  id: genTreeNodeId(TreeNodeType.PageChapter),
   type: TreeNodeType.PageChapter,
   chapter: {
     name: "Month starts",
   },
   children: [
     {
-      id: genBlockId(),
+      id: genTreeNodeId(TreeNodeType.ColumnBlock),
       type: TreeNodeType.ColumnBlock,
       block: {
         spacing: 0,
@@ -30,7 +30,7 @@ export const DefaultTemplateMonthStartsPage: PageChapterTreeNode = {
       },
       children: [
         {
-          id: genBlockId(),
+          id: genTreeNodeId(TreeNodeType.TextBlock),
           type: TreeNodeType.TextBlock,
           block: {
             content: "{{format-date monthDate 'MMMM'}}",
@@ -49,7 +49,7 @@ export const DefaultTemplateMonthStartsPage: PageChapterTreeNode = {
           children: [],
         },
         {
-          id: genBlockId(),
+          id: genTreeNodeId(TreeNodeType.TextBlock),
           type: TreeNodeType.TextBlock,
           block: {
             content: "New month incoming!",
@@ -75,14 +75,14 @@ export const DefaultTemplateMonthStartsPage: PageChapterTreeNode = {
 }
 
 export const DefaultTemplateMonthEndsPage: PageChapterTreeNode = {
-  id: genChapterId(),
+  id: genTreeNodeId(TreeNodeType.PageChapter),
   type: TreeNodeType.PageChapter,
   chapter: {
     name: "Month ends",
   },
   children: [
     {
-      id: genBlockId(),
+      id: genTreeNodeId(TreeNodeType.ColumnBlock),
       type: TreeNodeType.ColumnBlock,
       block: {
         spacing: 0,
@@ -102,7 +102,7 @@ export const DefaultTemplateMonthEndsPage: PageChapterTreeNode = {
       },
       children: [
         {
-          id: genBlockId(),
+          id: genTreeNodeId(TreeNodeType.TextBlock),
           type: TreeNodeType.TextBlock,
           block: {
             content: "Bye {{format-date monthDate 'MMMM'}}",
@@ -121,7 +121,7 @@ export const DefaultTemplateMonthEndsPage: PageChapterTreeNode = {
           children: [],
         },
         {
-          id: genBlockId(),
+          id: genTreeNodeId(TreeNodeType.TextBlock),
           type: TreeNodeType.TextBlock,
           block: {
             content: "See you next month!",

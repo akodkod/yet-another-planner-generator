@@ -1,6 +1,6 @@
-import { InspectorNodeRendererProps } from "@/features/inspector/inspector"
-import { TreeStore } from "@/features/tree-store/tree-store"
-import { BlockTreeNode } from "@/features/tree/tree"
+import { InspectorRenderNodeProps } from "@/features/pdf-editor/inspector/inspector"
+import { Trees } from "@/features/trees/trees"
+import { TreeNodeBlockTypes } from "@/features/trees/tree"
 import { useDebounceFn } from "@/lib/hooks/use-debounce-fn"
 import { FieldGroup, Field, FieldSet, FieldLabel } from "@/lib/ui/field"
 import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from "@/lib/ui/input-group"
@@ -8,9 +8,11 @@ import { Transform } from "@/lib/utils/react-pdf"
 import { useState } from "react"
 import { match } from "ts-pattern"
 import * as z from "zod"
+import { PDFEditor } from "@/features/pdf-editor/pdf-editor"
 
-export function InspectorBaseBlock({ treeId, nodeId }: InspectorNodeRendererProps) {
-  const node = TreeStore.useNode<BlockTreeNode>(treeId, nodeId)
+export function InspectorBaseBlock({ nodeId }: InspectorRenderNodeProps) {
+  const treeId = PDFEditor.useTreeId()
+  const node = PDFEditor.useNodeAnyOf(nodeId, TreeNodeBlockTypes)
 
   const packedTransforms = typeof node.block.style.transform === "string"
     ? JSON.parse(node.block.style.transform)
@@ -18,11 +20,10 @@ export function InspectorBaseBlock({ treeId, nodeId }: InspectorNodeRendererProp
 
   const [transforms, setTransforms] = useState<ParsedTransform>(unpackTransforms(packedTransforms))
 
-  const updateNode = useDebounceFn(TreeStore.updateNode.bind(TreeStore), 1000)
-
   const updateTransforms = useDebounceFn((transforms: ParsedTransform) => {
-    TreeStore.updateNode(treeId, {
+    Trees.updateNode(treeId, {
       ...node,
+      // @ts-expect-error
       block: {
         ...node.block,
         style: {

@@ -1,9 +1,13 @@
-import { OutlineItem } from "@/features/outline-renderer/outline-item"
-import { OutlineRenderer, OutlineNodeRendererProps } from "@/features/outline-renderer/outline-renderer"
-import { PageChapterTreeNode } from "@/features/tree/tree"
+import { OutlineItem } from "@/features/pdf-editor/outline/outline-item"
+import { OutlineRenderChildren } from "@/features/pdf-editor/outline/outline-render-children"
+import { OutlineRenderNodeContentProps } from "@/features/pdf-editor/outline/outline-render-node"
+import { PDFEditor } from "@/features/pdf-editor/pdf-editor"
+import { TreeNodeType } from "@/features/trees/tree"
 import { NotebookTextIcon } from "lucide-react"
 
-export function OutlinePageChapter({ node, onNodeSelect }: OutlineNodeRendererProps<PageChapterTreeNode>) {
+export function OutlinePageChapter({ nodeId }: OutlineRenderNodeContentProps) {
+  const node = PDFEditor.useNodeOf(nodeId, TreeNodeType.PageChapter)
+
   return (
     <OutlineItem
       icon={NotebookTextIcon}
@@ -24,13 +28,9 @@ export function OutlinePageChapter({ node, onNodeSelect }: OutlineNodeRendererPr
         [&>div>*]:data-[slot=outline-button]:bg-stone-100 [&>div>*]:data-[slot=outline-button]:text-stone-600
         [&>div>*]:data-[slot=outline-button]:hover:opacity-80
       `}
-      onClick={() => onNodeSelect(node)}
+      onClick={() => PDFEditor.selectNode(nodeId)}
     >
-      <OutlineRenderer
-        nodes={node.children}
-        parent={node}
-        onNodeSelect={onNodeSelect}
-      />
+      <OutlineRenderChildren nodeId={node.id} />
     </OutlineItem>
   )
 }

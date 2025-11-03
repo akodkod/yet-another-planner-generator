@@ -1,9 +1,15 @@
 import { PageChapterContext, useRootChapterContext } from "@/features/chapters/chapter-contexts"
-import { PDFNodeRendererProps, PDFRenderer } from "@/features/pdf-renderer/pdf-renderer"
-import { PageChapterTreeNode } from "@/features/tree/tree"
+import { PDFRenderChildren } from "@/features/pdf-renderer/pdf-render-children"
+import { PDFRenderNodeContentProps } from "@/features/pdf-renderer/pdf-render-node"
+import { usePDFRenderer } from "@/features/pdf-renderer/pdf-renderer-context"
+import { TreeNodeType } from "@/features/trees/tree"
+import { Trees } from "@/features/trees/trees"
 import { Page } from "@react-pdf/renderer"
 
-export function PDFPageChapter({ node }: PDFNodeRendererProps<PageChapterTreeNode>) {
+export function PDFPageChapter({ nodeId }: PDFRenderNodeContentProps) {
+  const { treeId } = usePDFRenderer()
+  const node = Trees.useNodeOf(treeId, nodeId, TreeNodeType.PageChapter)
+
   const { pageWidth, pageHeight } = useRootChapterContext()
 
   return (
@@ -14,10 +20,7 @@ export function PDFPageChapter({ node }: PDFNodeRendererProps<PageChapterTreeNod
           height: pageHeight,
         }}
       >
-        <PDFRenderer
-          nodes={node.children}
-          parent={node}
-        />
+        <PDFRenderChildren nodeId={node.id} />
       </Page>
     </PageChapterContext.Provider>
   )

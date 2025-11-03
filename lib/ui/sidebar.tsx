@@ -127,7 +127,7 @@ function SidebarProvider({
               "--sidebar-width": SIDEBAR_WIDTH,
               "--sidebar-width-icon": SIDEBAR_WIDTH_ICON,
               ...style,
-            } as React.ViewStyle
+            } as React.CSSProperties
           }
           className={cn(
             `
@@ -193,7 +193,7 @@ function Sidebar({
           style={
             {
               "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
-            } as React.ViewStyle
+            } as React.CSSProperties
           }
           side={side}
         >
@@ -322,7 +322,7 @@ function SidebarRail({ className, ...props }: React.ComponentProps<"button">) {
           absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear
           group-data-[side=left]:-right-4
           group-data-[side=right]:left-0
-          after:absolute after:inset-y-0 after:left-1/2 after:w-[2px]
+          after:absolute after:inset-y-0 after:left-1/2 after:w-0.5
           sm:flex
         `,
         `
@@ -739,7 +739,7 @@ function SidebarMenuSkeleton({
         style={
           {
             "--skeleton-width": width,
-          } as React.ViewStyle
+          } as React.CSSProperties
         }
       />
     </div>

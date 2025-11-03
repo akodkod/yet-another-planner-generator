@@ -6,10 +6,16 @@ import { format } from "date-fns"
 import { Text, View } from "@react-pdf/renderer"
 import { localeCodeExists, localeCodeToLocale } from "@/lib/utils/date-fns"
 import { getErrorMessage } from "@/lib/utils/error"
-import { TextBlockTreeNode } from "@/features/tree/tree"
-import { PDFNodeRendererProps } from "@/features/pdf-renderer/pdf-renderer"
+import { TreeNodeType } from "@/features/trees/tree"
+import { PDFRenderNodeContentProps } from "@/features/pdf-renderer/pdf-render-node"
+import { usePDFRenderer } from "@/features/pdf-renderer/pdf-renderer-context"
+import { Trees } from "@/features/trees/trees"
 
-export function PDFTextBlock({ node, parent }: PDFNodeRendererProps<TextBlockTreeNode>) {
+export function PDFTextBlock({ nodeId }: PDFRenderNodeContentProps) {
+  const { treeId } = usePDFRenderer()
+
+  const node = Trees.useNodeOf(treeId, nodeId, TreeNodeType.TextBlock)
+  const parent = Trees.useParentNode(treeId, nodeId)
   const variables = useVariables()
 
   const styles: ViewStyle = {

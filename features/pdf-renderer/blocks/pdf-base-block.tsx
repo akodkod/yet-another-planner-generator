@@ -1,6 +1,6 @@
 import { BlockSizeType } from "@/features/blocks/block-types"
-import { BlockTreeNode, TreeNode, TreeNodeType } from "@/features/tree/tree"
-import { isBlockTreeNode } from "@/features/tree/tree-utils"
+import { BlockTreeNode, TreeNode, TreeNodeType } from "@/features/trees/tree"
+import { isBlockTreeNode } from "@/features/trees/tree-utils"
 import { ViewStyle } from "@/lib/utils/react-pdf"
 import { match } from "ts-pattern"
 

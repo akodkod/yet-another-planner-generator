@@ -1,6 +1,7 @@
 import { BlockSizeType } from "@/features/blocks/block-types"
 import { genChapterId, genBlockId } from "@/lib/templates/template-utils"
-import { PageChapterTreeNode, TreeNodeType } from "@/features/tree/tree"
+import { PageChapterTreeNode, TreeNodeType } from "@/features/trees/tree"
+import { genTreeNodeId } from "@/features/trees/tree-gen"
 
 export const DefaultTemplateYearStartsPage: PageChapterTreeNode = {
   id: genChapterId(),
@@ -82,7 +83,7 @@ export const DefaultTemplateYearEndsPage: PageChapterTreeNode = {
   },
   children: [
     {
-      id: genBlockId(),
+      id: genTreeNodeId(TreeNodeType.ColumnBlock),
       type: TreeNodeType.ColumnBlock,
       block: {
         spacing: 0,
@@ -102,7 +103,7 @@ export const DefaultTemplateYearEndsPage: PageChapterTreeNode = {
       },
       children: [
         {
-          id: genBlockId(),
+          id: genTreeNodeId(TreeNodeType.TextBlock),
           type: TreeNodeType.TextBlock,
           block: {
             content: "Bye {{year}}",
@@ -121,7 +122,7 @@ export const DefaultTemplateYearEndsPage: PageChapterTreeNode = {
           children: [],
         },
         {
-          id: genBlockId(),
+          id: genTreeNodeId(TreeNodeType.TextBlock),
           type: TreeNodeType.TextBlock,
           block: {
             content: "See you next year!",

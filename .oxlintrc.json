@@ -170,9 +170,10 @@
           {
             "name": "lucide-react",
             "importNames": [
-              "Badge"
+              "Badge",
+              "Trees"
             ],
-            "message": "Badge should be imported from shared/ui/badge instead"
+            "message": "Accidental import from Lucide React instead of our project files"
           }
         ]
       }

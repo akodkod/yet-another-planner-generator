@@ -1,10 +1,13 @@
-import { OutlineItem } from "@/features/outline-renderer/outline-item"
-import { OutlineRenderer, OutlineNodeRendererProps } from "@/features/outline-renderer/outline-renderer"
-import { ChapterTreeNode, TreeNodeType } from "@/features/tree/tree"
+import { OutlineItem } from "@/features/pdf-editor/outline/outline-item"
+import { OutlineRenderChildren } from "@/features/pdf-editor/outline/outline-render-children"
+import { OutlineRenderNodeContentProps } from "@/features/pdf-editor/outline/outline-render-node"
+import { PDFEditor } from "@/features/pdf-editor/pdf-editor"
+import { TreeNodeChapterType, TreeNodeChapterTypes, TreeNodeType } from "@/features/trees/tree"
 import { cn } from "@/lib/ui/utils"
 import { BookOpenIcon } from "lucide-react"
 
-export function OutlineChapter({ node, onNodeSelect }: OutlineNodeRendererProps<ChapterTreeNode>) {
+export function OutlineAnyChapter({ nodeId }: OutlineRenderNodeContentProps) {
+  const node = PDFEditor.useNodeAnyOf(nodeId, TreeNodeChapterTypes)
   const { type } = node
 
   return (
@@ -28,19 +31,15 @@ export function OutlineChapter({ node, onNodeSelect }: OutlineNodeRendererProps<
         `,
         classNamesMap[type],
       )}
-      onClick={() => onNodeSelect(node)}
+      onClick={() => PDFEditor.selectNode(nodeId)}
     >
-      <OutlineRenderer
-        nodes={node.children}
-        parent={node}
-        onNodeSelect={onNodeSelect}
-      />
+      <OutlineRenderChildren nodeId={node.id} />
     </OutlineItem>
   )
 }
 
-const namesMap: Record<ChapterTreeNode["type"], string> = {
-  [TreeNodeType.RootChapter]: "",
+const namesMap: Record<TreeNodeChapterType, string> = {
+  [TreeNodeType.RootChapter]: "Root",
   [TreeNodeType.YearChapter]: "Year",
   [TreeNodeType.MonthChapter]: "Month",
   [TreeNodeType.WeekChapter]: "Week",
@@ -48,7 +47,7 @@ const namesMap: Record<ChapterTreeNode["type"], string> = {
   [TreeNodeType.PageChapter]: "Page",
 } as const
 
-const descriptionsMap: Record<ChapterTreeNode["type"], string> = {
+const descriptionsMap: Record<TreeNodeChapterType, string> = {
   [TreeNodeType.RootChapter]: "",
   [TreeNodeType.YearChapter]: "repeats every year",
   [TreeNodeType.MonthChapter]: "repeats every month",
@@ -57,7 +56,7 @@ const descriptionsMap: Record<ChapterTreeNode["type"], string> = {
   [TreeNodeType.PageChapter]: "",
 } as const
 
-const classNamesMap: Record<ChapterTreeNode["type"], string> = {
+const classNamesMap: Record<TreeNodeChapterType, string> = {
   [TreeNodeType.RootChapter]: "",
   [TreeNodeType.YearChapter]: "",
   [TreeNodeType.MonthChapter]: "*:data-[slot=outline-visual-line]:bg-blue-300 [&>div>*]:data-[slot=outline-expand-button]:text-blue-500 [&>div>button>*]:data-[slot=outline-icon]:text-blue-500 [&>div>button>*]:data-[slot=outline-icon]:opacity-80 [&>div>*]:data-[slot=outline-button]:bg-blue-100 [&>div>*]:data-[slot=outline-button]:text-blue-600",

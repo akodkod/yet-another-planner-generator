@@ -44,6 +44,8 @@ export type TreeNode =
 
 export type PDFTree = RootChapterTreeNode
 
+export type TreeNodeByType<T extends TreeNodeType> = Extract<TreeNode, { type: T }>
+
 //
 // MARK: - Chapters
 //
