@@ -37,6 +37,10 @@ class PDFEditorModule extends StoreModule<Store> {
     return nodeId ?? rootNode.id
   }
 
+  useOptionalSelectedNodeId() {
+    return this.use("selectedNodeId")
+  }
+
   useSelectedNode() {
     const treeId = this.useRequired("currentTreeId")
     const nodeId = this.useSelectedNodeId()
@@ -62,6 +66,11 @@ class PDFEditorModule extends StoreModule<Store> {
   useHasChildren(nodeId: string) {
     const treeId = this.useRequired("currentTreeId")
     return Trees.useHasChildren(treeId, nodeId)
+  }
+
+  useParentNodeOfType<T extends TreeNodeType>(nodeId: string | null, type: T) {
+    const treeId = this.useRequired("currentTreeId")
+    return Trees.useParentNodeOfType(treeId, nodeId, type)
   }
 }
 

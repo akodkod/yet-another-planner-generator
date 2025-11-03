@@ -1,24 +1,48 @@
 import { InspectorRenderNodeProps } from "@/features/pdf-editor/inspector/inspector"
 import { InspectorTitle } from "@/features/pdf-editor/inspector/inspector-title"
-import { Trees } from "@/features/trees/trees"
 import { TreeNodeType } from "@/features/trees/tree"
-import { useDebounceFn } from "@/lib/hooks/use-debounce-fn"
-import { FieldGroup, Field, FieldLabel, FieldSet } from "@/lib/ui/field"
-import { Input } from "@/lib/ui/input"
-import { InputGroup, InputGroupAddon, InputGroupText, InputGroupInput } from "@/lib/ui/input-group"
-import { useState } from "react"
+import { FieldSet } from "@/lib/ui/field"
 import * as z from "zod"
 import { PDFEditor } from "@/features/pdf-editor/pdf-editor"
+import { useAppForm } from "@/lib/ui/tanstack-form"
+import { Any } from "@/lib/utils/types"
+import { Trees } from "@/features/trees/trees"
+
+const schema = z.object({
+  year: z.coerce.number().min(1900).max(2100),
+  pageWidth: z.coerce.number().min(1024).max(4096),
+  pageHeight: z.coerce.number().min(1024).max(4096),
+})
 
 export function InspectorRootChapter({ nodeId }: InspectorRenderNodeProps) {
   const treeId = PDFEditor.useTreeId()
   const node = PDFEditor.useNodeOf(nodeId, TreeNodeType.RootChapter)
 
-  const [year, setYear] = useState(node.chapter.year)
-  const [pageWidth, setPageWidth] = useState(node.chapter.pageWidth)
-  const [pageHeight, setPageHeight] = useState(node.chapter.pageHeight)
+  const form = useAppForm({
+    defaultValues: {
+      year: node.chapter.year as Any,
+      pageWidth: node.chapter.pageWidth as Any,
+      pageHeight: node.chapter.pageHeight as Any,
+    },
+    validators: {
+      onChange: schema,
+    },
+    listeners: {
+      onChangeDebounceMs: 1000,
+      onChange: ({ formApi }) => {
+        const { data, success } = schema.safeParse(formApi.store.state.values)
+        if (!success) return
 
-  const updateNode = useDebounceFn(Trees.updateNode.bind(Trees), 1000)
+        Trees.updateNode(treeId, node, (node) => ({
+          ...node,
+          chapter: {
+            ...node.chapter,
+            ...data,
+          },
+        }))
+      },
+    },
+  })
 
   return (
     <div className="space-y-4">
@@ -26,88 +50,42 @@ export function InspectorRootChapter({ nodeId }: InspectorRenderNodeProps) {
         Planner Settings
       </InspectorTitle>
 
-      <FieldSet>
-        <FieldGroup>
+      <form.AppForm>
+        <FieldSet>
           <div className="grid grid-cols-2 gap-4">
-            <Field>
-              <FieldLabel htmlFor="year">Year</FieldLabel>
-              <Input
-                id="year"
-                type="number"
-                placeholder="2025"
-                value={year}
-                onChange={(event) => {
-                  const value = z.coerce.number().parse(event.target.value)
-                  setYear(value)
-
-                  updateNode(treeId, {
-                    ...node,
-                    chapter: {
-                      ...node.chapter,
-                      year: value,
-                    },
-                  })
-                }}
-              />
-            </Field>
+            <form.AppField name="year">
+              {(field) => (
+                <field.Input
+                  label="Year"
+                  hint="The year of the chapter"
+                  type="number"
+                />
+              )}
+            </form.AppField>
 
             <div />
 
-            <Field>
-              <FieldLabel htmlFor="pageWidth">Page Width</FieldLabel>
-              <InputGroup>
-                <InputGroupInput
-                  id="pageWidth"
+            <form.AppField name="pageWidth">
+              {(field) => (
+                <field.Input
+                  label="Page Width"
+                  hint="The width of the page"
                   type="number"
-                  placeholder="1620"
-                  value={pageWidth}
-                  onChange={(event) => {
-                    const value = z.coerce.number().parse(event.target.value)
-                    setPageWidth(value)
-
-                    updateNode(treeId, {
-                      ...node,
-                      chapter: {
-                        ...node.chapter,
-                        pageWidth: value,
-                      },
-                    })
-                  }}
                 />
-                <InputGroupAddon align="inline-end">
-                  <InputGroupText>px</InputGroupText>
-                </InputGroupAddon>
-              </InputGroup>
-            </Field>
-            <Field>
-              <FieldLabel htmlFor="pageHeight">Page Height</FieldLabel>
-              <InputGroup>
-                <InputGroupInput
-                  id="pageHeight"
-                  type="number"
-                  placeholder="2160"
-                  value={pageHeight}
-                  onChange={(event) => {
-                    const value = z.coerce.number().parse(event.target.value)
-                    setPageHeight(value)
+              )}
+            </form.AppField>
 
-                    updateNode(treeId, {
-                      ...node,
-                      chapter: {
-                        ...node.chapter,
-                        pageWidth: value,
-                      },
-                    })
-                  }}
+            <form.AppField name="pageHeight">
+              {(field) => (
+                <field.Input
+                  label="Page Height"
+                  hint="The height of the page"
                 />
-                <InputGroupAddon align="inline-end">
-                  <InputGroupText>px</InputGroupText>
-                </InputGroupAddon>
-              </InputGroup>
-            </Field>
+              )}
+            </form.AppField>
           </div>
-        </FieldGroup>
-      </FieldSet>
+        </FieldSet>
+      </form.AppForm>
     </div>
   )
 }

@@ -1,6 +1,6 @@
 // oxlint-disable rules-of-hooks
 import { TreeNode, TreeNodeByType, TreeNodeType } from "@/features/trees/tree"
-import { dupTree, findParentTreeNode, findTreeNode, updateTreeNode } from "@/features/trees/tree-utils"
+import { dupTree, findParentTreeNode, findParentTreeNodeOfType, findTreeNode, updateTreeNode } from "@/features/trees/tree-utils"
 import { StoreModule } from "@/lib/modules/core/store"
 import { DefaultTemplate } from "@/lib/templates/default/default"
 import { assert } from "@/lib/utils/code-execution"
@@ -133,6 +133,23 @@ class TreesModule extends StoreModule<Store> {
     })
   }
 
+  useParentNodeOfType<T extends TreeNodeType>(treeId: string, nodeId: string | null, type: T) {
+    return this.useDeepShallow((state) => {
+      if (!nodeId) return null
+
+      const tree = state.trees[treeId]
+      assert(tree, `Tree "${treeId}" not found`)
+
+      const node = findParentTreeNodeOfType(tree, nodeId, type)
+      if (!node) return null
+
+      return {
+        ...node,
+        children: [],
+      }
+    })
+  }
+
   useHasChildren(treeId: string, nodeId: string) {
     return this.store((state) => {
       const tree = state.trees[treeId]
@@ -145,16 +162,16 @@ class TreesModule extends StoreModule<Store> {
     })
   }
 
-  updateNode<T extends TreeNode>(treeId: string, node: T) {
+  updateNode<T extends TreeNode>(treeId: string, node: T, updater: (node: T) => T) {
     this.store.setState((state) => {
       const tree = state.trees[treeId]
-      if (!tree) return state
+      assert(tree, `Tree "${treeId}" not found`)
 
       return {
         ...state,
         trees: {
           ...state.trees,
-          [treeId]: updateTreeNode(tree, node),
+          [treeId]: updateTreeNode(tree, node, updater),
         },
       }
     })

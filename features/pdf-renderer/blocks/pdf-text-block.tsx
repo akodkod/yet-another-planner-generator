@@ -1,4 +1,4 @@
-import { getBaseBlockStyles } from "@/features/pdf-renderer/blocks/pdf-base-block"
+import { getBaseBlockStyle } from "@/features/pdf-renderer/blocks/pdf-base-block"
 import { useRootChapterContext, useOptionalYearChapterContext, useOptionalDayChapterContext, useOptionalMonthChapterContext, useOptionalPageChapterContext, useOptionalWeekChapterContext } from "@/features/chapters/chapter-contexts"
 import { ViewStyle } from "@/lib/utils/react-pdf"
 import Handlebars from "handlebars"
@@ -6,28 +6,67 @@ import { format } from "date-fns"
 import { Text, View } from "@react-pdf/renderer"
 import { localeCodeExists, localeCodeToLocale } from "@/lib/utils/date-fns"
 import { getErrorMessage } from "@/lib/utils/error"
-import { TreeNodeType } from "@/features/trees/tree"
+import { TextBlockTreeNode, TreeNodeType } from "@/features/trees/tree"
 import { PDFRenderNodeContentProps } from "@/features/pdf-renderer/pdf-render-node"
 import { usePDFRenderer } from "@/features/pdf-renderer/pdf-renderer-context"
 import { Trees } from "@/features/trees/trees"
+import { ReactNode } from "react"
 
 export function PDFTextBlock({ nodeId }: PDFRenderNodeContentProps) {
-  const { treeId } = usePDFRenderer()
+  const { treeId, html } = usePDFRenderer()
 
   const node = Trees.useNodeOf(treeId, nodeId, TreeNodeType.TextBlock)
   const parent = Trees.useParentNode(treeId, nodeId)
   const variables = useVariables()
 
-  const styles: ViewStyle = {
-    ...getBaseBlockStyles(node, parent),
+  const style: ViewStyle = {
+    ...getBaseBlockStyle(node, parent),
   }
 
+  const Content = html ? ContentHTML : ContentPDF
+
   return (
-    <View style={styles}>
+    <Content
+      node={node}
+      style={style}
+    >
+      {renderContent(node.block.content, variables)}
+    </Content>
+  )
+}
+
+type ContentProps = {
+  node: TextBlockTreeNode
+  style: ViewStyle
+  children: ReactNode
+}
+
+function ContentPDF({ node, style, children }: ContentProps) {
+  return (
+    <View style={style}>
       <Text style={node.block.textStyle}>
-        {renderContent(node.block.content, variables)}
+        {children}
       </Text>
     </View>
+  )
+}
+
+function ContentHTML({ node, style, children }: ContentProps) {
+  const { onNodeClick } = usePDFRenderer()
+
+  return (
+    <div
+      style={style}
+      className="cursor-pointer"
+      onClick={(event) => {
+        event.stopPropagation()
+        onNodeClick?.(node.id)
+      }}
+    >
+      <span style={node.block.textStyle}>
+        {children}
+      </span>
+    </div>
   )
 }
 

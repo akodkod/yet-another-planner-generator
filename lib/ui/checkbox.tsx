@@ -1,15 +1,14 @@
 "use client"
 
-import * as React from "react"
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox"
 import { CheckIcon } from "lucide-react"
 
 import { cn } from "@/lib/ui/utils"
+import { ComponentProps } from "react"
 
-function Checkbox({
-  className,
-  ...props
-}: React.ComponentProps<typeof CheckboxPrimitive.Root>) {
+export type CheckboxProps = ComponentProps<typeof CheckboxPrimitive.Root>
+
+function Checkbox({ className, ...props }: CheckboxProps) {
   return (
     <CheckboxPrimitive.Root
       data-slot="checkbox"
@@ -24,7 +23,7 @@ function Checkbox({
           aria-invalid:ring-destructive/20
           dark:aria-invalid:ring-destructive/40
           aria-invalid:border-destructive
-          size-4 shrink-0 rounded-[4px] border shadow-xs transition-shadow outline-none
+          size-4 shrink-0 rounded-lg border shadow-xs transition-shadow outline-none
           focus-visible:ring-[3px]
           disabled:cursor-not-allowed disabled:opacity-50
         `,

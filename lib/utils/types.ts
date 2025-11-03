@@ -11,3 +11,8 @@ export type AsyncVoidFn = () => Promise<void>
 
 export type MethodReturnType<TClass, TMethod extends keyof TClass> = TClass[TMethod] extends (...args: Any[]) => infer R ? R : never
 export type NativeElement = keyof JSX.IntrinsicElements | JSXElementConstructor<Any>
+
+export type AriaProps = {
+  "aria-invalid"?: boolean
+  "aria-describedby"?: string
+}

@@ -1,4 +1,4 @@
-import { useMemo } from "react"
+import { ComponentProps, useMemo } from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/ui/utils"
@@ -61,7 +61,7 @@ function FieldGroup({ className, ...props }: React.ComponentProps<"div">) {
 
 const fieldVariants = cva(
   `
-    group/field flex w-full gap-1
+    group/field flex w-full gap-3
     data-[invalid=true]:text-destructive
   `,
   {
@@ -101,11 +101,13 @@ const fieldVariants = cva(
   },
 )
 
+export type FieldProps = ComponentProps<"div"> & VariantProps<typeof fieldVariants>
+
 function Field({
   className,
   orientation = "vertical",
   ...props
-}: React.ComponentProps<"div"> & VariantProps<typeof fieldVariants>) {
+}: FieldProps) {
   return (
     <div
       role="group"

@@ -1,22 +1,55 @@
-import { getBaseBlockStyles } from "@/features/pdf-renderer/blocks/pdf-base-block"
+import { getBaseBlockStyle } from "@/features/pdf-renderer/blocks/pdf-base-block"
 import { PDFRenderNodeContentProps } from "@/features/pdf-renderer/pdf-render-node"
 import { usePDFRenderer } from "@/features/pdf-renderer/pdf-renderer-context"
-import { TreeNodeType } from "@/features/trees/tree"
+import { BackgroundGridBlockTreeNode, TreeNodeType } from "@/features/trees/tree"
 import { Trees } from "@/features/trees/trees"
 import { ViewStyle } from "@/lib/utils/react-pdf"
 import { View } from "@react-pdf/renderer"
 
 export function PDFBackgroundGridBlock({ nodeId }: PDFRenderNodeContentProps) {
-  const { treeId } = usePDFRenderer()
+  const { treeId, html } = usePDFRenderer()
 
   const node = Trees.useNodeOf(treeId, nodeId, TreeNodeType.BackgroundGridBlock)
   const parent = Trees.useParentNode(treeId, nodeId)
 
-  const styles: ViewStyle = {
-    ...getBaseBlockStyles(node, parent),
+  const style: ViewStyle = {
+    ...getBaseBlockStyle(node, parent),
     backgroundColor: "#fafafa",
     borderRadius: 16,
   }
 
-  return <View style={styles} />
+  const Content = html ? ContentHTML : ContentPDF
+
+  return (
+    <Content
+      node={node}
+      style={style}
+    />
+  )
+}
+
+type ContentProps = {
+  node: BackgroundGridBlockTreeNode
+  style: ViewStyle
+}
+
+function ContentPDF({ style }: ContentProps) {
+  return (
+    <View style={style} />
+  )
+}
+
+function ContentHTML({ node, style }: ContentProps) {
+  const { onNodeClick } = usePDFRenderer()
+
+  return (
+    <div
+      style={style}
+      className="cursor-pointer"
+      onClick={(event) => {
+        event.stopPropagation()
+        onNodeClick?.(node.id)
+      }}
+    />
+  )
 }

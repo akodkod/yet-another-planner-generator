@@ -1,28 +1,65 @@
-import { getBaseBlockStyles } from "@/features/pdf-renderer/blocks/pdf-base-block"
+import { convertPDFStyleToHTMLStyle, getBaseBlockStyle } from "@/features/pdf-renderer/blocks/pdf-base-block"
 import { PDFRenderChildren } from "@/features/pdf-renderer/pdf-render-children"
 import { PDFRenderNodeContentProps } from "@/features/pdf-renderer/pdf-render-node"
 import { usePDFRenderer } from "@/features/pdf-renderer/pdf-renderer-context"
-import { TreeNodeType } from "@/features/trees/tree"
+import { ColumnBlockTreeNode, TreeNodeType } from "@/features/trees/tree"
 import { ViewStyle } from "@/lib/utils/react-pdf"
 import { View } from "@react-pdf/renderer"
 import { Trees } from "@/features/trees/trees"
+import { ReactNode } from "react"
 
 export function PDFColumnBlock({ nodeId }: PDFRenderNodeContentProps) {
-  const { treeId } = usePDFRenderer()
+  const { treeId, html } = usePDFRenderer()
 
   const node = Trees.useNodeOf(treeId, nodeId, TreeNodeType.ColumnBlock)
   const parent = Trees.useParentNode(treeId, nodeId)
 
-  const styles: ViewStyle = {
-    ...getBaseBlockStyles(node, parent),
+  const style: ViewStyle = {
+    ...getBaseBlockStyle(node, parent),
     display: "flex",
     flexDirection: "column",
     gap: node.block.spacing,
   }
 
+  const Content = html ? ContentHTML : ContentPDF
+
   return (
-    <View style={styles}>
+    <Content
+      node={node}
+      style={style}
+    >
       <PDFRenderChildren nodeId={node.id} />
+    </Content>
+  )
+}
+
+type ContentProps = {
+  node: ColumnBlockTreeNode
+  style: ViewStyle
+  children: ReactNode
+}
+
+function ContentPDF({ style, children }: ContentProps) {
+  return (
+    <View style={style}>
+      {children}
     </View>
+  )
+}
+
+function ContentHTML({ node, style, children }: ContentProps) {
+  const { onNodeClick } = usePDFRenderer()
+
+  return (
+    <div
+      style={convertPDFStyleToHTMLStyle(style)}
+      className="cursor-pointer"
+      onClick={(event) => {
+        event.stopPropagation()
+        onNodeClick?.(node.id)
+      }}
+    >
+      {children}
+    </div>
   )
 }

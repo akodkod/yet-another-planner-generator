@@ -27,6 +27,8 @@ export function OutlinePageChapter({ nodeId }: OutlineRenderNodeContentProps) {
         [&>div>button>*]:data-[slot=outline-icon]:text-stone-500 [&>div>button>*]:data-[slot=outline-icon]:opacity-80
         [&>div>*]:data-[slot=outline-button]:bg-stone-100 [&>div>*]:data-[slot=outline-button]:text-stone-600
         [&>div>*]:data-[slot=outline-button]:hover:opacity-80
+        dark:[&>div>*]:data-[slot=outline-button]:bg-stone-900 dark:[&>div>*]:data-[slot=outline-button]:text-stone-300
+        dark:*:data-[slot=outline-visual-line]:bg-stone-700
       `}
       onClick={() => PDFEditor.selectNode(nodeId)}
     >

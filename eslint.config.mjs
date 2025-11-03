@@ -59,11 +59,19 @@ const eslintConfig = defineConfig(
         callees: [
           ...betterTailwindcssDefaults.getDefaultCallees(),
           [
-            "twLint",
+            "twLintClassNameValues",
             [
               {
                 match: "objectValues",
                 pathPattern: "(class|[cC]lassName)$",
+              },
+            ],
+          ],
+          [
+            "twLintValues",
+            [
+              {
+                match: "objectValues",
               },
             ],
           ],

@@ -2,14 +2,14 @@ import { RootChapterContext } from "@/features/chapters/chapter-contexts"
 import { PDFRenderChildren } from "@/features/pdf-renderer/pdf-render-children"
 import { PDFRenderNodeContentProps } from "@/features/pdf-renderer/pdf-render-node"
 import { usePDFRenderer } from "@/features/pdf-renderer/pdf-renderer-context"
-import { TreeNodeType } from "@/features/trees/tree"
+import { RootChapterTreeNode, TreeNodeType } from "@/features/trees/tree"
 import { Trees } from "@/features/trees/trees"
 import { TZDate } from "@date-fns/tz"
 import { Document } from "@react-pdf/renderer"
-import { useMemo } from "react"
+import { ReactNode, useMemo } from "react"
 
 export function PDFRootChapter({ nodeId }: PDFRenderNodeContentProps) {
-  const { treeId } = usePDFRenderer()
+  const { treeId, html } = usePDFRenderer()
   const node = Trees.useNodeOf(treeId, nodeId, TreeNodeType.RootChapter)
 
   const startDate = new TZDate(node.chapter.year, 0, 1)
@@ -22,11 +22,51 @@ export function PDFRootChapter({ nodeId }: PDFRenderNodeContentProps) {
     pageHeight: node.chapter.pageHeight,
   }), [node.chapter.pageWidth, node.chapter.pageHeight, startDate, endDate])
 
+  const Content = html
+    ? ContentHTML
+    : ContentPDF
+
   return (
     <RootChapterContext.Provider value={value}>
-      <Document pageMode="fullScreen">
+      <Content node={node}>
         <PDFRenderChildren nodeId={node.id} />
-      </Document>
+      </Content>
     </RootChapterContext.Provider>
+  )
+}
+
+type ContentProps = {
+  node: RootChapterTreeNode
+  children: ReactNode
+}
+
+function ContentPDF({ children }: ContentProps) {
+  return (
+    <Document pageMode="fullScreen">
+      {children}
+    </Document>
+  )
+}
+
+function ContentHTML({ node, children }: ContentProps) {
+  return (
+    <div
+      style={{
+        width: node.chapter.pageWidth,
+        height: node.chapter.pageHeight,
+      }}
+      className="overflow-hidden relative"
+    >
+      <div
+        data-slot="pdf-scroller"
+        style={{ height: node.chapter.pageHeight }}
+        className={`
+          flex flex-row items-center absolute top-0 left-0 transition-transform duration-200 ease-out
+          translate-x-(--scroller-position)
+        `}
+      >
+        {children}
+      </div>
+    </div>
   )
 }

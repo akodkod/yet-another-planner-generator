@@ -1,4 +1,4 @@
-import { TreeNode, BlockTreeNode, ChapterTreeNode, TreeNodeChapterTypes, TreeNodeChapterType, TreeNodeBlockType, TreeNodeBlockTypes } from "@/features/trees/tree"
+import { TreeNode, BlockTreeNode, ChapterTreeNode, TreeNodeChapterTypes, TreeNodeChapterType, TreeNodeBlockType, TreeNodeBlockTypes, TreeNodeType, TreeNodeByType } from "@/features/trees/tree"
 import { genTreeNodeId } from "@/features/trees/tree-gen"
 import { Any } from "@/lib/utils/types"
 
@@ -34,13 +34,35 @@ export function findParentTreeNode(tree: TreeNode, id: string): TreeNode | null 
   return null
 }
 
-export function updateTreeNode<T extends TreeNode>(tree: TreeNode, node: T): TreeNode {
-  if (tree.id === node.id) return node
+export function findParentTreeNodeOfType<T extends TreeNodeType>(
+  tree: TreeNode,
+  currentNodeId: string,
+  type: T,
+): TreeNodeByType<T> | null {
+  const parent = findParentTreeNode(tree, currentNodeId)
+  if (!parent) return null
+
+  if (parent.type === type) {
+    return parent as TreeNodeByType<T>
+  } else {
+    return findParentTreeNodeOfType(tree, parent.id, type)
+  }
+}
+
+export function updateTreeNode<T extends TreeNode>(tree: TreeNode, node: T, updater: (node: T) => T): TreeNode {
+  if (tree.id === node.id) {
+    const newNode = updater(node)
+
+    return {
+      ...newNode,
+      children: tree.children,
+    } as T
+  }
 
   let changed = false
 
   const newChildren = tree.children.map((child) => {
-    const replacedChild = updateTreeNode(child, node)
+    const replacedChild = updateTreeNode(child, node, updater)
 
     if (replacedChild !== child) {
       changed = true

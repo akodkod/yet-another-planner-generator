@@ -1,194 +1,190 @@
 import { InspectorRenderNodeProps } from "@/features/pdf-editor/inspector/inspector"
 import { Trees } from "@/features/trees/trees"
-import { TreeNodeBlockTypes } from "@/features/trees/tree"
-import { useDebounceFn } from "@/lib/hooks/use-debounce-fn"
-import { FieldGroup, Field, FieldSet, FieldLabel } from "@/lib/ui/field"
-import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from "@/lib/ui/input-group"
+import { BlockTreeNode, TreeNodeBlockTypes } from "@/features/trees/tree"
+import { FieldSet } from "@/lib/ui/field"
+import { InputGroupAddon, InputGroupText } from "@/lib/ui/input-group"
 import { Transform } from "@/lib/utils/react-pdf"
-import { useState } from "react"
 import { match } from "ts-pattern"
 import * as z from "zod"
 import { PDFEditor } from "@/features/pdf-editor/pdf-editor"
+import { useAppForm } from "@/lib/ui/tanstack-form"
+import { Any } from "@/lib/utils/types"
+
+const schema = z.object({
+  translateX: z.coerce.number(),
+  translateY: z.coerce.number(),
+  scaleX: z.coerce.number(),
+  scaleY: z.coerce.number(),
+  skewX: z.coerce.number(),
+  skewY: z.coerce.number(),
+  rotate: z.coerce.number(),
+})
 
 export function InspectorBaseBlock({ nodeId }: InspectorRenderNodeProps) {
   const treeId = PDFEditor.useTreeId()
   const node = PDFEditor.useNodeAnyOf(nodeId, TreeNodeBlockTypes)
 
-  const packedTransforms = typeof node.block.style.transform === "string"
-    ? JSON.parse(node.block.style.transform)
-    : node.block.style.transform ?? []
+  const packedTransforms = Array.isArray(node.block.style.transform)
+    ? node.block.style.transform
+    : []
 
-  const [transforms, setTransforms] = useState<ParsedTransform>(unpackTransforms(packedTransforms))
+  const initialTransforms = unpackTransforms(packedTransforms)
 
-  const updateTransforms = useDebounceFn((transforms: ParsedTransform) => {
-    Trees.updateNode(treeId, {
-      ...node,
-      // @ts-expect-error
-      block: {
-        ...node.block,
-        style: {
-          ...node.block.style,
-          transform: packTransforms(transforms),
-        },
+  const form = useAppForm({
+    defaultValues: {
+      translateX: (initialTransforms.translateX ?? 0) as Any,
+      translateY: (initialTransforms.translateY ?? 0) as Any,
+      scaleX: (initialTransforms.scaleX ?? 1) as Any,
+      scaleY: (initialTransforms.scaleY ?? 1) as Any,
+      skewX: (initialTransforms.skewX ?? 0) as Any,
+      skewY: (initialTransforms.skewY ?? 0) as Any,
+      rotate: (initialTransforms.rotate ?? 0) as Any,
+    },
+    validators: {
+      onChange: schema,
+    },
+    listeners: {
+      onChangeDebounceMs: 1000,
+      onChange: ({ formApi }) => {
+        const { data, success } = schema.safeParse(formApi.store.state.values)
+        if (!success) return
+
+        const transforms: ParsedTransform = {
+          translateX: data.translateX,
+          translateY: data.translateY,
+          scaleX: data.scaleX,
+          scaleY: data.scaleY,
+          skewX: data.skewX,
+          skewY: data.skewY,
+          rotate: data.rotate,
+        }
+
+        // @ts-expect-error -- TODO: Fix this
+        Trees.updateNode(treeId, node as BlockTreeNode, (node) => ({
+          ...node,
+          block: {
+            ...node.block,
+            style: {
+              ...node.block.style,
+              transform: packTransforms(transforms),
+            },
+          },
+        }))
       },
-    })
-  }, 1000)
+    },
+  })
 
   return (
-    <div>
+    <form.AppForm>
       <FieldSet>
-        <FieldGroup>
-          <div className="grid grid-cols-2 gap-4">
-            <Field>
-              <FieldLabel htmlFor="translateX">Translate X</FieldLabel>
-              <InputGroup>
-                <InputGroupInput
-                  id="translateX"
-                  type="number"
-                  placeholder="0"
-                  value={transforms.translateX ?? 0}
-                  onChange={(event) => {
-                    const value = z.coerce.number().catch(0).parse(event.target.value)
-                    const newTransforms = { ...transforms, translateX: value }
-                    setTransforms(newTransforms)
-                    updateTransforms(newTransforms)
-                  }}
-                />
-                <InputGroupAddon align="inline-end">
-                  <InputGroupText>px</InputGroupText>
-                </InputGroupAddon>
-              </InputGroup>
-            </Field>
+        <div className="grid grid-cols-2 gap-4">
+          <form.AppField name="translateX">
+            {(field) => (
+              <field.Input
+                label="Translate X"
+                type="number"
+                placeholder="0"
+                appendAddon={(
+                  <InputGroupAddon align="inline-end">
+                    <InputGroupText>px</InputGroupText>
+                  </InputGroupAddon>
+                )}
+              />
+            )}
+          </form.AppField>
 
-            <Field>
-              <FieldLabel htmlFor="translateY">Translate Y</FieldLabel>
-              <InputGroup>
-                <InputGroupInput
-                  id="translateY"
-                  type="number"
-                  placeholder="0"
-                  value={transforms.translateY ?? 0}
-                  onChange={(event) => {
-                    const value = z.coerce.number().catch(0).parse(event.target.value)
-                    const newTransforms = { ...transforms, translateY: value }
-                    setTransforms(newTransforms)
-                    updateTransforms(newTransforms)
-                  }}
-                />
-                <InputGroupAddon align="inline-end">
-                  <InputGroupText>px</InputGroupText>
-                </InputGroupAddon>
-              </InputGroup>
-            </Field>
+          <form.AppField name="translateY">
+            {(field) => (
+              <field.Input
+                label="Translate Y"
+                type="number"
+                placeholder="0"
+                appendAddon={(
+                  <InputGroupAddon align="inline-end">
+                    <InputGroupText>px</InputGroupText>
+                  </InputGroupAddon>
+                )}
+              />
+            )}
+          </form.AppField>
 
-            <Field>
-              <FieldLabel htmlFor="scaleX">Scale X</FieldLabel>
-              <InputGroup>
-                <InputGroupInput
-                  id="scaleX"
-                  type="number"
-                  placeholder="100"
-                  value={transforms.scaleX ?? 100}
-                  onChange={(event) => {
-                    const value = z.coerce.number().catch(100).parse(event.target.value)
-                    const newTransforms = { ...transforms, scaleX: value }
-                    setTransforms(newTransforms)
-                    updateTransforms(newTransforms)
-                  }}
-                />
-                <InputGroupAddon align="inline-end">
-                  <InputGroupText>%</InputGroupText>
-                </InputGroupAddon>
-              </InputGroup>
-            </Field>
+          <form.AppField name="scaleX">
+            {(field) => (
+              <field.Input
+                label="Scale X"
+                type="number"
+                placeholder="1"
+                appendAddon={(
+                  <InputGroupAddon align="inline-end">
+                    <InputGroupText>%</InputGroupText>
+                  </InputGroupAddon>
+                )}
+              />
+            )}
+          </form.AppField>
 
-            <Field>
-              <FieldLabel htmlFor="scaleY">Scale Y</FieldLabel>
-              <InputGroup>
-                <InputGroupInput
-                  id="scaleY"
-                  type="number"
-                  placeholder="100"
-                  value={transforms.scaleY ?? 100}
-                  onChange={(event) => {
-                    const value = z.coerce.number().catch(100).parse(event.target.value)
-                    const newTransforms = { ...transforms, scaleY: value }
-                    setTransforms(newTransforms)
-                    updateTransforms(newTransforms)
-                  }}
-                />
-                <InputGroupAddon align="inline-end">
-                  <InputGroupText>%</InputGroupText>
-                </InputGroupAddon>
-              </InputGroup>
-            </Field>
+          <form.AppField name="scaleY">
+            {(field) => (
+              <field.Input
+                label="Scale Y"
+                type="number"
+                placeholder="1"
+                appendAddon={(
+                  <InputGroupAddon align="inline-end">
+                    <InputGroupText>%</InputGroupText>
+                  </InputGroupAddon>
+                )}
+              />
+            )}
+          </form.AppField>
 
-            <Field>
-              <FieldLabel htmlFor="skewX">Skew X</FieldLabel>
-              <InputGroup>
-                <InputGroupInput
-                  id="skewX"
-                  type="number"
-                  placeholder="0"
-                  value={transforms.skewX ?? 0}
-                  onChange={(event) => {
-                    const value = z.coerce.number().catch(0).parse(event.target.value)
-                    const newTransforms = { ...transforms, skewX: value }
-                    setTransforms(newTransforms)
-                    updateTransforms(newTransforms)
-                  }}
-                />
-                <InputGroupAddon align="inline-end">
-                  <InputGroupText>deg</InputGroupText>
-                </InputGroupAddon>
-              </InputGroup>
-            </Field>
+          <form.AppField name="skewX">
+            {(field) => (
+              <field.Input
+                label="Skew X"
+                type="number"
+                placeholder="0"
+                appendAddon={(
+                  <InputGroupAddon align="inline-end">
+                    <InputGroupText>deg</InputGroupText>
+                  </InputGroupAddon>
+                )}
+              />
+            )}
+          </form.AppField>
 
-            <Field>
-              <FieldLabel htmlFor="skewY">Skew Y</FieldLabel>
-              <InputGroup>
-                <InputGroupInput
-                  id="skewY"
-                  type="number"
-                  placeholder="0"
-                  value={transforms.skewY ?? 0}
-                  onChange={(event) => {
-                    const value = z.coerce.number().catch(0).parse(event.target.value)
-                    const newTransforms = { ...transforms, skewY: value }
-                    setTransforms(newTransforms)
-                    updateTransforms(newTransforms)
-                  }}
-                />
-                <InputGroupAddon align="inline-end">
-                  <InputGroupText>deg</InputGroupText>
-                </InputGroupAddon>
-              </InputGroup>
-            </Field>
+          <form.AppField name="skewY">
+            {(field) => (
+              <field.Input
+                label="Skew Y"
+                type="number"
+                placeholder="0"
+                appendAddon={(
+                  <InputGroupAddon align="inline-end">
+                    <InputGroupText>deg</InputGroupText>
+                  </InputGroupAddon>
+                )}
+              />
+            )}
+          </form.AppField>
 
-            <Field>
-              <FieldLabel htmlFor="rotate">Rotate</FieldLabel>
-              <InputGroup>
-                <InputGroupInput
-                  id="rotate"
-                  type="number"
-                  placeholder="0"
-                  value={transforms.rotate ?? 0}
-                  onChange={(event) => {
-                    const value = z.coerce.number().catch(0).parse(event.target.value)
-                    const newTransforms = { ...transforms, rotate: value }
-                    setTransforms(newTransforms)
-                    updateTransforms(newTransforms)
-                  }}
-                />
-                <InputGroupAddon align="inline-end">
-                  <InputGroupText>deg</InputGroupText>
-                </InputGroupAddon>
-              </InputGroup>
-            </Field>
-          </div>
-        </FieldGroup>
+          <form.AppField name="rotate">
+            {(field) => (
+              <field.Input
+                label="Rotate"
+                type="number"
+                placeholder="0"
+                appendAddon={(
+                  <InputGroupAddon align="inline-end">
+                    <InputGroupText>deg</InputGroupText>
+                  </InputGroupAddon>
+                )}
+              />
+            )}
+          </form.AppField>
+        </div>
       </FieldSet>
-    </div>
+    </form.AppForm>
   )
 }
 
@@ -228,9 +224,17 @@ function unpackTransforms(transforms: Transform[]) {
 }
 
 function packTransforms(transforms: ParsedTransform): Transform[] {
-  const packedTransforms: Transform[] = []
+  const {
+    translateX = 0,
+    translateY = 0,
+    rotate = 0,
+    scaleX = 1,
+    scaleY = 1,
+    skewX = 0,
+    skewY = 0,
+  } = transforms
 
-  const { translateX = 0, translateY = 0, rotate = 0, scaleX = 0, scaleY = 0, skewX = 0, skewY = 0 } = transforms
+  const packedTransforms: Transform[] = []
 
   if (translateX !== 0 || translateY !== 0) {
     packedTransforms.push({ operation: "translate", value: [translateX, translateY] })
@@ -240,9 +244,9 @@ function packTransforms(transforms: ParsedTransform): Transform[] {
     packedTransforms.push({ operation: "rotate", value: [rotate] })
   }
 
-  // if (scaleX !== 100 || scaleY !== 100) {
-  //   packedTransforms.push({ operation: "scale", value: [scaleX, scaleY] })
-  // }
+  if (scaleX !== 1 || scaleY !== 1) {
+    packedTransforms.push({ operation: "scale", value: [scaleX, scaleY] })
+  }
 
   if (skewX !== 0 || skewY !== 0) {
     packedTransforms.push({ operation: "skew", value: [skewX, skewY] })

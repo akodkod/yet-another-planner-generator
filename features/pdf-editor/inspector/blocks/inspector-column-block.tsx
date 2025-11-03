@@ -3,21 +3,45 @@ import { InspectorRenderNodeProps } from "@/features/pdf-editor/inspector/inspec
 import { InspectorTitle } from "@/features/pdf-editor/inspector/inspector-title"
 import { Trees } from "@/features/trees/trees"
 import { TreeNodeType } from "@/features/trees/tree"
-import { useDebounceFn } from "@/lib/hooks/use-debounce-fn"
-import { FieldGroup, Field, FieldSet, FieldLabel } from "@/lib/ui/field"
-import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from "@/lib/ui/input-group"
+import { FieldSet } from "@/lib/ui/field"
 import { Separator } from "@/lib/ui/separator"
-import { useState } from "react"
 import * as z from "zod"
 import { PDFEditor } from "@/features/pdf-editor/pdf-editor"
+import { useAppForm } from "@/lib/ui/tanstack-form"
+import { Any } from "@/lib/utils/types"
+import { InputGroupAddon, InputGroupText } from "@/lib/ui/input-group"
+
+const schema = z.object({
+  spacing: z.coerce.number(),
+})
 
 export function InspectorColumnBlock({ nodeId }: InspectorRenderNodeProps) {
   const treeId = PDFEditor.useTreeId()
   const node = PDFEditor.useNodeOf(nodeId, TreeNodeType.ColumnBlock)
 
-  const [spacing, setSpacing] = useState(node.block.spacing)
+  const form = useAppForm({
+    defaultValues: {
+      spacing: node.block.spacing as Any,
+    },
+    validators: {
+      onChange: schema,
+    },
+    listeners: {
+      onChangeDebounceMs: 1000,
+      onChange: ({ formApi }) => {
+        const { data, success } = schema.safeParse(formApi.store.state.values)
+        if (!success) return
 
-  const updateNode = useDebounceFn(Trees.updateNode.bind(Trees), 1000)
+        Trees.updateNode(treeId, node, (node) => ({
+          ...node,
+          block: {
+            ...node.block,
+            spacing: data.spacing,
+          },
+        }))
+      },
+    },
+  })
 
   return (
     <div className="space-y-4">
@@ -25,38 +49,28 @@ export function InspectorColumnBlock({ nodeId }: InspectorRenderNodeProps) {
         Column
       </InspectorTitle>
 
-      <FieldSet>
-        <FieldGroup>
+      <form.AppForm>
+        <FieldSet>
           <div className="grid grid-cols-2 gap-4">
-            <Field>
-              <FieldLabel htmlFor="spacing">Spacing</FieldLabel>
-              <InputGroup>
-                <InputGroupInput
-                  id="spacing"
+            <form.AppField name="spacing">
+              {(field) => (
+                <field.Input
+                  label="Spacing"
                   type="number"
                   placeholder="0"
-                  value={spacing}
-                  onChange={(event) => {
-                    const value = z.coerce.number().parse(event.target.value)
-                    setSpacing(value)
-
-                    updateNode(treeId, {
-                      ...node,
-                      block: {
-                        ...node.block,
-                        spacing: value,
-                      },
-                    })
-                  }}
+                  min={0}
+                  max={4096}
+                  appendAddon={(
+                    <InputGroupAddon align="inline-end">
+                      <InputGroupText>px</InputGroupText>
+                    </InputGroupAddon>
+                  )}
                 />
-                <InputGroupAddon align="inline-end">
-                  <InputGroupText>px</InputGroupText>
-                </InputGroupAddon>
-              </InputGroup>
-            </Field>
+              )}
+            </form.AppField>
           </div>
-        </FieldGroup>
-      </FieldSet>
+        </FieldSet>
+      </form.AppForm>
 
       <Separator />
 

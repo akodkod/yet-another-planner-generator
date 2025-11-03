@@ -4,6 +4,7 @@ import { OutlineRenderNodeContentProps } from "@/features/pdf-editor/outline/out
 import { PDFEditor } from "@/features/pdf-editor/pdf-editor"
 import { TreeNodeChapterType, TreeNodeChapterTypes, TreeNodeType } from "@/features/trees/tree"
 import { cn } from "@/lib/ui/utils"
+import { twLintValues } from "@/lib/utils/tw"
 import { BookOpenIcon } from "lucide-react"
 
 export function OutlineAnyChapter({ nodeId }: OutlineRenderNodeContentProps) {
@@ -56,11 +57,39 @@ const descriptionsMap: Record<TreeNodeChapterType, string> = {
   [TreeNodeType.PageChapter]: "",
 } as const
 
-const classNamesMap: Record<TreeNodeChapterType, string> = {
+const classNamesMap: Record<TreeNodeChapterType, string> = twLintValues({
   [TreeNodeType.RootChapter]: "",
   [TreeNodeType.YearChapter]: "",
-  [TreeNodeType.MonthChapter]: "*:data-[slot=outline-visual-line]:bg-blue-300 [&>div>*]:data-[slot=outline-expand-button]:text-blue-500 [&>div>button>*]:data-[slot=outline-icon]:text-blue-500 [&>div>button>*]:data-[slot=outline-icon]:opacity-80 [&>div>*]:data-[slot=outline-button]:bg-blue-100 [&>div>*]:data-[slot=outline-button]:text-blue-600",
-  [TreeNodeType.WeekChapter]: "*:data-[slot=outline-visual-line]:bg-green-400 [&>div>*]:data-[slot=outline-expand-button]:text-green-500 [&>div>button>*]:data-[slot=outline-icon]:text-green-500 [&>div>button>*]:data-[slot=outline-icon]:opacity-80 [&>div>*]:data-[slot=outline-button]:bg-green-100 [&>div>*]:data-[slot=outline-button]:text-green-600",
-  [TreeNodeType.DayChapter]: "*:data-[slot=outline-visual-line]:bg-orange-300 [&>div>*]:data-[slot=outline-expand-button]:text-orange-500 [&>div>button>*]:data-[slot=outline-icon]:text-orange-500 [&>div>button>*]:data-[slot=outline-icon]:opacity-80 [&>div>*]:data-[slot=outline-button]:bg-orange-100 [&>div>*]:data-[slot=outline-button]:text-orange-600",
-  [TreeNodeType.PageChapter]: "*:data-[slot=outline-visual-line]:bg-stone-300 [&>div>*]:data-[slot=outline-expand-button]:text-stone-500 [&>div>button>*]:data-[slot=outline-icon]:text-stone-500 [&>div>button>*]:data-[slot=outline-icon]:opacity-80 [&>div>*]:data-[slot=outline-button]:bg-stone-100 [&>div>*]:data-[slot=outline-button]:text-stone-600",
-} as const
+  [TreeNodeType.MonthChapter]: `
+    *:data-[slot=outline-visual-line]:bg-blue-300
+    [&>div>*]:data-[slot=outline-expand-button]:text-blue-500
+    [&>div>button>*]:data-[slot=outline-icon]:text-blue-500 [&>div>button>*]:data-[slot=outline-icon]:opacity-80
+    [&>div>*]:data-[slot=outline-button]:bg-blue-100 [&>div>*]:data-[slot=outline-button]:text-blue-600
+    dark:*:data-[slot=outline-visual-line]:bg-blue-700 dark:[&>div>*]:data-[slot=outline-button]:bg-blue-950
+    dark:[&>div>*]:data-[slot=outline-button]:text-blue-400
+  `,
+  [TreeNodeType.WeekChapter]: `
+    *:data-[slot=outline-visual-line]:bg-green-400
+    [&>div>*]:data-[slot=outline-expand-button]:text-green-500
+    [&>div>button>*]:data-[slot=outline-icon]:text-green-500 [&>div>button>*]:data-[slot=outline-icon]:opacity-80
+    [&>div>*]:data-[slot=outline-button]:bg-green-100 [&>div>*]:data-[slot=outline-button]:text-green-600
+    dark:*:data-[slot=outline-visual-line]:bg-green-700 dark:[&>div>*]:data-[slot=outline-button]:bg-green-950
+    dark:[&>div>*]:data-[slot=outline-button]:text-green-400
+  `,
+  [TreeNodeType.DayChapter]: `
+    *:data-[slot=outline-visual-line]:bg-orange-300
+    [&>div>*]:data-[slot=outline-expand-button]:text-orange-500
+    [&>div>button>*]:data-[slot=outline-icon]:text-orange-500 [&>div>button>*]:data-[slot=outline-icon]:opacity-80
+    [&>div>*]:data-[slot=outline-button]:bg-orange-100 [&>div>*]:data-[slot=outline-button]:text-orange-600
+    dark:*:data-[slot=outline-visual-line]:bg-orange-700 dark:[&>div>*]:data-[slot=outline-button]:bg-orange-950
+    dark:[&>div>*]:data-[slot=outline-button]:text-orange-400
+  `,
+  [TreeNodeType.PageChapter]: `
+    *:data-[slot=outline-visual-line]:bg-stone-300
+    [&>div>*]:data-[slot=outline-expand-button]:text-stone-500
+    [&>div>button>*]:data-[slot=outline-icon]:text-stone-500 [&>div>button>*]:data-[slot=outline-icon]:opacity-80
+    [&>div>*]:data-[slot=outline-button]:bg-stone-100 [&>div>*]:data-[slot=outline-button]:text-stone-600
+    dark:*:data-[slot=outline-visual-line]:bg-stone-700 dark:[&>div>*]:data-[slot=outline-button]:bg-stone-950
+    dark:[&>div>*]:data-[slot=outline-button]:text-stone-400
+  `,
+} as const)

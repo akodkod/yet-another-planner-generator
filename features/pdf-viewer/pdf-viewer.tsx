@@ -1,5 +1,4 @@
 import { pdfjs, Document, Page, DocumentProps } from "react-pdf"
-import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationLink, PaginationNext } from "@/lib/ui/pagination"
 import { useCallback, useState } from "react"
 import { Alert, AlertTitle, AlertDescription } from "@/lib/ui/alert"
 import { AlertCircleIcon, DownloadIcon } from "lucide-react"
@@ -7,6 +6,7 @@ import { Button } from "@/lib/ui/button"
 import { Link } from "@tanstack/react-router"
 import { usePDF } from "@react-pdf/renderer"
 import { PDFRenderer } from "@/features/pdf-renderer/pdf-renderer"
+import { PDFViewerPagination } from "@/features/pdf-viewer/pdf-viewer-pagination"
 
 import "react-pdf/dist/Page/AnnotationLayer.css"
 import "react-pdf/dist/Page/TextLayer.css"
@@ -27,7 +27,6 @@ export function PDFViewer({ treeId, width, height }: PDFViewerProps) {
     document: (
       <PDFRenderer
         treeId={treeId}
-        options={{}}
       />
     ),
   })
@@ -73,37 +72,12 @@ export function PDFViewer({ treeId, width, height }: PDFViewerProps) {
             />
           </Document>
 
-          <div className="absolute bottom-4 inset-x-4 z-10">
-            <Pagination>
-              <PaginationContent>
-                <PaginationItem>
-                  <PaginationPrevious
-                    size="icon"
-                    disabled={currentPage === 1}
-                    onClick={() => setCurrentPage(currentPage - 1)}
-                  />
-                </PaginationItem>
-
-                <PaginationItem>
-                  <PaginationLink
-                    isActive
-                    size="default"
-                    className="pointer-events-none tabular-nums"
-                  >
-                    {currentPage} / {totalPages}
-                  </PaginationLink>
-                </PaginationItem>
-
-                <PaginationItem>
-                  <PaginationNext
-                    size="icon"
-                    disabled={currentPage === totalPages}
-                    onClick={() => setCurrentPage(currentPage + 1)}
-                  />
-                </PaginationItem>
-              </PaginationContent>
-            </Pagination>
-          </div>
+          <PDFViewerPagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPrevious={() => setCurrentPage(currentPage - 1)}
+            onNext={() => setCurrentPage(currentPage + 1)}
+          />
 
           {pdf.url && (
             <Button
