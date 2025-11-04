@@ -1,7 +1,7 @@
 import { OutlineItem } from "@/features/pdf-editor/outline/outline-item"
 import { OutlineRenderChildren } from "@/features/pdf-editor/outline/outline-render-children"
 import { OutlineRenderNodeContentProps } from "@/features/pdf-editor/outline/outline-render-node"
-import { PDFEditor } from "@/features/pdf-editor/pdf-editor"
+import { PDFEditor } from "@/features/pdf-editor/pdf-editor.module"
 import { TreeNodeBlockType, TreeNodeBlockTypes, TreeNodeType } from "@/features/trees/tree"
 import { truncate } from "@/lib/utils/string"
 import { ColumnsIcon, GridIcon, LucideIcon, RowsIcon, TypeIcon } from "lucide-react"

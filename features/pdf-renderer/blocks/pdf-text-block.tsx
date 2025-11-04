@@ -9,7 +9,7 @@ import { getErrorMessage } from "@/lib/utils/error"
 import { TextBlockTreeNode, TreeNodeType } from "@/features/trees/tree"
 import { PDFRenderNodeContentProps } from "@/features/pdf-renderer/pdf-render-node"
 import { usePDFRenderer } from "@/features/pdf-renderer/pdf-renderer-context"
-import { Trees } from "@/features/trees/trees"
+import { Trees } from "@/features/trees/trees.module"
 import { ReactNode } from "react"
 
 export function PDFTextBlock({ nodeId }: PDFRenderNodeContentProps) {

@@ -3,10 +3,10 @@ import { PDFRenderChildren } from "@/features/pdf-renderer/pdf-render-children"
 import { PDFRenderNodeContentProps } from "@/features/pdf-renderer/pdf-render-node"
 import { usePDFRenderer } from "@/features/pdf-renderer/pdf-renderer-context"
 import { RootChapterTreeNode, TreeNodeType } from "@/features/trees/tree"
-import { Trees } from "@/features/trees/trees"
+import { Trees } from "@/features/trees/trees.module"
 import { TZDate } from "@date-fns/tz"
 import { Document } from "@react-pdf/renderer"
-import { ReactNode, useMemo } from "react"
+import { ReactNode } from "react"
 
 export function PDFRootChapter({ nodeId }: PDFRenderNodeContentProps) {
   const { treeId, html } = usePDFRenderer()
@@ -15,12 +15,12 @@ export function PDFRootChapter({ nodeId }: PDFRenderNodeContentProps) {
   const startDate = new TZDate(node.chapter.year, 0, 1)
   const endDate = new TZDate(node.chapter.year, 11, 31)
 
-  const value: RootChapterContext = useMemo(() => ({
+  const value: RootChapterContext = {
     startDate,
     endDate,
     pageWidth: node.chapter.pageWidth,
     pageHeight: node.chapter.pageHeight,
-  }), [node.chapter.pageWidth, node.chapter.pageHeight, startDate, endDate])
+  }
 
   const Content = html
     ? ContentHTML

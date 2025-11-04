@@ -3,7 +3,7 @@ import { PDFRenderChildren } from "@/features/pdf-renderer/pdf-render-children"
 import { PDFRenderNodeContentProps } from "@/features/pdf-renderer/pdf-render-node"
 import { usePDFRenderer } from "@/features/pdf-renderer/pdf-renderer-context"
 import { TreeNodeType } from "@/features/trees/tree"
-import { Trees } from "@/features/trees/trees"
+import { Trees } from "@/features/trees/trees.module"
 import { tz } from "@date-fns/tz"
 import { clamp, eachWeekOfInterval, endOfWeek, getWeek, getWeekOfMonth, startOfWeek } from "date-fns"
 

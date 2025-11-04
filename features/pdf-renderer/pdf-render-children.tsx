@@ -1,6 +1,6 @@
 import { PDFRenderNode } from "@/features/pdf-renderer/pdf-render-node"
 import { usePDFRenderer } from "@/features/pdf-renderer/pdf-renderer-context"
-import { Trees } from "@/features/trees/trees"
+import { Trees } from "@/features/trees/trees.module"
 
 export type PDFRenderChildrenProps = {
   nodeId: string

@@ -9,11 +9,11 @@ import importNewlines from "eslint-plugin-import-newlines"
 import unusedImports from "eslint-plugin-unused-imports"
 import globals from "globals"
 import ts from "typescript-eslint"
-import storybook from "eslint-plugin-storybook"
+import reactHooks from "eslint-plugin-react-hooks"
 
 const eslintConfig = defineConfig(
   cspellRecommended,
-  ...storybook.configs["flat/recommended"],
+  reactHooks.configs.flat.recommended,
   {
     files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
   },
@@ -284,6 +284,15 @@ const eslintConfig = defineConfig(
     files: ["**/*.tsx"],
     rules: {
       complexity: ["error", 20],
+    },
+  },
+  {
+    files: [
+      "lib/modules/**/*.{ts,tsx}",
+      "features/**/*.module.ts",
+    ],
+    rules: {
+      "react-hooks/rules-of-hooks": "off",
     },
   },
 )

@@ -28,7 +28,11 @@ const config = defineConfig({
         semicolons: false,
       },
     }),
-    react(),
+    react({
+      babel: {
+        plugins: ["babel-plugin-react-compiler"],
+      },
+    }),
     viteStaticCopy({
       targets: [
         {

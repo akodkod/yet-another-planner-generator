@@ -74,6 +74,7 @@ function SidebarProvider({
       }
 
       // This sets the cookie to keep the sidebar state.
+      // oxlint-disable-next-line no-document-cookie
       document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`
     },
     [setOpenProp, open],
@@ -96,8 +97,8 @@ function SidebarProvider({
       }
     }
 
-    window.addEventListener("keydown", handleKeyDown)
-    return () => window.removeEventListener("keydown", handleKeyDown)
+    globalThis.addEventListener("keydown", handleKeyDown)
+    return () => globalThis.removeEventListener("keydown", handleKeyDown)
   }, [toggleSidebar])
 
   // We add a state so that we can do data-state="expanded" or "collapsed".
@@ -717,6 +718,7 @@ function SidebarMenuSkeleton({
 }) {
   // Random width between 50 to 90%.
   const width = React.useMemo(() => {
+    // eslint-disable-next-line react-hooks/purity
     return `${Math.floor(Math.random() * 40) + 50}%`
   }, [])
 

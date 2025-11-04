@@ -1,7 +1,7 @@
 import { ClientOnly } from "@tanstack/react-router"
 import { Inspector } from "@/features/pdf-editor/inspector/inspector"
 import { Outline } from "@/features/pdf-editor/outline/outline"
-import { PDFEditor } from "@/features/pdf-editor/pdf-editor"
+import { PDFEditor } from "@/features/pdf-editor/pdf-editor.module"
 import { PDFViewerHTML } from "@/features/pdf-viewer/pdf-viewer-html"
 import { useMeasure } from "@/lib/hooks/use-measure"
 import { motion } from "motion/react"

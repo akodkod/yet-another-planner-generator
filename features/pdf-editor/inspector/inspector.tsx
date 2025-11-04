@@ -1,7 +1,7 @@
 import { InspectorRootChapter } from "@/features/pdf-editor/inspector/chapters/inspector-root-chapter"
 import { TreeNodeType } from "@/features/trees/tree"
 import { Fragment } from "react/jsx-runtime"
-import { PDFEditor } from "@/features/pdf-editor/pdf-editor"
+import { PDFEditor } from "@/features/pdf-editor/pdf-editor.module"
 import { ComponentType } from "react"
 import { InspectorColumnBlock } from "@/features/pdf-editor/inspector/blocks/inspector-column-block"
 import { InspectorTextBlock } from "@/features/pdf-editor/inspector/blocks/inspector-text-block"

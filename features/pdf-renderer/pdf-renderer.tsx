@@ -1,5 +1,5 @@
 import { PDFRendererProvider, PDFRendererProviderProps } from "@/features/pdf-renderer/pdf-renderer-context"
-import { Trees } from "@/features/trees/trees"
+import { Trees } from "@/features/trees/trees.module"
 import { PDFRenderNode } from "@/features/pdf-renderer/pdf-render-node"
 
 export type PDFRendererProps = Omit<PDFRendererProviderProps, "children"> & {

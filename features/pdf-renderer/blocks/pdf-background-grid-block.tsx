@@ -2,7 +2,7 @@ import { getBaseBlockStyle } from "@/features/pdf-renderer/blocks/pdf-base-block
 import { PDFRenderNodeContentProps } from "@/features/pdf-renderer/pdf-render-node"
 import { usePDFRenderer } from "@/features/pdf-renderer/pdf-renderer-context"
 import { BackgroundGridBlockTreeNode, TreeNodeType } from "@/features/trees/tree"
-import { Trees } from "@/features/trees/trees"
+import { Trees } from "@/features/trees/trees.module"
 import { ViewStyle } from "@/lib/utils/react-pdf"
 import { View } from "@react-pdf/renderer"
 

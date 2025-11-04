@@ -1,6 +1,6 @@
 import { OutlineRenderNode } from "@/features/pdf-editor/outline/outline-render-node"
-import { PDFEditor } from "@/features/pdf-editor/pdf-editor"
-import { Trees } from "@/features/trees/trees"
+import { PDFEditor } from "@/features/pdf-editor/pdf-editor.module"
+import { Trees } from "@/features/trees/trees.module"
 
 export function Outline() {
   const treeId = PDFEditor.useTreeId()

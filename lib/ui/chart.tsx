@@ -197,7 +197,8 @@ function ChartTooltipContent({
         className,
       )}
     >
-      {!nestLabel ? tooltipLabel : null}
+      {nestLabel && tooltipLabel}
+
       <div className="grid gap-1.5">
         {payload
           .filter((item) => item.type !== "none")

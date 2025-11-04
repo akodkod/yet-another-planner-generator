@@ -5,7 +5,7 @@ import { usePDFRenderer } from "@/features/pdf-renderer/pdf-renderer-context"
 import { ColumnBlockTreeNode, TreeNodeType } from "@/features/trees/tree"
 import { ViewStyle } from "@/lib/utils/react-pdf"
 import { View } from "@react-pdf/renderer"
-import { Trees } from "@/features/trees/trees"
+import { Trees } from "@/features/trees/trees.module"
 import { ReactNode } from "react"
 
 export function PDFColumnBlock({ nodeId }: PDFRenderNodeContentProps) {

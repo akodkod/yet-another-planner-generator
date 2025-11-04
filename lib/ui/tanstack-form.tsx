@@ -207,14 +207,16 @@ function CheckboxField({ label, description, className, ...props }: CheckboxFiel
 export type SwitchFieldProps = SwitchProps & {
   label?: ReactNode
   description?: ReactNode
-  hint?: ReactNode
 }
 
-function SwitchField({ label, description, hint, className, ...props }: SwitchFieldProps) {
+function SwitchField({ label, description, className, ...props }: SwitchFieldProps) {
   const field = useFieldContext<boolean>()
 
   return (
-    <Field orientation="horizontal">
+    <Field
+      orientation="horizontal"
+      className={className}
+    >
       <FieldContent>
         <FieldLabel htmlFor={field.name}>
           {label}

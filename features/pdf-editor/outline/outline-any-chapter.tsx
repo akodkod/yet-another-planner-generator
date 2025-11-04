@@ -1,7 +1,7 @@
 import { OutlineItem } from "@/features/pdf-editor/outline/outline-item"
 import { OutlineRenderChildren } from "@/features/pdf-editor/outline/outline-render-children"
 import { OutlineRenderNodeContentProps } from "@/features/pdf-editor/outline/outline-render-node"
-import { PDFEditor } from "@/features/pdf-editor/pdf-editor"
+import { PDFEditor } from "@/features/pdf-editor/pdf-editor.module"
 import { TreeNodeChapterType, TreeNodeChapterTypes, TreeNodeType } from "@/features/trees/tree"
 import { cn } from "@/lib/ui/utils"
 import { twLintValues } from "@/lib/utils/tw"

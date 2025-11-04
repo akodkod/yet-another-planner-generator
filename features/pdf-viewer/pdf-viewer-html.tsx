@@ -1,10 +1,10 @@
-import { PDFEditor } from "@/features/pdf-editor/pdf-editor"
+import { PDFEditor } from "@/features/pdf-editor/pdf-editor.module"
 import { PDFRenderer } from "@/features/pdf-renderer/pdf-renderer"
 import { PDFViewerPagination } from "@/features/pdf-viewer/pdf-viewer-pagination"
 import { TreeNodeType } from "@/features/trees/tree"
-import { Trees } from "@/features/trees/trees"
+import { Trees } from "@/features/trees/trees.module"
 import { motion } from "motion/react"
-import { CSSProperties, useCallback, useMemo, useState } from "react"
+import { CSSProperties, useState } from "react"
 
 export type PDFViewerPropsHTML = {
   treeId: string
@@ -32,19 +32,9 @@ export function PDFViewerHTML({ treeId, availableWidth, availableHeight }: PDFVi
   const pageWidthScaled = pageWidth * scale
   const pageHeightScaled = pageHeight * scale
 
-  const handleNodeClick = useCallback((nodeId: string) => {
+  const handleNodeClick = (nodeId: string) => {
     PDFEditor.selectNode(nodeId)
-  }, [])
-
-  const pdf = useMemo(() => (
-    <PDFRenderer
-      html
-      treeId={treeId}
-      selectedNodeId={selectedNodeId}
-      pageIdsToRender={parentPageNode ? [parentPageNode.id] : undefined}
-      onNodeClick={handleNodeClick}
-    />
-  ), [treeId, selectedNodeId])
+  }
 
   return (
     <motion.div
@@ -65,7 +55,13 @@ export function PDFViewerHTML({ treeId, availableWidth, availableHeight }: PDFVi
           } as CSSProperties}
           className="origin-top-left text-black"
         >
-          {pdf}
+          <PDFRenderer
+            html
+            treeId={treeId}
+            selectedNodeId={selectedNodeId}
+            pageIdsToRender={parentPageNode ? [parentPageNode.id] : undefined}
+            onNodeClick={handleNodeClick}
+          />
         </motion.div>
 
         <PDFViewerPagination

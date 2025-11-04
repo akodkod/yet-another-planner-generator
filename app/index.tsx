@@ -3,7 +3,7 @@ import { createIsomorphicFn } from "@tanstack/react-start"
 import { pdfjs } from "react-pdf"
 import { zodValidator } from "@tanstack/zod-adapter"
 import { z } from "zod"
-import { Trees } from "@/features/trees/trees"
+import { Trees } from "@/features/trees/trees.module"
 import { PDFEditorView } from "@/features/pdf-editor/pdf-editor-view"
 
 const searchSchema = z.object({

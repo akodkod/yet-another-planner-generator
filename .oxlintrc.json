@@ -48,7 +48,6 @@
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-extra-non-null-assertion": "error",
     "@typescript-eslint/no-misused-new": "error",
-    "@typescript-eslint/no-namespace": "error",
     "@typescript-eslint/no-non-null-asserted-optional-chain": "error",
     "@typescript-eslint/no-require-imports": [
       "error",
@@ -85,19 +84,6 @@
           "index"
         ],
         "newlines-between": "never"
-      }
-    ],
-    "import/no-namespace": [
-      "error",
-      {
-        "ignore": [
-          "zod",
-          "recharts",
-          "@radix-ui/*",
-          "@sentry/*",
-          "@/db/schema",
-          "@/db/types"
-        ]
       }
     ],
     "no-alert": "error",
@@ -201,7 +187,7 @@
     "no-with": "error",
     "react-perf/jsx-no-new-object-as-prop": "error",
     // "react-hooks/exhaustive-deps": "error",
-    "react-hooks/rules-of-hooks": "error",
+    // "react-hooks/rules-of-hooks": "error",
     "react/jsx-fragments": [
       "error",
       "syntax"
@@ -424,17 +410,6 @@
         "no-with": "off",
         "prefer-rest-params": "error",
         "prefer-spread": "error"
-      }
-    },
-    {
-      "files": [
-        "lib/modules/**/*.{js,jsx,ts,tsx}",
-        "apps/hq/lib/modules/**/*.{js,jsx,ts,tsx}",
-        "apps/app/lib/modules/**/*.{js,jsx,ts,tsx}"
-      ],
-      "rules": {
-        "react-hooks/rules-of-hooks": "off",
-        "unicorn/consistent-function-scoping": "off"
       }
     }
   ]

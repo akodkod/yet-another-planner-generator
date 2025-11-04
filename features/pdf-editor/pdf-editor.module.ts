@@ -1,6 +1,6 @@
 // oxlint-disable rules-of-hooks
 import { TreeNodeType } from "@/features/trees/tree"
-import { Trees } from "@/features/trees/trees"
+import { Trees } from "@/features/trees/trees.module"
 import { StoreModule } from "@/lib/modules/core/store"
 import { create } from "zustand"
 

@@ -3,10 +3,10 @@ import { InspectorTitle } from "@/features/pdf-editor/inspector/inspector-title"
 import { TreeNodeType } from "@/features/trees/tree"
 import { FieldSet } from "@/lib/ui/field"
 import * as z from "zod"
-import { PDFEditor } from "@/features/pdf-editor/pdf-editor"
+import { PDFEditor } from "@/features/pdf-editor/pdf-editor.module"
 import { useAppForm } from "@/lib/ui/tanstack-form"
 import { Any } from "@/lib/utils/types"
-import { Trees } from "@/features/trees/trees"
+import { Trees } from "@/features/trees/trees.module"
 
 const schema = z.object({
   year: z.coerce.number().min(1900).max(2100),

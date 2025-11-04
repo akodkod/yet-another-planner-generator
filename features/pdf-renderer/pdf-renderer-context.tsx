@@ -1,5 +1,5 @@
 import { useRequireContext } from "@/lib/hooks/use-require-context"
-import { createContext, ReactNode, useMemo } from "react"
+import { createContext, ReactNode } from "react"
 
 export type PDFRendererOptions = {
   html?: boolean
@@ -21,13 +21,10 @@ export type PDFRendererProviderProps = PDFRendererOptions & {
 }
 
 export function PDFRendererProvider({ treeId, children, ...options }: PDFRendererProviderProps) {
-  const value: PDFRendererContext = useMemo(() => ({
+  const value = {
     treeId,
     ...options,
-  }), [
-    treeId,
-    options,
-  ])
+  }
 
   return (
     <PDFRendererContext.Provider value={value}>

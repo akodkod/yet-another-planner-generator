@@ -1,6 +1,6 @@
 import { OutlineRenderChildren } from "@/features/pdf-editor/outline/outline-render-children"
 import { OutlineRenderNodeContentProps } from "@/features/pdf-editor/outline/outline-render-node"
-import { PDFEditor } from "@/features/pdf-editor/pdf-editor"
+import { PDFEditor } from "@/features/pdf-editor/pdf-editor.module"
 import { TreeNodeType } from "@/features/trees/tree"
 import { Button } from "@/lib/ui/button"
 import { ChevronsUpDownIcon, Settings2Icon } from "lucide-react"
