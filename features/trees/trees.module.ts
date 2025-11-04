@@ -1,6 +1,6 @@
 // oxlint-disable rules-of-hooks
 import { TreeNode, TreeNodeByType, TreeNodeType } from "@/features/trees/tree"
-import { dupTree, findParentTreeNode, findParentTreeNodeOfType, findTreeNode, updateTreeNode } from "@/features/trees/tree-utils"
+import { dupTree, findParentNodes, findParentTreeNode, findParentTreeNodeOfType, findTreeNode, updateTreeNode } from "@/features/trees/tree-utils"
 import { StoreModule } from "@/lib/modules/core/store"
 import { DefaultTemplate } from "@/lib/templates/default/default"
 import { assert } from "@/lib/utils/code-execution"
@@ -131,8 +131,10 @@ class TreesModule extends StoreModule<Store> {
     })
   }
 
-  useParentNode(treeId: string, nodeId: string) {
+  useParentNode(treeId: string, nodeId: string | null) {
     return this.useDeepShallow((state) => {
+      if (!nodeId) return null
+
       const tree = state.trees[treeId]
       assert(tree, `Tree "${treeId}" not found`)
 
@@ -160,6 +162,22 @@ class TreesModule extends StoreModule<Store> {
         ...node,
         children: [],
       }
+    })
+  }
+
+  useParentNodes(treeId: string, nodeId: string | null, limit = 3) {
+    return this.useDeepShallow((state) => {
+      if (!nodeId) return []
+
+      const tree = state.trees[treeId]
+      assert(tree, `Tree "${treeId}" not found`)
+
+      const nodes = findParentNodes(tree, nodeId, limit)
+
+      return nodes.map((node) => ({
+        ...node,
+        children: [],
+      }))
     })
   }
 

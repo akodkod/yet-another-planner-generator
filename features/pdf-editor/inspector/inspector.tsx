@@ -5,6 +5,7 @@ import { ComponentType } from "react"
 import { InspectorColumnBlock } from "@/features/pdf-editor/inspector/blocks/inspector-column-block"
 import { InspectorTextBlock } from "@/features/pdf-editor/inspector/blocks/inspector-text-block"
 import { InspectorRoot } from "@/features/pdf-editor/inspector/top-level/inspector-root"
+import { InspectorPage } from "@/features/pdf-editor/inspector/top-level/inspector-page"
 
 export function Inspector() {
   const node = PDFEditor.useSelectedNode()
@@ -31,6 +32,7 @@ const componentMap: Partial<
     ComponentType<InspectorRenderNodeProps>>
 > = {
   [TreeNodeType.Root]: InspectorRoot,
+  [TreeNodeType.Page]: InspectorPage,
   [TreeNodeType.ColumnBlock]: InspectorColumnBlock,
   [TreeNodeType.TextBlock]: InspectorTextBlock,
 } as const

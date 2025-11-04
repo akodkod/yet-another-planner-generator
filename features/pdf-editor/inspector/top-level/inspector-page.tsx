@@ -1,25 +1,23 @@
-import { InspectorBaseBlock } from "@/features/pdf-editor/inspector/blocks/inspector-base-block"
 import { InspectorRenderNodeProps } from "@/features/pdf-editor/inspector/inspector"
-import { Trees } from "@/features/trees/trees.module"
 import { TreeNodeType } from "@/features/trees/tree"
 import { FieldSet } from "@/lib/ui/field"
 import * as z from "zod"
 import { PDFEditor } from "@/features/pdf-editor/pdf-editor.module"
 import { useAppForm } from "@/lib/ui/tanstack-form"
-import { Any } from "@/lib/utils/types"
+import { Trees } from "@/features/trees/trees.module"
 import { InspectorHeader } from "@/features/pdf-editor/inspector/common/inspector-header"
 
 const schema = z.object({
-  content: z.string(),
+  name: z.string().min(0),
 })
 
-export function InspectorTextBlock({ nodeId }: InspectorRenderNodeProps) {
+export function InspectorPage({ nodeId }: InspectorRenderNodeProps) {
   const treeId = PDFEditor.useTreeId()
-  const node = PDFEditor.useNodeOf(nodeId, TreeNodeType.TextBlock)
+  const node = PDFEditor.useNodeOf(nodeId, TreeNodeType.Page)
 
   const form = useAppForm({
     defaultValues: {
-      content: node.data.content as Any,
+      name: node.data.name,
     },
     validators: {
       onChange: schema,
@@ -34,7 +32,7 @@ export function InspectorTextBlock({ nodeId }: InspectorRenderNodeProps) {
           ...node,
           data: {
             ...node.data,
-            content: data.content,
+            ...data,
           },
         }))
       },
@@ -47,18 +45,16 @@ export function InspectorTextBlock({ nodeId }: InspectorRenderNodeProps) {
 
       <form.AppForm>
         <FieldSet>
-          <form.AppField name="content">
+          <form.AppField name="name">
             {(field) => (
-              <field.Textarea
-                label="Content"
-                placeholder="Enter your text here..."
+              <field.Input
+                label="Name"
+                hint="Optional. Used for better navigation in outline view"
               />
             )}
           </form.AppField>
         </FieldSet>
       </form.AppForm>
-
-      <InspectorBaseBlock nodeId={nodeId} />
     </div>
   )
 }

@@ -58,7 +58,7 @@ function InputOTPSlot({
           dark:data-[active=true]:aria-invalid:ring-destructive/40
           aria-invalid:border-destructive
           data-[active=true]:aria-invalid:border-destructive
-          dark:bg-input/30
+          dark:bg-input/60
           border-input relative flex size-9 items-center justify-center border-y border-r text-sm shadow-xs
           transition-all outline-none
           first:rounded-l-md first:border-l

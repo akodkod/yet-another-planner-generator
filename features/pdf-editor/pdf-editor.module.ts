@@ -68,9 +68,19 @@ class PDFEditorModule extends StoreModule<Store> {
     return Trees.useHasChildren(treeId, nodeId)
   }
 
+  useParentNode(nodeId: string | null) {
+    const treeId = this.useRequired("currentTreeId")
+    return Trees.useParentNode(treeId, nodeId)
+  }
+
   useParentNodeOfType<T extends TreeNodeType>(nodeId: string | null, type: T) {
     const treeId = this.useRequired("currentTreeId")
     return Trees.useParentNodeOfType(treeId, nodeId, type)
+  }
+
+  useParentNodes(nodeId: string | null, limit = 3) {
+    const treeId = this.useRequired("currentTreeId")
+    return Trees.useParentNodes(treeId, nodeId, limit)
   }
 }
 

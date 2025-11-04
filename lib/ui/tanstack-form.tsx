@@ -1,5 +1,5 @@
 import { Any } from "@/lib/utils/types"
-import { createFormHook, createFormHookContexts, useStore } from "@tanstack/react-form"
+import { createFormHook, createFormHookContexts, FormApi, useStore } from "@tanstack/react-form"
 import { ReactNode } from "react"
 import { Input, InputProps } from "./input"
 import { LucideIcon } from "lucide-react"
@@ -32,6 +32,8 @@ export const { useAppForm } = createFormHook({
   },
   formComponents: {},
 })
+
+export type FormApiAny = FormApi<Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any, Any>
 
 export type FieldWrapperProps = FieldProps & {
   label?: ReactNode

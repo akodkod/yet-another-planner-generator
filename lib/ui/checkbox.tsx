@@ -15,7 +15,7 @@ function Checkbox({ className, ...props }: CheckboxProps) {
       className={cn(
         `
           peer border-input
-          dark:bg-input/30
+          dark:bg-input/60
           data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground
           dark:data-[state=checked]:bg-primary
           data-[state=checked]:border-primary

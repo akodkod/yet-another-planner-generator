@@ -13,9 +13,9 @@ export function PDFEditorView({ treeId }: PDFEditorViewProps) {
   return (
     <div
       className={`
-        h-screen w-screen bg-linear-to-r from-cyan-100 to-blue-100
+        h-screen w-screen bg-linear-to-r from-sky-100 to-blue-100
         dark:from-zinc-500/15 dark:to-zinc-500/10
-        overflow-hidden flex flex-row items-stretch p-4 gap-4
+        overflow-hidden flex flex-row items-stretch p-2 gap-2
       `}
     >
       <div

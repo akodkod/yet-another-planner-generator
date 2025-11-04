@@ -95,7 +95,7 @@ export function Select<ItemValue, SelectedValue = ItemValue, Multiple extends bo
             aria-invalid:-outline-offset-2 aria-invalid:outline-destructive/75
             data-[size=lg]:h-10
             data-[size=sm]:h-8 data-[size=sm]:pr-1 data-[size=sm]:pl-2.5
-            dark:bg-input/30 dark:hover:bg-input/40 dark:aria-invalid:border-destructive/80
+            dark:bg-input/60 dark:hover:bg-input/40 dark:aria-invalid:border-destructive/80
             dark:aria-invalid:ring-destructive/45
             enabled:hover:**:data-[slot="combobox-icon"]:bg-accent
             aria-invalid:**:data-[slot="icon"]:text-destructive/75

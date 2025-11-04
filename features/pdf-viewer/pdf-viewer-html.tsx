@@ -55,7 +55,7 @@ export function PDFViewerHTML({ treeId }: PDFViewerPropsHTML) {
             translateY: `-${(pageHeight - pdfHeightScaled) / 2}px`,
           }}
           style={{ "--scroller-position": `-${(currentPage - 1) * pageWidth}px` } as CSSProperties}
-          className="text-black"
+          className="text-black bg-white"
         >
           <PDFRenderer
             html

@@ -1,5 +1,4 @@
 import { InspectorRenderNodeProps } from "@/features/pdf-editor/inspector/inspector"
-import { InspectorTitle } from "@/features/pdf-editor/inspector/inspector-title"
 import { TreeNodeType } from "@/features/trees/tree"
 import { FieldSet } from "@/lib/ui/field"
 import * as z from "zod"
@@ -7,6 +6,7 @@ import { PDFEditor } from "@/features/pdf-editor/pdf-editor.module"
 import { useAppForm } from "@/lib/ui/tanstack-form"
 import { Any } from "@/lib/utils/types"
 import { Trees } from "@/features/trees/trees.module"
+import { InspectorHeader } from "@/features/pdf-editor/inspector/common/inspector-header"
 
 const schema = z.object({
   year: z.coerce.number().min(1900).max(2100),
@@ -28,7 +28,7 @@ export function InspectorRoot({ nodeId }: InspectorRenderNodeProps) {
       onChange: schema,
     },
     listeners: {
-      onChangeDebounceMs: 1000,
+      onChangeDebounceMs: 500,
       onChange: ({ formApi }) => {
         const { data, success } = schema.safeParse(formApi.store.state.values)
         if (!success) return
@@ -45,10 +45,11 @@ export function InspectorRoot({ nodeId }: InspectorRenderNodeProps) {
   })
 
   return (
-    <div className="space-y-4">
-      <InspectorTitle>
-        Planner Settings
-      </InspectorTitle>
+    <div className="space-y-2">
+      <InspectorHeader
+        node={node}
+        className="px-0.5"
+      />
 
       <form.AppForm>
         <FieldSet>

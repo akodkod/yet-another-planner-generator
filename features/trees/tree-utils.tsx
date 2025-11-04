@@ -49,6 +49,18 @@ export function findParentTreeNodeOfType<T extends TreeNodeType>(
   }
 }
 
+export function findParentNodes(tree: TreeNode, currentNodeId: string, limit = 3): TreeNode[] {
+  const nodes = []
+  let currentNode = findParentTreeNode(tree, currentNodeId)
+
+  while (currentNode && nodes.length < limit) {
+    nodes.push(currentNode)
+    currentNode = findParentTreeNode(tree, currentNode.id)
+  }
+
+  return nodes
+}
+
 export function updateTreeNode<T extends TreeNode>(tree: TreeNode, node: T, updater: (node: T) => T): TreeNode {
   if (tree.id === node.id) {
     const newNode = updater(node)
