@@ -58,47 +58,27 @@ function getSizeStyle(node: BlockNode, parent: BlockNode | null): ViewStyle {
     })
 }
 
-export function convertPDFStyleToHTMLStyle(style: ViewStyle): CSSProperties {
-  const fontFamily = Array.isArray(style.fontFamily) ? style.fontFamily.join(", ") : style.fontFamily
+export function pdfStyleToHTML(style: ViewStyle): CSSProperties {
+  const css: CSSProperties = {}
 
-  const transforms = Array.isArray(style.transform) ? style.transform : []
-  const transform = transforms.map(transformToString).filter(Boolean).join(", ")
+  for (const key of PassThroughStyles) {
+    const keyTyped = key as keyof ViewStyle
 
-  return {
-    display: style.display,
-    width: style.width,
-    height: style.height,
-    minHeight: style.minHeight,
-    maxHeight: style.maxHeight,
-    minWidth: style.minWidth,
-    maxWidth: style.maxWidth,
-    padding: style.padding,
-    paddingTop: style.paddingTop,
-    paddingRight: style.paddingRight,
-    paddingBottom: style.paddingBottom,
-    paddingLeft: style.paddingLeft,
-    margin: style.margin,
-    marginTop: style.marginTop,
-    marginRight: style.marginRight,
-    marginBottom: style.marginBottom,
-    marginLeft: style.marginLeft,
-    flex: style.flex,
-    flexDirection: style.flexDirection,
-    flexWrap: style.flexWrap,
-    flexGrow: style.flexGrow,
-    flexShrink: style.flexShrink,
-    flexBasis: style.flexBasis,
-    gap: style.gap,
-    justifyContent: style.justifyContent,
-    alignItems: style.alignItems,
-    alignContent: style.alignContent,
-    alignSelf: style.alignSelf,
-    fontFamily,
-    fontSize: style.fontSize,
-    fontWeight: style.fontWeight,
-    fontStyle: style.fontStyle,
-    transform,
+    if (keyTyped in style && style[keyTyped] !== undefined) {
+      css[key as keyof CSSProperties] = style[keyTyped]
+    }
   }
+
+  if (style.fontFamily) {
+    style.fontFamily = Array.isArray(style.fontFamily) ? style.fontFamily.join(", ") : style.fontFamily
+  }
+
+  if (style.transform) {
+    const transforms = Array.isArray(style.transform) ? style.transform : []
+    css.transform = transforms.map(transformToString).filter(Boolean).join(", ")
+  }
+
+  return css
 }
 
 function transformToString(transform: Transform): string | null {
@@ -112,9 +92,9 @@ function transformToString(transform: Transform): string | null {
 
 type CSSKeys = keyof CSSProperties
 type PDFStyleKeys = keyof ViewStyle
+type CommonKeys = CSSKeys | PDFStyleKeys
 
-// TODO: Use it
-const _PassThroughCSSProperties: (CSSKeys | PDFStyleKeys)[] = [
+const PassThroughStyles: CommonKeys[] = [
   "display",
   "width",
   "height",
@@ -122,4 +102,28 @@ const _PassThroughCSSProperties: (CSSKeys | PDFStyleKeys)[] = [
   "maxHeight",
   "minWidth",
   "maxWidth",
+  "padding",
+  "paddingTop",
+  "paddingRight",
+  "paddingBottom",
+  "paddingLeft",
+  "margin",
+  "marginTop",
+  "marginRight",
+  "marginBottom",
+  "marginLeft",
+  "flex",
+  "flexDirection",
+  "flexWrap",
+  "flexGrow",
+  "flexShrink",
+  "flexBasis",
+  "gap",
+  "justifyContent",
+  "alignItems",
+  "alignContent",
+  "alignSelf",
+  "fontSize",
+  "fontWeight",
+  "fontStyle",
 ] as const

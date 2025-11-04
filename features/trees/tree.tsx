@@ -1,14 +1,5 @@
 import { BackgroundGridBlock, ColumnBlock, RowBlock, TextBlock } from "@/features/blocks/block-types"
-
-export type Root = {
-  year: number
-  pageWidth: number
-  pageHeight: number
-}
-
-export type Page = {
-  name: string
-}
+import { ViewStyle } from "@/lib/utils/react-pdf"
 
 export enum TreeNodeType {
   Root = "root",
@@ -54,6 +45,21 @@ export type TreeNode =
 export type PDFTree = RootNode
 
 export type TreeNodeByType<T extends TreeNodeType> = Extract<TreeNode, { type: T }>
+
+//
+// MARK: - Data Types
+//
+
+export type Root = {
+  year: number
+  pageWidth: number
+  pageHeight: number
+}
+
+export type Page = {
+  name: string
+  style: ViewStyle
+}
 
 //
 // MARK: - Top Level Nodes

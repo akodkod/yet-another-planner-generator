@@ -14,11 +14,9 @@ export function PDFDay({ nodeId }: PDFRenderNodeContentProps) {
   const { startDate, endDate } = useRootContext()
   const { weekStartDate, weekEndDate } = useWeekContext()
 
-  const daysStartDate = max([weekStartDate, startDate])
-  const daysEndDate = min([weekEndDate, endDate])
   const days = eachDayOfInterval({
-    start: daysStartDate,
-    end: daysEndDate,
+    start: max([weekStartDate, startDate]),
+    end: min([weekEndDate, endDate]),
   }, {
     in: tz("UTC"),
   })

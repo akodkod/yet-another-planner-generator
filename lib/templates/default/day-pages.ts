@@ -7,6 +7,9 @@ export const DefaultTemplateDayPage1: PageNode = {
   type: TreeNodeType.Page,
   data: {
     name: "Tasks",
+    style: {
+      padding: 32,
+    },
   },
   children: [
     {
@@ -114,6 +117,9 @@ export const DefaultTemplateDayPage2: PageNode = {
   type: TreeNodeType.Page,
   data: {
     name: "Notes",
+    style: {
+      padding: 32,
+    },
   },
   children: [
     {

@@ -1,4 +1,4 @@
-import { convertPDFStyleToHTMLStyle, getBaseBlockStyle } from "@/features/pdf-renderer/blocks/pdf-base-block"
+import { pdfStyleToHTML, getBaseBlockStyle } from "@/features/pdf-renderer/blocks/pdf-base-block"
 import { PDFRenderChildren } from "@/features/pdf-renderer/pdf-render-children"
 import { PDFRenderNodeContentProps } from "@/features/pdf-renderer/pdf-render-node"
 import { usePDFRenderer } from "@/features/pdf-renderer/pdf-renderer-context"
@@ -52,7 +52,7 @@ function ContentHTML({ node, style, children }: ContentProps) {
 
   return (
     <div
-      style={convertPDFStyleToHTMLStyle(style)}
+      style={pdfStyleToHTML(style)}
       className="cursor-pointer"
       onClick={(event) => {
         event.stopPropagation()

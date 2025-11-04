@@ -8,6 +8,9 @@ export const DefaultTemplateWeekStartsPage1: PageNode = {
   type: TreeNodeType.Page,
   data: {
     name: "Week starts",
+    style: {
+      padding: 32,
+    },
   },
   children: [
     {
@@ -80,6 +83,9 @@ export const DefaultTemplateWeekStartsPage2: PageNode = {
   type: TreeNodeType.Page,
   data: {
     name: "Tasks",
+    style: {
+      padding: 32,
+    },
   },
   children: [
     {
@@ -270,6 +276,9 @@ export const DefaultTemplateWeekEndsPage: PageNode = {
   type: TreeNodeType.Page,
   data: {
     name: "Tasks",
+    style: {
+      padding: 32,
+    },
   },
   children: [
     {

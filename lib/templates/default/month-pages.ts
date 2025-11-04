@@ -7,6 +7,9 @@ export const DefaultTemplateMonthStartsPage: PageNode = {
   type: TreeNodeType.Page,
   data: {
     name: "Month starts",
+    style: {
+      padding: 32,
+    },
   },
   children: [
     {
@@ -79,6 +82,9 @@ export const DefaultTemplateMonthEndsPage: PageNode = {
   type: TreeNodeType.Page,
   data: {
     name: "Month ends",
+    style: {
+      padding: 32,
+    },
   },
   children: [
     {

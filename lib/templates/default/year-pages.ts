@@ -8,6 +8,9 @@ export const DefaultTemplateYearStartsPage: PageNode = {
   type: TreeNodeType.Page,
   data: {
     name: "Year starts",
+    style: {
+      padding: 32,
+    },
   },
   children: [
     {
@@ -80,6 +83,9 @@ export const DefaultTemplateYearEndsPage: PageNode = {
   type: TreeNodeType.Page,
   data: {
     name: "Year ends",
+    style: {
+      padding: 32,
+    },
   },
   children: [
     {
