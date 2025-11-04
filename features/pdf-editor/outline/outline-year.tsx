@@ -3,7 +3,7 @@ import { OutlineRenderNodeContentProps } from "@/features/pdf-editor/outline/out
 import { PDFEditor } from "@/features/pdf-editor/pdf-editor.module"
 import { TreeNodeType } from "@/features/trees/tree"
 
-export function OutlineYearChapter({ nodeId }: OutlineRenderNodeContentProps) {
-  const node = PDFEditor.useNodeOf(nodeId, TreeNodeType.YearChapter)
+export function OutlineYear({ nodeId }: OutlineRenderNodeContentProps) {
+  const node = PDFEditor.useNodeOf(nodeId, TreeNodeType.Year)
   return <OutlineRenderChildren nodeId={node.id} />
 }

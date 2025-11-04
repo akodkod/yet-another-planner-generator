@@ -1,18 +1,18 @@
 import { BlockSizeType } from "@/features/blocks/block-types"
-import { BlockTreeNode, TreeNode, TreeNodeType } from "@/features/trees/tree"
-import { isBlockTreeNode } from "@/features/trees/tree-utils"
+import { BlockNode, TreeNode, TreeNodeType } from "@/features/trees/tree"
+import { isBlockNode } from "@/features/trees/tree-utils"
 import { Transform, ViewStyle } from "@/lib/utils/react-pdf"
 import { CSSProperties } from "react"
 import { match } from "ts-pattern"
 
-export function getBaseBlockStyle(node: BlockTreeNode, parent: TreeNode | null): ViewStyle {
+export function getBaseBlockStyle(node: BlockNode, parent: TreeNode | null): ViewStyle {
   return {
-    ...getSizeStyle(node, parent && isBlockTreeNode(parent) ? parent : null),
-    ...node.block.style,
+    ...getSizeStyle(node, parent && isBlockNode(parent) ? parent : null),
+    ...node.data.style,
   }
 }
 
-function getSizeStyle(node: BlockTreeNode, parent: BlockTreeNode | null): ViewStyle {
+function getSizeStyle(node: BlockNode, parent: BlockNode | null): ViewStyle {
   if (!parent) {
     return {
       width: "100%",
@@ -20,7 +20,7 @@ function getSizeStyle(node: BlockTreeNode, parent: BlockTreeNode | null): ViewSt
     }
   }
 
-  const { block } = node
+  const { data: block } = node
 
   return match(parent)
     .with({ type: TreeNodeType.ColumnBlock }, () => ({

@@ -1,6 +1,6 @@
 import { nanoid } from "@/lib/utils/nanoid"
 
-export function genChapterId() {
+export function genId() {
   return nanoid()
 }
 

@@ -5,8 +5,8 @@ import { PDFEditor } from "@/features/pdf-editor/pdf-editor.module"
 import { TreeNodeType } from "@/features/trees/tree"
 import { NotebookTextIcon } from "lucide-react"
 
-export function OutlinePageChapter({ nodeId }: OutlineRenderNodeContentProps) {
-  const node = PDFEditor.useNodeOf(nodeId, TreeNodeType.PageChapter)
+export function OutlinePage({ nodeId }: OutlineRenderNodeContentProps) {
+  const node = PDFEditor.useNodeOf(nodeId, TreeNodeType.Page)
 
   return (
     <OutlineItem
@@ -14,10 +14,10 @@ export function OutlinePageChapter({ nodeId }: OutlineRenderNodeContentProps) {
       name={(
         <>
           <span className="flex-1 text-left">
-            {node.chapter.name || "Page"}
+            {node.data.name || "Page"}
           </span>
           <span className="text-xs opacity-60 font-normal">
-            {node.chapter.name ? "page" : ""}
+            {node.data.name ? "page" : ""}
           </span>
         </>
       )}

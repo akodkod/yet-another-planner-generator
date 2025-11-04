@@ -1,4 +1,4 @@
-import { useMonthChapterContext, useRootChapterContext, WeekChapterContext } from "@/features/chapters/chapter-contexts"
+import { useMonthContext, useRootContext, WeekContext } from "@/features/pdf-renderer/pdf-renderer-contexts"
 import { PDFRenderChildren } from "@/features/pdf-renderer/pdf-render-children"
 import { PDFRenderNodeContentProps } from "@/features/pdf-renderer/pdf-render-node"
 import { usePDFRenderer } from "@/features/pdf-renderer/pdf-renderer-context"
@@ -7,12 +7,12 @@ import { Trees } from "@/features/trees/trees.module"
 import { tz } from "@date-fns/tz"
 import { clamp, eachWeekOfInterval, endOfWeek, getWeek, getWeekOfMonth, startOfWeek } from "date-fns"
 
-export function PDFWeekChapter({ nodeId }: PDFRenderNodeContentProps) {
+export function PDFWeek({ nodeId }: PDFRenderNodeContentProps) {
   const { treeId } = usePDFRenderer()
-  const node = Trees.useNodeOf(treeId, nodeId, TreeNodeType.WeekChapter)
+  const node = Trees.useNodeOf(treeId, nodeId, TreeNodeType.Week)
 
-  const { startDate, endDate } = useRootChapterContext()
-  const { monthStartDate, monthEndDate } = useMonthChapterContext()
+  const { startDate, endDate } = useRootContext()
+  const { monthStartDate, monthEndDate } = useMonthContext()
 
   const weeks = eachWeekOfInterval({
     start: monthStartDate,
@@ -23,7 +23,7 @@ export function PDFWeekChapter({ nodeId }: PDFRenderNodeContentProps) {
   }).map((week) => clamp(week, { start: startDate, end: endDate }))
 
   return weeks.map((week) => (
-    <WeekChapterContext.Provider
+    <WeekContext.Provider
       key={week.toString()}
       value={{
         weekOfYear: getWeek(week, { weekStartsOn: 1 }),
@@ -33,6 +33,6 @@ export function PDFWeekChapter({ nodeId }: PDFRenderNodeContentProps) {
       }}
     >
       <PDFRenderChildren nodeId={node.id} />
-    </WeekChapterContext.Provider>
+    </WeekContext.Provider>
   ))
 }

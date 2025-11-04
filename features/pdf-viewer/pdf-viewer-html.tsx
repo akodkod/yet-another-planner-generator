@@ -12,12 +12,12 @@ export type PDFViewerPropsHTML = {
 }
 
 export function PDFViewerHTML({ treeId }: PDFViewerPropsHTML) {
-  const rootNode = Trees.useNodeOf(treeId, treeId, TreeNodeType.RootChapter)
+  const rootNode = Trees.useNodeOf(treeId, treeId, TreeNodeType.Root)
   // const selectedNodeId = PDFEditor.useOptionalSelectedNodeId()
-  // const parentPageNode = PDFEditor.useParentNodeOfType(selectedNodeId, TreeNodeType.PageChapter)
+  // const parentPageNode = PDFEditor.useParentNodeOfType(selectedNodeId, TreeNodeType.Page)
 
   const { ref, width: availableWidth, height: availableHeight } = useMeasure()
-  const { pageWidth, pageHeight } = rootNode.chapter
+  const { pageWidth, pageHeight } = rootNode.data
 
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, _setTotalPages] = useState(1024)

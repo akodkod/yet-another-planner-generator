@@ -14,7 +14,7 @@ export function OutlineAnyBlock({ nodeId }: OutlineRenderNodeContentProps) {
   const name = match(node)
     .with({ type: TreeNodeType.ColumnBlock }, () => "Horizontal Stack")
     .with({ type: TreeNodeType.RowBlock }, () => "Vertical Stack")
-    .with({ type: TreeNodeType.TextBlock }, (node) => truncate(node.block.content, 40).trim())
+    .with({ type: TreeNodeType.TextBlock }, (node) => truncate(node.data.content, 40).trim())
     .with({ type: TreeNodeType.BackgroundGridBlock }, () => "Background Grid")
     .exhaustive()
 

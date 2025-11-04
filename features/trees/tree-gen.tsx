@@ -6,12 +6,12 @@ export function genTreeNodeId(type: TreeNodeType) {
 }
 
 const prefixMap: Record<TreeNodeType, string> = {
-  [TreeNodeType.RootChapter]: "ch-ro",
-  [TreeNodeType.YearChapter]: "ch-ye",
-  [TreeNodeType.MonthChapter]: "ch-mo",
-  [TreeNodeType.WeekChapter]: "ch-we",
-  [TreeNodeType.DayChapter]: "ch-da",
-  [TreeNodeType.PageChapter]: "ch-pa",
+  [TreeNodeType.Root]: "ch-ro",
+  [TreeNodeType.Year]: "ch-ye",
+  [TreeNodeType.Month]: "ch-mo",
+  [TreeNodeType.Week]: "ch-we",
+  [TreeNodeType.Day]: "ch-da",
+  [TreeNodeType.Page]: "ch-pa",
   [TreeNodeType.ColumnBlock]: "bl-co",
   [TreeNodeType.RowBlock]: "bl-ro",
   [TreeNodeType.TextBlock]: "bl-te",

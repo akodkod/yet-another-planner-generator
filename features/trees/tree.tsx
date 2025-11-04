@@ -1,13 +1,22 @@
 import { BackgroundGridBlock, ColumnBlock, RowBlock, TextBlock } from "@/features/blocks/block-types"
-import { PageChapter, RootChapter } from "@/features/chapters/chapter-types"
+
+export type Root = {
+  year: number
+  pageWidth: number
+  pageHeight: number
+}
+
+export type Page = {
+  name: string
+}
 
 export enum TreeNodeType {
-  RootChapter = "root-chapter",
-  YearChapter = "year-chapter",
-  MonthChapter = "month-chapter",
-  WeekChapter = "week-chapter",
-  DayChapter = "day-chapter",
-  PageChapter = "page-chapter",
+  Root = "root",
+  Year = "year",
+  Month = "month",
+  Week = "week",
+  Day = "day",
+  Page = "page",
 
   ColumnBlock = "column-block",
   RowBlock = "row-block",
@@ -15,13 +24,13 @@ export enum TreeNodeType {
   BackgroundGridBlock = "background-grid-block",
 }
 
-export const TreeNodeChapterTypes = [
-  TreeNodeType.RootChapter,
-  TreeNodeType.YearChapter,
-  TreeNodeType.MonthChapter,
-  TreeNodeType.WeekChapter,
-  TreeNodeType.DayChapter,
-  TreeNodeType.PageChapter,
+export const TreeNodeTopLevelTypes = [
+  TreeNodeType.Root,
+  TreeNodeType.Year,
+  TreeNodeType.Month,
+  TreeNodeType.Week,
+  TreeNodeType.Day,
+  TreeNodeType.Page,
 ] as const
 
 export const TreeNodeBlockTypes = [
@@ -31,7 +40,7 @@ export const TreeNodeBlockTypes = [
   TreeNodeType.BackgroundGridBlock,
 ] as const
 
-export type TreeNodeChapterType = (typeof TreeNodeChapterTypes)[number]
+export type TreeNodeSectionType = (typeof TreeNodeTopLevelTypes)[number]
 export type TreeNodeBlockType = (typeof TreeNodeBlockTypes)[number]
 
 type BaseTreeNode = {
@@ -39,91 +48,91 @@ type BaseTreeNode = {
 }
 
 export type TreeNode =
-  | ChapterTreeNode
-  | BlockTreeNode
+  | Node
+  | BlockNode
 
-export type PDFTree = RootChapterTreeNode
+export type PDFTree = RootNode
 
 export type TreeNodeByType<T extends TreeNodeType> = Extract<TreeNode, { type: T }>
 
 //
-// MARK: - Chapters
+// MARK: - Top Level Nodes
 //
 
-type BaseChapterTreeNode = BaseTreeNode
+type BaseNode = BaseTreeNode
 
-export type RootChapterTreeNode = BaseChapterTreeNode & {
-  type: TreeNodeType.RootChapter
-  chapter: RootChapter
-  children: (YearChapterTreeNode | PageChapterTreeNode)[]
+export type RootNode = BaseNode & {
+  type: TreeNodeType.Root
+  data: Root
+  children: (YearNode | PageNode)[]
 }
 
-export type YearChapterTreeNode = BaseChapterTreeNode & {
-  type: TreeNodeType.YearChapter
-  children: (MonthChapterTreeNode | PageChapterTreeNode)[]
+export type YearNode = BaseNode & {
+  type: TreeNodeType.Year
+  children: (MonthNode | PageNode)[]
 }
 
-export type MonthChapterTreeNode = BaseChapterTreeNode & {
-  type: TreeNodeType.MonthChapter
-  children: (WeekChapterTreeNode | PageChapterTreeNode)[]
+export type MonthNode = BaseNode & {
+  type: TreeNodeType.Month
+  children: (WeekNode | PageNode)[]
 }
 
-export type WeekChapterTreeNode = BaseChapterTreeNode & {
-  type: TreeNodeType.WeekChapter
-  children: (DayChapterTreeNode | PageChapterTreeNode)[]
+export type WeekNode = BaseNode & {
+  type: TreeNodeType.Week
+  children: (DayNode | PageNode)[]
 }
 
-export type DayChapterTreeNode = BaseChapterTreeNode & {
-  type: TreeNodeType.DayChapter
-  children: PageChapterTreeNode[]
+export type DayNode = BaseNode & {
+  type: TreeNodeType.Day
+  children: PageNode[]
 }
 
-export type PageChapterTreeNode = BaseChapterTreeNode & {
-  type: TreeNodeType.PageChapter
-  chapter: PageChapter
-  children: BlockTreeNode[]
+export type PageNode = BaseNode & {
+  type: TreeNodeType.Page
+  data: Page
+  children: BlockNode[]
 }
 
-export type ChapterTreeNode =
-  | RootChapterTreeNode
-  | YearChapterTreeNode
-  | MonthChapterTreeNode
-  | WeekChapterTreeNode
-  | DayChapterTreeNode
-  | PageChapterTreeNode
+export type Node =
+  | RootNode
+  | YearNode
+  | MonthNode
+  | WeekNode
+  | DayNode
+  | PageNode
 
 //
-// MARK: - Blocks
+// MARK: - Block Nodes
 //
 
-type BaseBlockTreeNode = BaseTreeNode
+type BaseBlockNode = BaseTreeNode
 
-export type ColumnBlockTreeNode = BaseBlockTreeNode & {
+export type ColumnBlockNode = BaseBlockNode & {
   type: TreeNodeType.ColumnBlock
-  block: ColumnBlock
-  children: BlockTreeNode[]
+  data: ColumnBlock
+  children: BlockNode[]
 }
 
-export type RowBlockTreeNode = BaseBlockTreeNode & {
+export type RowBlockNode = BaseBlockNode & {
   type: TreeNodeType.RowBlock
-  block: RowBlock
-  children: BlockTreeNode[]
+  data: RowBlock
+  children: BlockNode[]
 }
 
-export type TextBlockTreeNode = BaseBlockTreeNode & {
+export type TextBlockNode = BaseBlockNode & {
   type: TreeNodeType.TextBlock
-  block: TextBlock
+  data: TextBlock
   children: never[]
 }
 
-export type BackgroundGridBlockTreeNode = BaseBlockTreeNode & {
+export type BackgroundGridBlockNode = BaseBlockNode & {
   type: TreeNodeType.BackgroundGridBlock
-  block: BackgroundGridBlock
+  data: BackgroundGridBlock
   children: never[]
 }
 
-export type BlockTreeNode =
-  | ColumnBlockTreeNode
-  | RowBlockTreeNode
-  | TextBlockTreeNode
-  | BackgroundGridBlockTreeNode
+export type BlockNode =
+  | ColumnBlockNode
+  | RowBlockNode
+  | TextBlockNode
+  | BackgroundGridBlockNode

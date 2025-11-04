@@ -20,7 +20,7 @@ export function InspectorTextBlock({ nodeId }: InspectorRenderNodeProps) {
 
   const form = useAppForm({
     defaultValues: {
-      content: node.block.content as Any,
+      content: node.data.content as Any,
     },
     validators: {
       onChange: schema,
@@ -33,8 +33,8 @@ export function InspectorTextBlock({ nodeId }: InspectorRenderNodeProps) {
 
         Trees.updateNode(treeId, node, (node) => ({
           ...node,
-          block: {
-            ...node.block,
+          data: {
+            ...node.data,
             content: data.content,
           },
         }))

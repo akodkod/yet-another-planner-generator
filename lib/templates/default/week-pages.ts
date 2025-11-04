@@ -1,19 +1,19 @@
 import { BackgroundGridSpacing, BackgroundGridType, BlockSizeType } from "@/features/blocks/block-types"
-import { genChapterId, genBlockId } from "@/lib/templates/template-utils"
-import { PageChapterTreeNode, TreeNodeType } from "@/features/trees/tree"
+import { genId, genBlockId } from "@/lib/templates/template-utils"
+import { PageNode, TreeNodeType } from "@/features/trees/tree"
 import { genTreeNodeId } from "@/features/trees/tree-gen"
 
-export const DefaultTemplateWeekStartsPage1: PageChapterTreeNode = {
-  id: genTreeNodeId(TreeNodeType.PageChapter),
-  type: TreeNodeType.PageChapter,
-  chapter: {
+export const DefaultTemplateWeekStartsPage1: PageNode = {
+  id: genTreeNodeId(TreeNodeType.Page),
+  type: TreeNodeType.Page,
+  data: {
     name: "Week starts",
   },
   children: [
     {
       id: genTreeNodeId(TreeNodeType.ColumnBlock),
       type: TreeNodeType.ColumnBlock,
-      block: {
+      data: {
         spacing: 0,
         style: {
           alignItems: "center",
@@ -33,7 +33,7 @@ export const DefaultTemplateWeekStartsPage1: PageChapterTreeNode = {
         {
           id: genTreeNodeId(TreeNodeType.TextBlock),
           type: TreeNodeType.TextBlock,
-          block: {
+          data: {
             content: "Week #{{weekOfMonth}}",
             style: {},
             textStyle: {
@@ -52,7 +52,7 @@ export const DefaultTemplateWeekStartsPage1: PageChapterTreeNode = {
         {
           id: genTreeNodeId(TreeNodeType.TextBlock),
           type: TreeNodeType.TextBlock,
-          block: {
+          data: {
             content: "Super Cool Planner",
             style: {},
             textStyle: {
@@ -75,17 +75,17 @@ export const DefaultTemplateWeekStartsPage1: PageChapterTreeNode = {
   ],
 }
 
-export const DefaultTemplateWeekStartsPage2: PageChapterTreeNode = {
-  id: genTreeNodeId(TreeNodeType.PageChapter),
-  type: TreeNodeType.PageChapter,
-  chapter: {
+export const DefaultTemplateWeekStartsPage2: PageNode = {
+  id: genTreeNodeId(TreeNodeType.Page),
+  type: TreeNodeType.Page,
+  data: {
     name: "Tasks",
   },
   children: [
     {
       id: genTreeNodeId(TreeNodeType.ColumnBlock),
       type: TreeNodeType.ColumnBlock,
-      block: {
+      data: {
         spacing: 0,
         style: {
           padding: 96,
@@ -101,7 +101,7 @@ export const DefaultTemplateWeekStartsPage2: PageChapterTreeNode = {
         {
           id: genTreeNodeId(TreeNodeType.RowBlock),
           type: TreeNodeType.RowBlock,
-          block: {
+          data: {
             spacing: 16,
             style: {
               alignItems: "center",
@@ -118,7 +118,7 @@ export const DefaultTemplateWeekStartsPage2: PageChapterTreeNode = {
             {
               id: genTreeNodeId(TreeNodeType.TextBlock),
               type: TreeNodeType.TextBlock,
-              block: {
+              data: {
                 content: "Let's plan this week",
                 style: {},
                 textStyle: {
@@ -137,7 +137,7 @@ export const DefaultTemplateWeekStartsPage2: PageChapterTreeNode = {
             {
               id: genTreeNodeId(TreeNodeType.TextBlock),
               type: TreeNodeType.TextBlock,
-              block: {
+              data: {
                 content: "Week #{{weekOfMonth}} of {{format-date weekStartDate 'MMMM'}}",
                 style: {
                   marginTop: 8,
@@ -161,7 +161,7 @@ export const DefaultTemplateWeekStartsPage2: PageChapterTreeNode = {
         {
           id: genTreeNodeId(TreeNodeType.BackgroundGridBlock),
           type: TreeNodeType.BackgroundGridBlock,
-          block: {
+          data: {
             gridType: BackgroundGridType.Dots,
             gridColor: "#ccc",
             gridLineWidth: 1,
@@ -181,7 +181,7 @@ export const DefaultTemplateWeekStartsPage2: PageChapterTreeNode = {
         {
           id: genTreeNodeId(TreeNodeType.RowBlock),
           type: TreeNodeType.RowBlock,
-          block: {
+          data: {
             spacing: 16,
             style: {
               alignItems: "center",
@@ -198,7 +198,7 @@ export const DefaultTemplateWeekStartsPage2: PageChapterTreeNode = {
             {
               id: genTreeNodeId(TreeNodeType.TextBlock),
               type: TreeNodeType.TextBlock,
-              block: {
+              data: {
                 content: "One day on this week",
                 style: {
                   marginTop: 48,
@@ -219,7 +219,7 @@ export const DefaultTemplateWeekStartsPage2: PageChapterTreeNode = {
             {
               id: genTreeNodeId(TreeNodeType.TextBlock),
               type: TreeNodeType.TextBlock,
-              block: {
+              data: {
                 content: "Week #{{weekOfMonth}} of {{format-date weekStartDate 'MMMM'}}",
                 style: {
                   marginTop: 8,
@@ -243,7 +243,7 @@ export const DefaultTemplateWeekStartsPage2: PageChapterTreeNode = {
         {
           id: genTreeNodeId(TreeNodeType.BackgroundGridBlock),
           type: TreeNodeType.BackgroundGridBlock,
-          block: {
+          data: {
             gridType: BackgroundGridType.Dots,
             gridColor: "#ccc",
             gridLineWidth: 1,
@@ -265,17 +265,17 @@ export const DefaultTemplateWeekStartsPage2: PageChapterTreeNode = {
   ],
 }
 
-export const DefaultTemplateWeekEndsPage: PageChapterTreeNode = {
-  id: genChapterId(),
-  type: TreeNodeType.PageChapter,
-  chapter: {
+export const DefaultTemplateWeekEndsPage: PageNode = {
+  id: genId(),
+  type: TreeNodeType.Page,
+  data: {
     name: "Tasks",
   },
   children: [
     {
       id: genTreeNodeId(TreeNodeType.ColumnBlock),
       type: TreeNodeType.ColumnBlock,
-      block: {
+      data: {
         spacing: 0,
         style: {
           padding: 96,
@@ -291,7 +291,7 @@ export const DefaultTemplateWeekEndsPage: PageChapterTreeNode = {
         {
           id: genTreeNodeId(TreeNodeType.RowBlock),
           type: TreeNodeType.RowBlock,
-          block: {
+          data: {
             spacing: 16,
             style: {
               alignItems: "center",
@@ -308,7 +308,7 @@ export const DefaultTemplateWeekEndsPage: PageChapterTreeNode = {
             {
               id: genTreeNodeId(TreeNodeType.TextBlock),
               type: TreeNodeType.TextBlock,
-              block: {
+              data: {
                 content: "Week is over\r\nLet's review past week",
                 style: {},
                 textStyle: {
@@ -327,7 +327,7 @@ export const DefaultTemplateWeekEndsPage: PageChapterTreeNode = {
             {
               id: genTreeNodeId(TreeNodeType.TextBlock),
               type: TreeNodeType.TextBlock,
-              block: {
+              data: {
                 content: "Week #{{weekOfMonth}} of {{format-date weekStartDate 'MMMM'}}",
                 style: {
                   marginTop: 8,
@@ -351,7 +351,7 @@ export const DefaultTemplateWeekEndsPage: PageChapterTreeNode = {
         {
           id: genTreeNodeId(TreeNodeType.BackgroundGridBlock),
           type: TreeNodeType.BackgroundGridBlock,
-          block: {
+          data: {
             gridType: BackgroundGridType.Dots,
             gridColor: "#ccc",
             gridLineWidth: 1,
@@ -372,7 +372,7 @@ export const DefaultTemplateWeekEndsPage: PageChapterTreeNode = {
         {
           id: genTreeNodeId(TreeNodeType.RowBlock),
           type: TreeNodeType.RowBlock,
-          block: {
+          data: {
             spacing: 16,
             style: {
               alignItems: "center",
@@ -389,7 +389,7 @@ export const DefaultTemplateWeekEndsPage: PageChapterTreeNode = {
             {
               id: genTreeNodeId(TreeNodeType.ColumnBlock),
               type: TreeNodeType.ColumnBlock,
-              block: {
+              data: {
                 spacing: 0,
                 style: {
                   padding: 96,
@@ -405,7 +405,7 @@ export const DefaultTemplateWeekEndsPage: PageChapterTreeNode = {
                 {
                   id: genTreeNodeId(TreeNodeType.RowBlock),
                   type: TreeNodeType.RowBlock,
-                  block: {
+                  data: {
                     spacing: 16,
                     style: {
                       alignItems: "center",
@@ -422,7 +422,7 @@ export const DefaultTemplateWeekEndsPage: PageChapterTreeNode = {
                     {
                       id: genTreeNodeId(TreeNodeType.TextBlock),
                       type: TreeNodeType.TextBlock,
-                      block: {
+                      data: {
                         content: "What was good?",
                         style: {},
                         textStyle: {
@@ -441,7 +441,7 @@ export const DefaultTemplateWeekEndsPage: PageChapterTreeNode = {
                     {
                       id: genTreeNodeId(TreeNodeType.TextBlock),
                       type: TreeNodeType.TextBlock,
-                      block: {
+                      data: {
                         content: "",
                         style: {
                           marginTop: 8,
@@ -465,7 +465,7 @@ export const DefaultTemplateWeekEndsPage: PageChapterTreeNode = {
                 {
                   id: genTreeNodeId(TreeNodeType.BackgroundGridBlock),
                   type: TreeNodeType.BackgroundGridBlock,
-                  block: {
+                  data: {
                     gridType: BackgroundGridType.Dots,
                     gridColor: "#ccc",
                     gridLineWidth: 1,
@@ -487,7 +487,7 @@ export const DefaultTemplateWeekEndsPage: PageChapterTreeNode = {
             {
               id: genTreeNodeId(TreeNodeType.ColumnBlock),
               type: TreeNodeType.ColumnBlock,
-              block: {
+              data: {
                 spacing: 0,
                 style: {
                   padding: 96,
@@ -503,7 +503,7 @@ export const DefaultTemplateWeekEndsPage: PageChapterTreeNode = {
                 {
                   id: genTreeNodeId(TreeNodeType.RowBlock),
                   type: TreeNodeType.RowBlock,
-                  block: {
+                  data: {
                     spacing: 16,
                     style: {
                       alignItems: "center",
@@ -520,7 +520,7 @@ export const DefaultTemplateWeekEndsPage: PageChapterTreeNode = {
                     {
                       id: genBlockId(),
                       type: TreeNodeType.TextBlock,
-                      block: {
+                      data: {
                         content: "What was bad?",
                         style: {},
                         textStyle: {
@@ -539,7 +539,7 @@ export const DefaultTemplateWeekEndsPage: PageChapterTreeNode = {
                     {
                       id: genBlockId(),
                       type: TreeNodeType.TextBlock,
-                      block: {
+                      data: {
                         content: "",
                         style: {
                           marginTop: 8,
@@ -563,7 +563,7 @@ export const DefaultTemplateWeekEndsPage: PageChapterTreeNode = {
                 {
                   id: genTreeNodeId(TreeNodeType.BackgroundGridBlock),
                   type: TreeNodeType.BackgroundGridBlock,
-                  block: {
+                  data: {
                     gridType: BackgroundGridType.Dots,
                     gridColor: "#ccc",
                     gridLineWidth: 1,

@@ -2,7 +2,7 @@ import { getBaseBlockStyle } from "@/features/pdf-renderer/blocks/pdf-base-block
 import { PDFRenderChildren } from "@/features/pdf-renderer/pdf-render-children"
 import { PDFRenderNodeContentProps } from "@/features/pdf-renderer/pdf-render-node"
 import { usePDFRenderer } from "@/features/pdf-renderer/pdf-renderer-context"
-import { RowBlockTreeNode, TreeNodeType } from "@/features/trees/tree"
+import { RowBlockNode, TreeNodeType } from "@/features/trees/tree"
 import { Trees } from "@/features/trees/trees.module"
 import { ViewStyle } from "@/lib/utils/react-pdf"
 import { View } from "@react-pdf/renderer"
@@ -18,7 +18,7 @@ export function PDFRowBlock({ nodeId }: PDFRenderNodeContentProps) {
     ...getBaseBlockStyle(node, parent),
     display: "flex",
     flexDirection: "row",
-    gap: node.block.spacing,
+    gap: node.data.spacing,
   }
 
   const Content = html ? ContentHTML : ContentPDF
@@ -34,7 +34,7 @@ export function PDFRowBlock({ nodeId }: PDFRenderNodeContentProps) {
 }
 
 type ContentProps = {
-  node: RowBlockTreeNode
+  node: RowBlockNode
   style: ViewStyle
   children: ReactNode
 }

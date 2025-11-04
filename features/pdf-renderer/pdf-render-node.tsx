@@ -2,12 +2,12 @@ import { PDFBackgroundGridBlock } from "@/features/pdf-renderer/blocks/pdf-backg
 import { PDFColumnBlock } from "@/features/pdf-renderer/blocks/pdf-column-block"
 import { PDFRowBlock } from "@/features/pdf-renderer/blocks/pdf-row-block"
 import { PDFTextBlock } from "@/features/pdf-renderer/blocks/pdf-text-block"
-import { PDFDayChapter } from "@/features/pdf-renderer/chapters/pdf-day-chapter"
-import { PDFMonthChapter } from "@/features/pdf-renderer/chapters/pdf-month-chapter"
-import { PDFRootChapter } from "@/features/pdf-renderer/chapters/pdf-root-chapter"
-import { PDFWeekChapter } from "@/features/pdf-renderer/chapters/pdf-week-chapter"
-import { PDFYearChapter } from "@/features/pdf-renderer/chapters/pdf-year-chapter"
-import { PDFPageChapter } from "@/features/pdf-renderer/chapters/pdf-page-chapter"
+import { PDFDay } from "@/features/pdf-renderer/top-level/pdf-day"
+import { PDFMonth } from "@/features/pdf-renderer/top-level/pdf-month"
+import { PDFRoot } from "@/features/pdf-renderer/top-level/pdf-root"
+import { PDFWeek } from "@/features/pdf-renderer/top-level/pdf-week"
+import { PDFYear } from "@/features/pdf-renderer/top-level/pdf-year"
+import { PDFPage } from "@/features/pdf-renderer/top-level/pdf-page"
 import { TreeNode, TreeNodeType } from "@/features/trees/tree"
 import { ComponentType } from "react"
 
@@ -28,12 +28,12 @@ const componentsMap: Record<
   TreeNodeType,
   ComponentType<PDFRenderNodeContentProps>
 > = {
-  [TreeNodeType.RootChapter]: PDFRootChapter,
-  [TreeNodeType.YearChapter]: PDFYearChapter,
-  [TreeNodeType.MonthChapter]: PDFMonthChapter,
-  [TreeNodeType.WeekChapter]: PDFWeekChapter,
-  [TreeNodeType.DayChapter]: PDFDayChapter,
-  [TreeNodeType.PageChapter]: PDFPageChapter,
+  [TreeNodeType.Root]: PDFRoot,
+  [TreeNodeType.Year]: PDFYear,
+  [TreeNodeType.Month]: PDFMonth,
+  [TreeNodeType.Week]: PDFWeek,
+  [TreeNodeType.Day]: PDFDay,
+  [TreeNodeType.Page]: PDFPage,
   [TreeNodeType.ColumnBlock]: PDFColumnBlock,
   [TreeNodeType.RowBlock]: PDFRowBlock,
   [TreeNodeType.TextBlock]: PDFTextBlock,

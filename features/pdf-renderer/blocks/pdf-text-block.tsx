@@ -1,12 +1,12 @@
 import { getBaseBlockStyle } from "@/features/pdf-renderer/blocks/pdf-base-block"
-import { useRootChapterContext, useOptionalYearChapterContext, useOptionalDayChapterContext, useOptionalMonthChapterContext, useOptionalPageChapterContext, useOptionalWeekChapterContext } from "@/features/chapters/chapter-contexts"
+import { useRootContext, useOptionalYearContext, useOptionalDayContext, useOptionalMonthContext, useOptionalPageContext, useOptionalWeekContext } from "@/features/pdf-renderer/pdf-renderer-contexts"
 import { ViewStyle } from "@/lib/utils/react-pdf"
 import Handlebars from "handlebars"
 import { format } from "date-fns"
 import { Text, View } from "@react-pdf/renderer"
 import { localeCodeExists, localeCodeToLocale } from "@/lib/utils/date-fns"
 import { getErrorMessage } from "@/lib/utils/error"
-import { TextBlockTreeNode, TreeNodeType } from "@/features/trees/tree"
+import { TextBlockNode, TreeNodeType } from "@/features/trees/tree"
 import { PDFRenderNodeContentProps } from "@/features/pdf-renderer/pdf-render-node"
 import { usePDFRenderer } from "@/features/pdf-renderer/pdf-renderer-context"
 import { Trees } from "@/features/trees/trees.module"
@@ -30,13 +30,13 @@ export function PDFTextBlock({ nodeId }: PDFRenderNodeContentProps) {
       node={node}
       style={style}
     >
-      {renderContent(node.block.content, variables)}
+      {renderContent(node.data.content, variables)}
     </Content>
   )
 }
 
 type ContentProps = {
-  node: TextBlockTreeNode
+  node: TextBlockNode
   style: ViewStyle
   children: ReactNode
 }
@@ -44,7 +44,7 @@ type ContentProps = {
 function ContentPDF({ node, style, children }: ContentProps) {
   return (
     <View style={style}>
-      <Text style={node.block.textStyle}>
+      <Text style={node.data.textStyle}>
         {children}
       </Text>
     </View>
@@ -63,7 +63,7 @@ function ContentHTML({ node, style, children }: ContentProps) {
         onNodeClick?.(node.id)
       }}
     >
-      <span style={node.block.textStyle}>
+      <span style={node.data.textStyle}>
         {children}
       </span>
     </div>
@@ -71,12 +71,12 @@ function ContentHTML({ node, style, children }: ContentProps) {
 }
 
 function useVariables() {
-  const rootContext = useRootChapterContext()
-  const yearContext = useOptionalYearChapterContext()
-  const monthContext = useOptionalMonthChapterContext()
-  const weekContext = useOptionalWeekChapterContext()
-  const dayContext = useOptionalDayChapterContext()
-  const pageContext = useOptionalPageChapterContext()
+  const rootContext = useRootContext()
+  const yearContext = useOptionalYearContext()
+  const monthContext = useOptionalMonthContext()
+  const weekContext = useOptionalWeekContext()
+  const dayContext = useOptionalDayContext()
+  const pageContext = useOptionalPageContext()
 
   return {
     ...rootContext,

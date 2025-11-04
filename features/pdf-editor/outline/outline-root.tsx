@@ -5,8 +5,8 @@ import { TreeNodeType } from "@/features/trees/tree"
 import { Button } from "@/lib/ui/button"
 import { ChevronsUpDownIcon, Settings2Icon } from "lucide-react"
 
-export function OutlineRootChapter({ nodeId }: OutlineRenderNodeContentProps) {
-  const node = PDFEditor.useNodeOf(nodeId, TreeNodeType.RootChapter)
+export function OutlineRoot({ nodeId }: OutlineRenderNodeContentProps) {
+  const node = PDFEditor.useNodeOf(nodeId, TreeNodeType.Root)
 
   return (
     <>
@@ -20,7 +20,7 @@ export function OutlineRootChapter({ nodeId }: OutlineRenderNodeContentProps) {
           `}
           onClick={() => PDFEditor.selectNode(nodeId)}
         >
-          Planner {node.chapter.year}
+          Planner {node.data.year}
         </Button>
 
         <Button

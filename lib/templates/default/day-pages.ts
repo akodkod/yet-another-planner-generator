@@ -1,18 +1,18 @@
 import { BlockSizeType, BackgroundGridType, BackgroundGridSpacing } from "@/features/blocks/block-types"
-import { PageChapterTreeNode, TreeNodeType } from "@/features/trees/tree"
+import { PageNode, TreeNodeType } from "@/features/trees/tree"
 import { genTreeNodeId } from "@/features/trees/tree-gen"
 
-export const DefaultTemplateDayPage1: PageChapterTreeNode = {
-  id: genTreeNodeId(TreeNodeType.PageChapter),
-  type: TreeNodeType.PageChapter,
-  chapter: {
+export const DefaultTemplateDayPage1: PageNode = {
+  id: genTreeNodeId(TreeNodeType.Page),
+  type: TreeNodeType.Page,
+  data: {
     name: "Tasks",
   },
   children: [
     {
       id: genTreeNodeId(TreeNodeType.ColumnBlock),
       type: TreeNodeType.ColumnBlock,
-      block: {
+      data: {
         spacing: 0,
         style: {
           padding: 96,
@@ -28,7 +28,7 @@ export const DefaultTemplateDayPage1: PageChapterTreeNode = {
         {
           id: genTreeNodeId(TreeNodeType.RowBlock),
           type: TreeNodeType.RowBlock,
-          block: {
+          data: {
             spacing: 16,
             style: {
               alignItems: "center",
@@ -45,7 +45,7 @@ export const DefaultTemplateDayPage1: PageChapterTreeNode = {
             {
               id: genTreeNodeId(TreeNodeType.TextBlock),
               type: TreeNodeType.TextBlock,
-              block: {
+              data: {
                 content: "{{format-date dayDate \"do 'of' LLLL\"}}",
                 style: {},
                 textStyle: {
@@ -63,7 +63,7 @@ export const DefaultTemplateDayPage1: PageChapterTreeNode = {
             {
               id: genTreeNodeId(TreeNodeType.TextBlock),
               type: TreeNodeType.TextBlock,
-              block: {
+              data: {
                 content: "{{format-date dayDate 'EEEE'}}",
                 style: {
                   marginTop: 8,
@@ -87,7 +87,7 @@ export const DefaultTemplateDayPage1: PageChapterTreeNode = {
         {
           id: genTreeNodeId(TreeNodeType.BackgroundGridBlock),
           type: TreeNodeType.BackgroundGridBlock,
-          block: {
+          data: {
             gridType: BackgroundGridType.Dots,
             gridColor: "#ccc",
             gridLineWidth: 1,
@@ -109,17 +109,17 @@ export const DefaultTemplateDayPage1: PageChapterTreeNode = {
   ],
 }
 
-export const DefaultTemplateDayPage2: PageChapterTreeNode = {
-  id: genTreeNodeId(TreeNodeType.PageChapter),
-  type: TreeNodeType.PageChapter,
-  chapter: {
+export const DefaultTemplateDayPage2: PageNode = {
+  id: genTreeNodeId(TreeNodeType.Page),
+  type: TreeNodeType.Page,
+  data: {
     name: "Notes",
   },
   children: [
     {
       id: genTreeNodeId(TreeNodeType.ColumnBlock),
       type: TreeNodeType.ColumnBlock,
-      block: {
+      data: {
         spacing: 0,
         style: {
           padding: 96,
@@ -135,7 +135,7 @@ export const DefaultTemplateDayPage2: PageChapterTreeNode = {
         {
           id: genTreeNodeId(TreeNodeType.RowBlock),
           type: TreeNodeType.RowBlock,
-          block: {
+          data: {
             spacing: 16,
             style: {
               alignItems: "center",
@@ -152,7 +152,7 @@ export const DefaultTemplateDayPage2: PageChapterTreeNode = {
             {
               id: genTreeNodeId(TreeNodeType.TextBlock),
               type: TreeNodeType.TextBlock,
-              block: {
+              data: {
                 content: "{{format-date dayDate \"do 'of' LLLL\"}}\r\nNotes",
                 style: {},
                 textStyle: {
@@ -170,7 +170,7 @@ export const DefaultTemplateDayPage2: PageChapterTreeNode = {
             {
               id: genTreeNodeId(TreeNodeType.TextBlock),
               type: TreeNodeType.TextBlock,
-              block: {
+              data: {
                 content: "{{format-date dayDate 'EEEE'}}",
                 style: {
                   marginTop: 8,
@@ -194,7 +194,7 @@ export const DefaultTemplateDayPage2: PageChapterTreeNode = {
         {
           id: genTreeNodeId(TreeNodeType.BackgroundGridBlock),
           type: TreeNodeType.BackgroundGridBlock,
-          block: {
+          data: {
             gridType: BackgroundGridType.Dots,
             gridColor: "#ccc",
             gridLineWidth: 1,

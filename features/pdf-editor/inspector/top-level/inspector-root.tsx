@@ -14,15 +14,15 @@ const schema = z.object({
   pageHeight: z.coerce.number().min(1024).max(4096),
 })
 
-export function InspectorRootChapter({ nodeId }: InspectorRenderNodeProps) {
+export function InspectorRoot({ nodeId }: InspectorRenderNodeProps) {
   const treeId = PDFEditor.useTreeId()
-  const node = PDFEditor.useNodeOf(nodeId, TreeNodeType.RootChapter)
+  const node = PDFEditor.useNodeOf(nodeId, TreeNodeType.Root)
 
   const form = useAppForm({
     defaultValues: {
-      year: node.chapter.year as Any,
-      pageWidth: node.chapter.pageWidth as Any,
-      pageHeight: node.chapter.pageHeight as Any,
+      year: node.data.year as Any,
+      pageWidth: node.data.pageWidth as Any,
+      pageHeight: node.data.pageHeight as Any,
     },
     validators: {
       onChange: schema,
@@ -35,8 +35,8 @@ export function InspectorRootChapter({ nodeId }: InspectorRenderNodeProps) {
 
         Trees.updateNode(treeId, node, (node) => ({
           ...node,
-          chapter: {
-            ...node.chapter,
+          data: {
+            ...node.data,
             ...data,
           },
         }))
@@ -57,7 +57,7 @@ export function InspectorRootChapter({ nodeId }: InspectorRenderNodeProps) {
               {(field) => (
                 <field.Input
                   label="Year"
-                  hint="The year of the chapter"
+                  hint="The year of the "
                   type="number"
                 />
               )}

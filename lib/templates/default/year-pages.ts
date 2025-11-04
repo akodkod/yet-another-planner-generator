@@ -1,19 +1,19 @@
 import { BlockSizeType } from "@/features/blocks/block-types"
-import { genChapterId, genBlockId } from "@/lib/templates/template-utils"
-import { PageChapterTreeNode, TreeNodeType } from "@/features/trees/tree"
+import { genId, genBlockId } from "@/lib/templates/template-utils"
+import { PageNode, TreeNodeType } from "@/features/trees/tree"
 import { genTreeNodeId } from "@/features/trees/tree-gen"
 
-export const DefaultTemplateYearStartsPage: PageChapterTreeNode = {
-  id: genChapterId(),
-  type: TreeNodeType.PageChapter,
-  chapter: {
+export const DefaultTemplateYearStartsPage: PageNode = {
+  id: genId(),
+  type: TreeNodeType.Page,
+  data: {
     name: "Year starts",
   },
   children: [
     {
       id: genBlockId(),
       type: TreeNodeType.ColumnBlock,
-      block: {
+      data: {
         spacing: 0,
         style: {
           alignItems: "center",
@@ -33,7 +33,7 @@ export const DefaultTemplateYearStartsPage: PageChapterTreeNode = {
         {
           id: genBlockId(),
           type: TreeNodeType.TextBlock,
-          block: {
+          data: {
             content: "{{year}}",
             style: {},
             textStyle: {
@@ -52,7 +52,7 @@ export const DefaultTemplateYearStartsPage: PageChapterTreeNode = {
         {
           id: genBlockId(),
           type: TreeNodeType.TextBlock,
-          block: {
+          data: {
             content: "Super Cool Planner",
             style: {},
             textStyle: {
@@ -75,17 +75,17 @@ export const DefaultTemplateYearStartsPage: PageChapterTreeNode = {
   ],
 }
 
-export const DefaultTemplateYearEndsPage: PageChapterTreeNode = {
-  id: genChapterId(),
-  type: TreeNodeType.PageChapter,
-  chapter: {
+export const DefaultTemplateYearEndsPage: PageNode = {
+  id: genId(),
+  type: TreeNodeType.Page,
+  data: {
     name: "Year ends",
   },
   children: [
     {
       id: genTreeNodeId(TreeNodeType.ColumnBlock),
       type: TreeNodeType.ColumnBlock,
-      block: {
+      data: {
         spacing: 0,
         style: {
           alignItems: "center",
@@ -105,7 +105,7 @@ export const DefaultTemplateYearEndsPage: PageChapterTreeNode = {
         {
           id: genTreeNodeId(TreeNodeType.TextBlock),
           type: TreeNodeType.TextBlock,
-          block: {
+          data: {
             content: "Bye {{year}}",
             style: {},
             textStyle: {
@@ -124,7 +124,7 @@ export const DefaultTemplateYearEndsPage: PageChapterTreeNode = {
         {
           id: genTreeNodeId(TreeNodeType.TextBlock),
           type: TreeNodeType.TextBlock,
-          block: {
+          data: {
             content: "See you next year!",
             style: {},
             textStyle: {

@@ -1,12 +1,12 @@
-import { TreeNode, BlockTreeNode, ChapterTreeNode, TreeNodeChapterTypes, TreeNodeChapterType, TreeNodeBlockType, TreeNodeBlockTypes, TreeNodeType, TreeNodeByType } from "@/features/trees/tree"
+import { TreeNode, BlockNode, Node, TreeNodeTopLevelTypes, TreeNodeSectionType, TreeNodeBlockType, TreeNodeBlockTypes, TreeNodeType, TreeNodeByType } from "@/features/trees/tree"
 import { genTreeNodeId } from "@/features/trees/tree-gen"
 import { Any } from "@/lib/utils/types"
 
-export function isChapterTreeNode(node: TreeNode): node is ChapterTreeNode {
-  return TreeNodeChapterTypes.includes(node.type as TreeNodeChapterType)
+export function isNode(node: TreeNode): node is Node {
+  return TreeNodeTopLevelTypes.includes(node.type as TreeNodeSectionType)
 }
 
-export function isBlockTreeNode(node: TreeNode): node is BlockTreeNode {
+export function isBlockNode(node: TreeNode): node is BlockNode {
   return TreeNodeBlockTypes.includes(node.type as TreeNodeBlockType)
 }
 

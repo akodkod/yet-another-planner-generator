@@ -6,33 +6,33 @@ import { DefaultTemplateWeekStartsPage1, DefaultTemplateWeekEndsPage, DefaultTem
 import { DefaultTemplateYearStartsPage, DefaultTemplateYearEndsPage } from "@/lib/templates/default/year-pages"
 
 export const DefaultTemplate: PDFTree = {
-  id: genTreeNodeId(TreeNodeType.RootChapter),
-  type: TreeNodeType.RootChapter,
-  chapter: {
+  id: genTreeNodeId(TreeNodeType.Root),
+  type: TreeNodeType.Root,
+  data: {
     year: 2025,
     pageWidth: 1620,
     pageHeight: 2160,
   },
   children: [
     {
-      id: genTreeNodeId(TreeNodeType.YearChapter),
-      type: TreeNodeType.YearChapter,
+      id: genTreeNodeId(TreeNodeType.Year),
+      type: TreeNodeType.Year,
       children: [
         DefaultTemplateYearStartsPage,
         {
-          id: genTreeNodeId(TreeNodeType.MonthChapter),
-          type: TreeNodeType.MonthChapter,
+          id: genTreeNodeId(TreeNodeType.Month),
+          type: TreeNodeType.Month,
           children: [
             DefaultTemplateMonthStartsPage,
             {
-              id: genTreeNodeId(TreeNodeType.WeekChapter),
-              type: TreeNodeType.WeekChapter,
+              id: genTreeNodeId(TreeNodeType.Week),
+              type: TreeNodeType.Week,
               children: [
                 DefaultTemplateWeekStartsPage1,
                 DefaultTemplateWeekStartsPage2,
                 {
-                  id: genTreeNodeId(TreeNodeType.DayChapter),
-                  type: TreeNodeType.DayChapter,
+                  id: genTreeNodeId(TreeNodeType.Day),
+                  type: TreeNodeType.Day,
                   children: [
                     DefaultTemplateDayPage1,
                     DefaultTemplateDayPage2,

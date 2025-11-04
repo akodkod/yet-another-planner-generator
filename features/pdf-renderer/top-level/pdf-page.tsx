@@ -1,4 +1,4 @@
-import { PageChapterContext, useRootChapterContext } from "@/features/chapters/chapter-contexts"
+import { PageContext, useRootContext } from "@/features/pdf-renderer/pdf-renderer-contexts"
 import { PDFRenderChildren } from "@/features/pdf-renderer/pdf-render-children"
 import { PDFRenderNodeContentProps } from "@/features/pdf-renderer/pdf-render-node"
 import { usePDFRenderer } from "@/features/pdf-renderer/pdf-renderer-context"
@@ -7,11 +7,11 @@ import { Trees } from "@/features/trees/trees.module"
 import { Page } from "@react-pdf/renderer"
 import { ReactNode } from "react"
 
-export function PDFPageChapter({ nodeId }: PDFRenderNodeContentProps) {
+export function PDFPage({ nodeId }: PDFRenderNodeContentProps) {
   const { treeId, html, pageIdsToRender } = usePDFRenderer()
-  const node = Trees.useNodeOf(treeId, nodeId, TreeNodeType.PageChapter)
+  const node = Trees.useNodeOf(treeId, nodeId, TreeNodeType.Page)
 
-  const { pageWidth, pageHeight } = useRootChapterContext()
+  const { pageWidth, pageHeight } = useRootContext()
 
   if (pageIdsToRender && !pageIdsToRender.includes(node.id)) {
     return null
@@ -20,14 +20,14 @@ export function PDFPageChapter({ nodeId }: PDFRenderNodeContentProps) {
   const Content = html ? ContentHTML : ContentPDF
 
   return (
-    <PageChapterContext.Provider value={{}}>
+    <PageContext.Provider value={{}}>
       <Content
         pageWidth={pageWidth}
         pageHeight={pageHeight}
       >
         <PDFRenderChildren nodeId={node.id} />
       </Content>
-    </PageChapterContext.Provider>
+    </PageContext.Provider>
   )
 }
 

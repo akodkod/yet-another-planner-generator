@@ -1,6 +1,6 @@
 import { InspectorRenderNodeProps } from "@/features/pdf-editor/inspector/inspector"
 import { Trees } from "@/features/trees/trees.module"
-import { BlockTreeNode, TreeNodeBlockTypes } from "@/features/trees/tree"
+import { BlockNode, TreeNodeBlockTypes } from "@/features/trees/tree"
 import { FieldSet } from "@/lib/ui/field"
 import { InputGroupAddon, InputGroupText } from "@/lib/ui/input-group"
 import { Transform } from "@/lib/utils/react-pdf"
@@ -24,8 +24,8 @@ export function InspectorBaseBlock({ nodeId }: InspectorRenderNodeProps) {
   const treeId = PDFEditor.useTreeId()
   const node = PDFEditor.useNodeAnyOf(nodeId, TreeNodeBlockTypes)
 
-  const packedTransforms = Array.isArray(node.block.style.transform)
-    ? node.block.style.transform
+  const packedTransforms = Array.isArray(node.data.style.transform)
+    ? node.data.style.transform
     : []
 
   const initialTransforms = unpackTransforms(packedTransforms)
@@ -60,12 +60,12 @@ export function InspectorBaseBlock({ nodeId }: InspectorRenderNodeProps) {
         }
 
         // @ts-expect-error -- TODO: Fix this
-        Trees.updateNode(treeId, node as BlockTreeNode, (node) => ({
+        Trees.updateNode(treeId, node as BlockNode, (node) => ({
           ...node,
-          block: {
-            ...node.block,
+          data: {
+            ...node.data,
             style: {
-              ...node.block.style,
+              ...node.data.style,
               transform: packTransforms(transforms),
             },
           },

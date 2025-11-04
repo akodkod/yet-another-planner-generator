@@ -2,7 +2,7 @@ import { convertPDFStyleToHTMLStyle, getBaseBlockStyle } from "@/features/pdf-re
 import { PDFRenderChildren } from "@/features/pdf-renderer/pdf-render-children"
 import { PDFRenderNodeContentProps } from "@/features/pdf-renderer/pdf-render-node"
 import { usePDFRenderer } from "@/features/pdf-renderer/pdf-renderer-context"
-import { ColumnBlockTreeNode, TreeNodeType } from "@/features/trees/tree"
+import { ColumnBlockNode, TreeNodeType } from "@/features/trees/tree"
 import { ViewStyle } from "@/lib/utils/react-pdf"
 import { View } from "@react-pdf/renderer"
 import { Trees } from "@/features/trees/trees.module"
@@ -18,7 +18,7 @@ export function PDFColumnBlock({ nodeId }: PDFRenderNodeContentProps) {
     ...getBaseBlockStyle(node, parent),
     display: "flex",
     flexDirection: "column",
-    gap: node.block.spacing,
+    gap: node.data.spacing,
   }
 
   const Content = html ? ContentHTML : ContentPDF
@@ -34,7 +34,7 @@ export function PDFColumnBlock({ nodeId }: PDFRenderNodeContentProps) {
 }
 
 type ContentProps = {
-  node: ColumnBlockTreeNode
+  node: ColumnBlockNode
   style: ViewStyle
   children: ReactNode
 }

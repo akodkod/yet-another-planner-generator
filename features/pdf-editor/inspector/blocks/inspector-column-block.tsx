@@ -21,7 +21,7 @@ export function InspectorColumnBlock({ nodeId }: InspectorRenderNodeProps) {
 
   const form = useAppForm({
     defaultValues: {
-      spacing: node.block.spacing as Any,
+      spacing: node.data.spacing as Any,
     },
     validators: {
       onChange: schema,
@@ -34,8 +34,8 @@ export function InspectorColumnBlock({ nodeId }: InspectorRenderNodeProps) {
 
         Trees.updateNode(treeId, node, (node) => ({
           ...node,
-          block: {
-            ...node.block,
+          data: {
+            ...node.data,
             spacing: data.spacing,
           },
         }))

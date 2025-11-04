@@ -1,8 +1,8 @@
 import { OutlineAnyBlock } from "@/features/pdf-editor/outline/outline-any-block"
-import { OutlineAnyChapter } from "@/features/pdf-editor/outline/outline-any-chapter"
-import { OutlinePageChapter } from "@/features/pdf-editor/outline/outline-page-chapter"
-import { OutlineRootChapter } from "@/features/pdf-editor/outline/outline-root-chapter"
-import { OutlineYearChapter } from "@/features/pdf-editor/outline/outline-year-chapter"
+import { OutlineAnyTopLevel } from "@/features/pdf-editor/outline/outline-any-top-level"
+import { OutlinePage } from "@/features/pdf-editor/outline/outline-page"
+import { OutlineRoot } from "@/features/pdf-editor/outline/outline-root"
+import { OutlineYear } from "@/features/pdf-editor/outline/outline-year"
 import { TreeNode, TreeNodeType } from "@/features/trees/tree"
 import { ComponentType } from "react"
 
@@ -23,12 +23,12 @@ const componentsMap: Record<
   TreeNodeType,
   ComponentType<OutlineRenderNodeContentProps>
 > = {
-  [TreeNodeType.RootChapter]: OutlineRootChapter,
-  [TreeNodeType.YearChapter]: OutlineYearChapter,
-  [TreeNodeType.MonthChapter]: OutlineAnyChapter,
-  [TreeNodeType.WeekChapter]: OutlineAnyChapter,
-  [TreeNodeType.DayChapter]: OutlineAnyChapter,
-  [TreeNodeType.PageChapter]: OutlinePageChapter,
+  [TreeNodeType.Root]: OutlineRoot,
+  [TreeNodeType.Year]: OutlineYear,
+  [TreeNodeType.Month]: OutlineAnyTopLevel,
+  [TreeNodeType.Week]: OutlineAnyTopLevel,
+  [TreeNodeType.Day]: OutlineAnyTopLevel,
+  [TreeNodeType.Page]: OutlinePage,
   [TreeNodeType.ColumnBlock]: OutlineAnyBlock,
   [TreeNodeType.RowBlock]: OutlineAnyBlock,
   [TreeNodeType.TextBlock]: OutlineAnyBlock,

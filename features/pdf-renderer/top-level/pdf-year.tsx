@@ -1,4 +1,4 @@
-import { useRootChapterContext, YearChapterContext } from "@/features/chapters/chapter-contexts"
+import { useRootContext, YearContext } from "@/features/pdf-renderer/pdf-renderer-contexts"
 import { PDFRenderChildren } from "@/features/pdf-renderer/pdf-render-children"
 import { PDFRenderNodeContentProps } from "@/features/pdf-renderer/pdf-render-node"
 import { usePDFRenderer } from "@/features/pdf-renderer/pdf-renderer-context"
@@ -7,11 +7,11 @@ import { Trees } from "@/features/trees/trees.module"
 import { tz } from "@date-fns/tz"
 import { eachYearOfInterval, endOfYear, getYear, startOfYear } from "date-fns"
 
-export function PDFYearChapter({ nodeId }: PDFRenderNodeContentProps) {
+export function PDFYear({ nodeId }: PDFRenderNodeContentProps) {
   const { treeId } = usePDFRenderer()
-  const node = Trees.useNodeOf(treeId, nodeId, TreeNodeType.YearChapter)
+  const node = Trees.useNodeOf(treeId, nodeId, TreeNodeType.Year)
 
-  const { startDate, endDate } = useRootChapterContext()
+  const { startDate, endDate } = useRootContext()
 
   const years = eachYearOfInterval({
     start: startDate,
@@ -21,7 +21,7 @@ export function PDFYearChapter({ nodeId }: PDFRenderNodeContentProps) {
   })
 
   return years.map((year) => (
-    <YearChapterContext.Provider
+    <YearContext.Provider
       key={year.toString()}
       value={{
         year: getYear(year),
@@ -31,6 +31,6 @@ export function PDFYearChapter({ nodeId }: PDFRenderNodeContentProps) {
       }}
     >
       <PDFRenderChildren nodeId={node.id} />
-    </YearChapterContext.Provider>
+    </YearContext.Provider>
   ))
 }
