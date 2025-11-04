@@ -11,12 +11,14 @@ export function useMeasure() {
     setHeight(node.clientHeight)
 
     const observer = new ResizeObserver((entries) => {
-      const entry = entries[0]
+      requestAnimationFrame(() => {
+        const entry = entries[0]
 
-      if (entry) {
-        setWidth(entry.contentRect.width)
-        setHeight(entry.contentRect.height)
-      }
+        if (entry) {
+          setWidth(entry.contentRect.width)
+          setHeight(entry.contentRect.height)
+        }
+      })
     })
 
     observer.observe(node)

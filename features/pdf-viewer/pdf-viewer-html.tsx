@@ -3,63 +3,64 @@ import { PDFRenderer } from "@/features/pdf-renderer/pdf-renderer"
 import { PDFViewerPagination } from "@/features/pdf-viewer/pdf-viewer-pagination"
 import { TreeNodeType } from "@/features/trees/tree"
 import { Trees } from "@/features/trees/trees.module"
+import { useMeasure } from "@/lib/hooks/use-measure"
 import { motion } from "motion/react"
 import { CSSProperties, useState } from "react"
 
 export type PDFViewerPropsHTML = {
   treeId: string
-  availableWidth: number
-  availableHeight: number
 }
 
-export function PDFViewerHTML({ treeId, availableWidth, availableHeight }: PDFViewerPropsHTML) {
+export function PDFViewerHTML({ treeId }: PDFViewerPropsHTML) {
   const rootNode = Trees.useNodeOf(treeId, treeId, TreeNodeType.RootChapter)
-  const selectedNodeId = PDFEditor.useOptionalSelectedNodeId()
-  const parentPageNode = PDFEditor.useParentNodeOfType(selectedNodeId, TreeNodeType.PageChapter)
+  // const selectedNodeId = PDFEditor.useOptionalSelectedNodeId()
+  // const parentPageNode = PDFEditor.useParentNodeOfType(selectedNodeId, TreeNodeType.PageChapter)
 
+  const { ref, width: availableWidth, height: availableHeight } = useMeasure()
   const { pageWidth, pageHeight } = rootNode.chapter
 
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, _setTotalPages] = useState(1024)
 
-  const aspectRatio = pageWidth / pageHeight
+  const hasSize = availableWidth > 0 && availableHeight > 0
+
   const isHeightLimited = availableHeight < pageHeight
   const scale = isHeightLimited ? availableHeight / pageHeight : availableWidth / pageWidth
 
-  const viewWidth = isHeightLimited ? availableWidth : availableWidth / aspectRatio
-  const viewHeight = isHeightLimited ? availableHeight : availableHeight * aspectRatio
-
-  const pageWidthScaled = pageWidth * scale
-  const pageHeightScaled = pageHeight * scale
+  const pdfWidthScaled = pageWidth * scale
+  const pdfHeightScaled = pageHeight * scale
 
   const handleNodeClick = (nodeId: string) => {
     PDFEditor.selectNode(nodeId)
   }
 
   return (
-    <motion.div
-      transition={{ duration: 0.2 }}
-      animate={{ width: viewWidth, height: viewHeight }}
-      className="grid place-items-center"
+    <div
+      ref={ref}
+      className="size-full grid place-items-center"
     >
       <motion.div
-        transition={{ duration: 0.2 }}
-        animate={{ width: pageWidthScaled, height: pageHeightScaled }}
-        className="overflow-hidden bg-white shadow-xs rounded-xl relative"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: hasSize ? 1 : 0, width: pdfWidthScaled, height: pdfHeightScaled }}
+        transition={{ duration: 0.2, ease: "easeOut" }}
+        className="overflow-hidden relative border-1 rounded-sm shadow-xs"
       >
         <motion.div
-          transition={{ duration: 0.2 }}
-          animate={{ width: pageWidth, height: pageHeight, scale }}
-          style={{
-            "--scroller-position": `-${(currentPage - 1) * pageWidth}px`,
-          } as CSSProperties}
-          className="origin-top-left text-black"
+          transition={{ duration: 0.2, ease: "easeOut" }}
+          animate={{
+            width: pageWidth,
+            height: pageHeight,
+            scale,
+            translateX: `-${(pageWidth - pdfWidthScaled) / 2}px`,
+            translateY: `-${(pageHeight - pdfHeightScaled) / 2}px`,
+          }}
+          style={{ "--scroller-position": `-${(currentPage - 1) * pageWidth}px` } as CSSProperties}
+          className="text-black"
         >
           <PDFRenderer
             html
             treeId={treeId}
-            selectedNodeId={selectedNodeId}
-            pageIdsToRender={parentPageNode ? [parentPageNode.id] : undefined}
+            // pageIdsToRender={parentPageNode ? [parentPageNode.id] : undefined}
             onNodeClick={handleNodeClick}
           />
         </motion.div>
@@ -71,6 +72,6 @@ export function PDFViewerHTML({ treeId, availableWidth, availableHeight }: PDFVi
           onNext={() => setCurrentPage(currentPage + 1)}
         />
       </motion.div>
-    </motion.div>
+    </div>
   )
 }

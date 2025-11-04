@@ -68,6 +68,19 @@ class TreesModule extends StoreModule<Store> {
     })
   }
 
+  useRootNodeOf<T extends TreeNodeType>(treeId: string, type: T): TreeNodeByType<T> {
+    return this.useDeepShallow((state) => {
+      const tree = state.trees[treeId]
+      assert(tree, `Tree "${treeId}" not found`)
+      assert(tree.type === type, `Tree "${treeId}" is not of type ${type}`)
+
+      return {
+        ...tree,
+        children: [],
+      } as TreeNodeByType<T>
+    })
+  }
+
   useNode(treeId: string, nodeId: string): TreeNode {
     return this.useDeepShallow((state) => {
       const tree = state.trees[treeId]

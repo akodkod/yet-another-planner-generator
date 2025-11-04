@@ -102,38 +102,6 @@ const eslintConfig = defineConfig(
       "better-tailwindcss/no-unregistered-classes": ["error", {
         ignore: ["toaster", "full-size-children-center"],
       }],
-      "better-tailwindcss/no-restricted-classes": [
-        "error",
-        {
-          restrict: [
-            {
-              fix: "$1$2-success$4",
-              message: "Restricted class: Use '$1$2-success$4' instead.",
-              pattern: "^([a-zA-Z0-9:/_-]*:)?(text|bg)-green-(400|500|600)(\\/[0-9]{1,3})?$",
-            },
-            {
-              fix: "$1$2-warning$4",
-              message: "Restricted class: Use '$1$2-warning$4' instead.",
-              pattern: "^([a-zA-Z0-9:/_-]*:)?(text|bg)-yellow-(400|500|600)(\\/[0-9]{1,3})?$",
-            },
-            {
-              fix: "$1$2-danger$4",
-              message: "Restricted class: Use '$1$2-danger$4' instead.",
-              pattern: "^([a-zA-Z0-9:/_-]*:)?(text|bg)-red-(400|500|600)(\\/[0-9]{1,3})?$",
-            },
-            {
-              fix: "$1$2-muted-foreground$4",
-              message: "Restricted class: Use '$1$2-muted-foreground$4' instead.",
-              pattern: "^([a-zA-Z0-9:/_-]*:)?(text|bg)-gray-(600|700)(\\/[0-9]{1,3})?$",
-            },
-            {
-              fix: "$2$3-muted-foreground$5",
-              message: "Restricted class: Use '$2$3-muted-foreground$5' instead.",
-              pattern: "^([a-zA-Z0-9:/_-]*:)?dark:([a-zA-Z0-9:/_-]*:)?(text|bg)-zinc-(200|300)(\\/[0-9]{1,3})?$",
-            },
-          ],
-        },
-      ],
     },
   },
   {

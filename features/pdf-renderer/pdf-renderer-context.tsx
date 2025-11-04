@@ -3,7 +3,6 @@ import { createContext, ReactNode } from "react"
 
 export type PDFRendererOptions = {
   html?: boolean
-  selectedNodeId?: string | null
   pageIdsToRender?: string[]
   onNodeClick?: (nodeId: string) => void
 }
