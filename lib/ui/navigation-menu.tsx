@@ -151,7 +151,7 @@ function NavigationMenuViewport({
         data-slot="navigation-menu-viewport"
         className={cn(
           `
-            origin-top-center bg-popover text-popover-foreground
+            bg-popover text-popover-foreground
             data-[state=open]:animate-in
             data-[state=closed]:animate-out data-[state=closed]:zoom-out-95
             data-[state=open]:zoom-in-90

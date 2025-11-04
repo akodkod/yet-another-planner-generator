@@ -114,7 +114,7 @@ type CSSKeys = keyof CSSProperties
 type PDFStyleKeys = keyof ViewStyle
 
 // TODO: Use it
-const PassThroughCSSProperties: (CSSKeys | PDFStyleKeys)[] = [
+const _PassThroughCSSProperties: (CSSKeys | PDFStyleKeys)[] = [
   "display",
   "width",
   "height",

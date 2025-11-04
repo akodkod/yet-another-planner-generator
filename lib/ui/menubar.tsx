@@ -23,28 +23,34 @@ function Menubar({
 function MenubarMenu({
   ...props
 }: React.ComponentProps<typeof MenubarPrimitive.Menu>) {
-  return <MenubarPrimitive.Menu
-    data-slot="menubar-menu"
-    {...props}
-  />
+  return (
+    <MenubarPrimitive.Menu
+      data-slot="menubar-menu"
+      {...props}
+    />
+  )
 }
 
 function MenubarGroup({
   ...props
 }: React.ComponentProps<typeof MenubarPrimitive.Group>) {
-  return <MenubarPrimitive.Group
-    data-slot="menubar-group"
-    {...props}
-  />
+  return (
+    <MenubarPrimitive.Group
+      data-slot="menubar-group"
+      {...props}
+    />
+  )
 }
 
 function MenubarPortal({
   ...props
 }: React.ComponentProps<typeof MenubarPrimitive.Portal>) {
-  return <MenubarPrimitive.Portal
-    data-slot="menubar-portal"
-    {...props}
-  />
+  return (
+    <MenubarPrimitive.Portal
+      data-slot="menubar-portal"
+      {...props}
+    />
+  )
 }
 
 function MenubarRadioGroup({
@@ -266,10 +272,12 @@ function MenubarShortcut({
 function MenubarSub({
   ...props
 }: React.ComponentProps<typeof MenubarPrimitive.Sub>) {
-  return <MenubarPrimitive.Sub
-    data-slot="menubar-sub"
-    {...props}
-  />
+  return (
+    <MenubarPrimitive.Sub
+      data-slot="menubar-sub"
+      {...props}
+    />
+  )
 }
 
 function MenubarSubTrigger({

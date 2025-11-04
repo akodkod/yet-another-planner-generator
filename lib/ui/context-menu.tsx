@@ -9,10 +9,12 @@ import { cn } from "@/lib/ui/utils"
 function ContextMenu({
   ...props
 }: React.ComponentProps<typeof ContextMenuPrimitive.Root>) {
-  return <ContextMenuPrimitive.Root
-    data-slot="context-menu"
-    {...props}
-  />
+  return (
+    <ContextMenuPrimitive.Root
+      data-slot="context-menu"
+      {...props}
+    />
+  )
 }
 
 function ContextMenuTrigger({
@@ -51,10 +53,12 @@ function ContextMenuPortal({
 function ContextMenuSub({
   ...props
 }: React.ComponentProps<typeof ContextMenuPrimitive.Sub>) {
-  return <ContextMenuPrimitive.Sub
-    data-slot="context-menu-sub"
-    {...props}
-  />
+  return (
+    <ContextMenuPrimitive.Sub
+      data-slot="context-menu-sub"
+      {...props}
+    />
+  )
 }
 
 function ContextMenuRadioGroup({

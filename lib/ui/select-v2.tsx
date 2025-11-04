@@ -87,7 +87,7 @@ export function Select<ItemValue, SelectedValue = ItemValue, Multiple extends bo
         className={cn(
           `
             relative flex h-9 w-full max-w-lg min-w-52 cursor-pointer items-center gap-0 rounded-(--input-rounding)
-            border-[0.5px] border-border bg-white pr-1.5 pl-3 shadow-xs transition-all
+            border border-border bg-white pr-1.5 pl-3 shadow-xs transition-all
             focus-visible:border-ring/60 focus-visible:ring-[3px] focus-visible:ring-ring/40 focus-visible:outline-0
             enabled:hover:bg-accent/50
             disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50
@@ -97,8 +97,8 @@ export function Select<ItemValue, SelectedValue = ItemValue, Multiple extends bo
             data-[size=sm]:h-8 data-[size=sm]:pr-1 data-[size=sm]:pl-2.5
             dark:bg-input/30 dark:hover:bg-input/40 dark:aria-invalid:border-destructive/80
             dark:aria-invalid:ring-destructive/45
-            enabled:hover:[&_[data-slot="combobox-icon"]]:bg-accent/100
-            aria-invalid:[&_[data-slot="icon"]]:text-destructive/75
+            enabled:hover:**:data-[slot="combobox-icon"]:bg-accent
+            aria-invalid:**:data-[slot="icon"]:text-destructive/75
           `,
           className,
         )}
@@ -184,11 +184,11 @@ export function Select<ItemValue, SelectedValue = ItemValue, Multiple extends bo
                 origin-(--transform-origin) scroll-py-2 overflow-y-auto overscroll-contain rounded-md bg-popover py-2
                 text-popover-foreground shadow-lg outline-1 -outline-offset-1 outline-border
                 transition-[transform,scale,opacity]
-                data-[ending-style]:scale-95 data-[ending-style]:opacity-0
-                data-[side=none]:data-[ending-style]:transition-none
-                data-[starting-style]:scale-95 data-[starting-style]:opacity-0
-                data-[side=none]:data-[starting-style]:scale-100 data-[side=none]:data-[starting-style]:opacity-100
-                data-[side=none]:data-[starting-style]:transition-none
+                data-ending-style:scale-95 data-ending-style:opacity-0
+                data-[side=none]:data-ending-style:transition-none
+                data-starting-style:scale-95 data-starting-style:opacity-0
+                data-[side=none]:data-starting-style:scale-100 data-[side=none]:data-starting-style:opacity-100
+                data-[side=none]:data-starting-style:transition-none
                 dark:shadow-none
               `,
               popupClassName,
@@ -202,7 +202,7 @@ export function Select<ItemValue, SelectedValue = ItemValue, Multiple extends bo
                       variant="muted"
                       icon={SearchIcon}
                       placeholder={placeholderSearch ?? "Search"}
-                      className={"[&_[data-slot='icon']]:ml-2 [&_[data-slot='icon']]:size-3.5"}
+                      className={"**:data-[slot='icon']:ml-2 **:data-[slot='icon']:size-3.5"}
                       {...props}
                     />
                   )}
@@ -231,10 +231,10 @@ export function Select<ItemValue, SelectedValue = ItemValue, Multiple extends bo
                       `
                         group/item grid cursor-default grid-cols-[0.875rem_1fr_auto] items-center gap-2 py-2 pr-5 pl-4
                         text-sm leading-4 outline-none select-none
-                        data-[highlighted]:relative data-[highlighted]:z-0 data-[highlighted]:text-accent-foreground
-                        data-[highlighted]:before:absolute data-[highlighted]:before:inset-x-2
-                        data-[highlighted]:before:inset-y-0 data-[highlighted]:before:z-[-1]
-                        data-[highlighted]:before:rounded-sm data-[highlighted]:before:bg-accent
+                        data-highlighted:relative data-highlighted:z-0 data-highlighted:text-accent-foreground
+                        data-highlighted:before:absolute data-highlighted:before:inset-x-2
+                        data-highlighted:before:inset-y-0 data-highlighted:before:z-[-1]
+                        data-highlighted:before:rounded-sm data-highlighted:before:bg-accent
                       `,
                       item.bolder && "font-medium",
                       itemClassName,

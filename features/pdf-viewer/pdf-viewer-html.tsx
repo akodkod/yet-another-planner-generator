@@ -20,7 +20,7 @@ export function PDFViewerHTML({ treeId, availableWidth, availableHeight }: PDFVi
   const { pageWidth, pageHeight } = rootNode.chapter
 
   const [currentPage, setCurrentPage] = useState(1)
-  const [totalPages, setTotalPages] = useState(1024)
+  const [totalPages, _setTotalPages] = useState(1024)
 
   const aspectRatio = pageWidth / pageHeight
   const isHeightLimited = availableHeight < pageHeight
