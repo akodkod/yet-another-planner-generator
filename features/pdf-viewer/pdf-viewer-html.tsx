@@ -1,29 +1,27 @@
 import { PDFEditor } from "@/features/pdf-editor/pdf-editor.module"
-import { PDFRenderer } from "@/features/pdf-renderer/pdf-renderer"
-import { PDFViewerPagination } from "@/features/pdf-viewer/pdf-viewer-pagination"
+import { PDFRenderer, PDFRendererProps } from "@/features/pdf-renderer/pdf-renderer"
 import { TreeNodeType } from "@/features/trees/tree"
 import { Trees } from "@/features/trees/trees.module"
 import { useMeasure } from "@/lib/hooks/use-measure"
 import { motion } from "motion/react"
-import { CSSProperties, useState } from "react"
 
-export type PDFViewerPropsHTML = {
+export type PDFViewerPropsHTML = Pick<PDFRendererProps, "pageIdsToRender"> & {
   treeId: string
+  pageIdsToRender?: string[]
 }
 
-export function PDFViewerHTML({ treeId }: PDFViewerPropsHTML) {
+// TODO: Add pagination?
+export function PDFViewerHTML({ treeId, pageIdsToRender }: PDFViewerPropsHTML) {
   const rootNode = Trees.useNodeOf(treeId, treeId, TreeNodeType.Root)
-  // const selectedNodeId = PDFEditor.useOptionalSelectedNodeId()
-  // const parentPageNode = PDFEditor.useParentNodeOfType(selectedNodeId, TreeNodeType.Page)
 
   const { ref, width: availableWidth, height: availableHeight } = useMeasure()
-  const { pageWidth, pageHeight } = rootNode.data
 
-  const [currentPage, setCurrentPage] = useState(1)
-  const [totalPages, _setTotalPages] = useState(1024)
+  // const [currentPage, setCurrentPage] = useState(1)
+  // const [totalPages, setTotalPages] = useState(1024)
 
   const hasSize = availableWidth > 0 && availableHeight > 0
 
+  const { pageWidth, pageHeight } = rootNode.data
   const isHeightLimited = availableHeight < pageHeight
   const scale = isHeightLimited ? availableHeight / pageHeight : availableWidth / pageWidth
 
@@ -54,23 +52,23 @@ export function PDFViewerHTML({ treeId }: PDFViewerPropsHTML) {
             translateX: `-${(pageWidth - pdfWidthScaled) / 2}px`,
             translateY: `-${(pageHeight - pdfHeightScaled) / 2}px`,
           }}
-          style={{ "--scroller-position": `-${(currentPage - 1) * pageWidth}px` } as CSSProperties}
+          // style={{ "--scroller-position": `-${(currentPage - 1) * pageWidth}px` } as CSSProperties}
           className="text-black bg-white"
         >
           <PDFRenderer
             html
             treeId={treeId}
-            // pageIdsToRender={parentPageNode ? [parentPageNode.id] : undefined}
+            pageIdsToRender={pageIdsToRender}
             onNodeClick={handleNodeClick}
           />
         </motion.div>
 
-        <PDFViewerPagination
+        {/* <PDFViewerPagination
           currentPage={currentPage}
           totalPages={totalPages}
           onPrevious={() => setCurrentPage(currentPage - 1)}
           onNext={() => setCurrentPage(currentPage + 1)}
-        />
+        /> */}
       </motion.div>
     </div>
   )

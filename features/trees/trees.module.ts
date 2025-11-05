@@ -96,6 +96,23 @@ class TreesModule extends StoreModule<Store> {
     })
   }
 
+  useOptionalNode(treeId: string, nodeId: string | null): TreeNode | null {
+    return this.useDeepShallow((state) => {
+      if (!nodeId) return null
+
+      const tree = state.trees[treeId]
+      assert(tree, `Tree "${treeId}" not found`)
+
+      const node = findTreeNode(tree, nodeId)
+      if (!node) return null
+
+      return {
+        ...node,
+        children: [],
+      }
+    })
+  }
+
   useNodeOf<
     T extends TreeNodeType,
     R extends TreeNode = TreeNodeByType<T>,

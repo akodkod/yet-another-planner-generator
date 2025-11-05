@@ -128,3 +128,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .hover-pdf-highlight {
+    @apply hover:bg-violet-500/10 hover:border hover:border-violet-500/50;
+  }
+}

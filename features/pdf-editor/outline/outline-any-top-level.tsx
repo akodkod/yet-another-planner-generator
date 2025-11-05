@@ -13,7 +13,7 @@ export function OutlineAnyTopLevel({ nodeId }: OutlineRenderNodeContentProps) {
 
   return (
     <OutlineItem
-      icon={BookOpenIcon}
+      nodeId={nodeId}
       name={(
         <>
           <span className="flex-1 text-left">
@@ -24,6 +24,7 @@ export function OutlineAnyTopLevel({ nodeId }: OutlineRenderNodeContentProps) {
           </span>
         </>
       )}
+      icon={BookOpenIcon}
       alwaysExpanded={type === TreeNodeType.Root}
       className={cn(
         `

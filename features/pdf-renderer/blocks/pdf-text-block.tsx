@@ -1,4 +1,4 @@
-import { getBaseBlockStyle } from "@/features/pdf-renderer/blocks/pdf-base-block"
+import { getBaseBlockStyle, pdfStyleToHTML } from "@/features/pdf-renderer/blocks/pdf-base-block"
 import { useRootContext, useOptionalYearContext, useOptionalDayContext, useOptionalMonthContext, useOptionalPageContext, useOptionalWeekContext } from "@/features/pdf-renderer/pdf-renderer-contexts"
 import { ViewStyle } from "@/lib/utils/react-pdf"
 import Handlebars from "handlebars"
@@ -56,14 +56,14 @@ function ContentHTML({ node, style, children }: ContentProps) {
 
   return (
     <div
-      style={style}
-      className="cursor-pointer"
+      style={pdfStyleToHTML(style)}
+      className="relative cursor-pointer hover-pdf-highlight"
       onClick={(event) => {
         event.stopPropagation()
         onNodeClick?.(node.id)
       }}
     >
-      <span style={node.data.textStyle}>
+      <span style={pdfStyleToHTML(node.data.textStyle)}>
         {children}
       </span>
     </div>

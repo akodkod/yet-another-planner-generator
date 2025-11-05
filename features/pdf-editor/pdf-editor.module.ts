@@ -48,6 +48,13 @@ class PDFEditorModule extends StoreModule<Store> {
     return Trees.useNode(treeId, nodeId)
   }
 
+  useOptionalSelectedNode() {
+    const treeId = this.useRequired("currentTreeId")
+    const nodeId = this.useOptionalSelectedNodeId()
+
+    return Trees.useOptionalNode(treeId, nodeId)
+  }
+
   useNodeOf<T extends TreeNodeType>(nodeId: string, type: T) {
     const treeId = this.useRequired("currentTreeId")
     return Trees.useNodeOf(treeId, nodeId, type)

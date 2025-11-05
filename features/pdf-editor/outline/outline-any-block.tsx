@@ -20,6 +20,7 @@ export function OutlineAnyBlock({ nodeId }: OutlineRenderNodeContentProps) {
 
   return (
     <OutlineItem
+      nodeId={nodeId}
       name={name}
       icon={treeIconsMap[node.type]}
       // oxlint-disable-next-line no-children-prop

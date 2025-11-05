@@ -10,7 +10,7 @@ export function OutlinePage({ nodeId }: OutlineRenderNodeContentProps) {
 
   return (
     <OutlineItem
-      icon={NotebookTextIcon}
+      nodeId={nodeId}
       name={(
         <>
           <span className="flex-1 text-left">
@@ -21,6 +21,7 @@ export function OutlinePage({ nodeId }: OutlineRenderNodeContentProps) {
           </span>
         </>
       )}
+      icon={NotebookTextIcon}
       className={`
         *:data-[slot=outline-children]:py-1 *:data-[slot=outline-visual-line]:bg-stone-300
         [&>div>*]:data-[slot=outline-expand-button]:text-stone-500

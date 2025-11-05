@@ -1,28 +1,32 @@
+import { PDFEditor } from "@/features/pdf-editor/pdf-editor.module"
 import { Button } from "@/lib/ui/button"
 import { cn } from "@/lib/ui/utils"
 import { ChevronDownIcon, ChevronRightIcon, LucideIcon } from "lucide-react"
 import { ReactNode, useState } from "react"
 
 export type OutlineItemProps = {
+  nodeId: string
   name: ReactNode
   icon?: LucideIcon
   alwaysExpanded?: boolean
-  selected?: boolean
   className?: string
   children?: ReactNode
   onClick: () => void
 }
 
 export function OutlineItem({
+  nodeId,
   name,
   icon: Icon,
   alwaysExpanded = false,
-  selected = undefined,
   className,
   children,
   onClick,
 }: OutlineItemProps) {
   const [expanded, setExpanded] = useState(true)
+
+  const selectedNodeId = PDFEditor.useOptionalSelectedNodeId()
+  const isSelected = selectedNodeId === nodeId
 
   return (
     <div className={cn("relative rounded-md", className)}>
@@ -51,17 +55,16 @@ export function OutlineItem({
         )}
 
         <Button
-          data-slot="outline-button"
-          data-selected={selected}
-          variant="ghost"
+          data-slot={isSelected ? "outline-button-selected" : "outline-button"}
+          variant={isSelected ? "default" : "ghost"}
           size="sm"
           className="flex-1 justify-start truncate"
           onClick={onClick}
         >
           {Icon && (
             <Icon
-              data-slot="outline-icon"
-              className="opacity-25"
+              data-slot={isSelected ? "outline-icon-selected" : "outline-icon"}
+              className={cn(!isSelected && "opacity-25")}
             />
           )}
 
