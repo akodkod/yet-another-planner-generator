@@ -9,6 +9,7 @@ export type OutlineItemProps = {
   name: ReactNode
   icon?: LucideIcon
   alwaysExpanded?: boolean
+  append?: ReactNode
   className?: string
   children?: ReactNode
   onClick: () => void
@@ -19,6 +20,7 @@ export function OutlineItem({
   name,
   icon: Icon,
   alwaysExpanded = false,
+  append,
   className,
   children,
   onClick,
@@ -37,7 +39,7 @@ export function OutlineItem({
         />
       )}
 
-      <div className="flex flex-row items-center gap-px">
+      <div className="group flex flex-row items-center gap-px">
         {!alwaysExpanded && (
           children ? (
             <Button
@@ -76,6 +78,8 @@ export function OutlineItem({
             name
           )}
         </Button>
+
+        {append}
       </div>
 
       {children !== undefined && (expanded || alwaysExpanded) && (

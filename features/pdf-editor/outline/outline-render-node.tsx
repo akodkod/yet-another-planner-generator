@@ -2,6 +2,7 @@ import { OutlineAnyBlock } from "@/features/pdf-editor/outline/outline-any-block
 import { OutlineAnyTopLevel } from "@/features/pdf-editor/outline/outline-any-top-level"
 import { OutlinePage } from "@/features/pdf-editor/outline/outline-page"
 import { OutlineRoot } from "@/features/pdf-editor/outline/outline-root"
+import { OutlineColumnBlock } from "@/features/pdf-editor/outline/outline-column-block"
 import { OutlineYear } from "@/features/pdf-editor/outline/outline-year"
 import { TreeNode, TreeNodeType } from "@/features/trees/tree"
 import { ComponentType } from "react"
@@ -29,7 +30,7 @@ const componentsMap: Record<
   [TreeNodeType.Week]: OutlineAnyTopLevel,
   [TreeNodeType.Day]: OutlineAnyTopLevel,
   [TreeNodeType.Page]: OutlinePage,
-  [TreeNodeType.ColumnBlock]: OutlineAnyBlock,
+  [TreeNodeType.ColumnBlock]: OutlineColumnBlock,
   [TreeNodeType.RowBlock]: OutlineAnyBlock,
   [TreeNodeType.TextBlock]: OutlineAnyBlock,
   [TreeNodeType.BackgroundGridBlock]: OutlineAnyBlock,
